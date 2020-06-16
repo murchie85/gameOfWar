@@ -53,23 +53,25 @@ maxPP = 23210
 maxGDP = 19
 
 USA           = [round(19 / maxGDP * 10), round(19490 / maxPP * 10)]
+UK           = [round(3 / maxGDP * 10), round(2925 / maxPP * 10)]
 CHINA         = [round(12 / maxGDP * 10), round(23210 / maxPP * 10)]
 INDIA         = [round(3 / maxGDP * 10), round(9474 / maxPP * 10)]
-RUSSIA        = [round(2 / maxGDP * 10), round(19490 / maxPP * 10)]
-GERMANY       = [round(4 / maxGDP * 10), round(19490 / maxPP * 10)]
-FRANCE        = [round(3 / maxGDP * 10), round(19490 / maxPP * 10)]
+RUSSIA        = [round(2 / maxGDP * 10), round(4016 / maxPP * 10)]
+GERMANY       = [round(4 / maxGDP * 10), round(4199 / maxPP * 10)]
+FRANCE        = [round(3 / maxGDP * 10), round(2859 / maxPP * 10)]
 JAPAN         = [round(5 / maxGDP * 10), round(5443 / maxPP * 10)]
-BRAZIL        = [round(2 / maxGDP * 10), round(19490 / maxPP * 10)]
-SOUTHKOREA    = [round(2 / maxGDP * 10), round(19490 / maxPP * 10)]
-SOUTHAFRICA   =  [round(1 / maxGDP * 10), round(19490 / maxPP * 10)]
+BRAZIL        = [round(2 / maxGDP * 10), round(3248 / maxPP * 10)]
+SOUTHKOREA    = [round(2 / maxGDP * 10), round(2035 / maxPP * 10)]
+SOUTHAFRICA   =  [round(1 / maxGDP * 10), round(767 / maxPP * 10)]
 
-NATION_ARRAY = [[USA,'USA'],[CHINA,'CHINA'],[INDIA,'INDIA'],[RUSSIA,'RUSSIA'],[GERMANY,'GERMANY'],[FRANCE,'FRANCE'],[JAPAN,'JAPAN'],[BRAZIL,'BRAZIL'],[SOUTHKOREA,'SOUTHKOREA'],[SOUTHAFRICA,'SOUTHAFRICA']]
+NATION_ARRAY = [[USA,'USA'],[CHINA,'CHINA'],[INDIA,'INDIA'],[RUSSIA,'RUSSIA'],[UK,'UK'],[GERMANY,'GERMANY'],[FRANCE,'FRANCE'],[JAPAN,'JAPAN'],[BRAZIL,'BRAZIL'],[SOUTHKOREA,'SOUTHKOREA'],[SOUTHAFRICA,'SOUTHAFRICA']]
 # TRADE INITIALISED BY PP
 # TOTAL INITIALISED BY GDP
 
 
 nation = ''
-
+buffer = ''
+buffer = ''
 
 
 
@@ -101,7 +103,7 @@ def selectNation(NATION_ARRAY):
 			NationChoice = int(input('Please chose a country \n'))
 		fast_print('Your chosen country is : ' + 	str(NATION_ARRAY[NationChoice][-1]) + '\n')
 		print('')
-		input('Press any button to continue \n')
+		buffer = input('Press any button to continue \n')
 		print(chr(27) + "[2J")
 		nation = NATION_ARRAY[NationChoice]
 		nationSelected = 'Y'
@@ -122,7 +124,7 @@ def stats(NATION_ARRAY):
 		print('|' + score + '|' + tradeScore + '|' + '   ' + str(NATION_ARRAY[x][-1])  )
 
 	print('')
-	input('Press any button to continue \n')
+	buffer = input('Press any button to continue \n')
 	print(chr(27) + "[2J")
 
 
@@ -135,7 +137,8 @@ while selection != 'Done':
     print('[2] View Country Stats')
     print('[3] View game rules')
     print('[4] View Credits')
-    print('[5] Start Game')
+    print('[5] Play some music')
+    print('[6] Start Game')
     print('')
     print('')
     
@@ -149,13 +152,20 @@ while selection != 'Done':
     	fast_print('This can be by winning on trade, military, culture or other. \n')
     	fast_print('Remember, every action has its own consequence! \n')
     	fast_print('Good Luck commander! \n' )
-    	input('Press any button to continue \n ')
+    	buffer = input('Press any button to continue \n ')
     	print(chr(27) + "[2J")
     if selection == 4:
     	fast_print('All credits go to Adam McMurchie... me! . \n')
-    	input('Press any button to continue \n ')
+    	buffer = input('Press any button to continue \n ')
     	print(chr(27) + "[2J")
     if selection == 5:
+    	import webbrowser
+    	fast_print('This will open music in your webbrowser. \n' )
+    	decision = input('Y/N \n').upper()
+    	if decision == 'Y':
+    		webbrowser.open('https://youtu.be/H8w_Q57RQJc')
+    	print(chr(27) + "[2J")
+    if selection == 6:
     	if nation == '':
     		fast_print('Nation not selected \n')
     		fast_print('Please pick a nation...\n')
@@ -191,8 +201,8 @@ med_print(str(userName) + ': ... im ' + str(userName) + '\n')
 
 fast_print(str(assistant) + 'ah, so YOU are the one. \n')
 time.sleep(0.4)
-fast_print(str(assistant) + 'INDIAts truly an honour to meet you ' + str(userName) +  ' please know that we all appreciate your sacrifice  \n')
-fast_print(str(assistant) + 'are you ready?  \n ')
+fast_print(str(assistant) + 'Its truly an honour to meet you ' + str(userName) +  ' please know that we all appreciate your sacrifice  \n')
+fast_print(str(assistant) + '...are you ready?  \n ')
 print('')
 input(' Press any key to start..')
 fast_print(str(assistant) + 'executing dynamic cascade sequence now, this should feel... uh..errr..  \n ')
@@ -221,7 +231,7 @@ for y in range(0,3):
 		print('><><><>><><><>><><><>><><><>><><><>><><><>><><><>><><><')
 	time.sleep(0.50)
 print(chr(27) + "[2J")
-fast_print('....Lead me, follow me, or get out of my way ........ \n')
+med_print('....Lead me, follow me, or get out of my way ........ \n')
 print('(George S Patton)')
 time.sleep(1.90)
 print(chr(27) + "[2J")
@@ -242,9 +252,11 @@ for x in range(0, 5):
 
 
 
-fast_print('Good morning commander..... \n')
+fast_print('Good morning commander ' + str(userName) + '..... \n')
 fast_print('')
+time.sleep(0.80)
 fast_print('The year is 1949, the devestating and costly war has finally come to an end.\nIt is your responsibility to lead ' + str(nation[-1]) + ' greatness. \n')
+time.sleep(0.80)
 fast_print('There are many ways to win, trade, politics, war....the path is up to you? \n')
 
 
