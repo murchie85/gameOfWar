@@ -1,30 +1,61 @@
 # GAME OF WAR 
 
 
+# INSTRUCTIONS 
+
+JUST RUN THIS COMMAND TO START 
+  
+`python game.py` 
+  
+  
+If you have any issues please contact me. 
+
+
 # SUMMARY 
 
 1. A playable game for users
-2. A iterable simulation for an AI. 
+2. A iterable simulation for an AI. 	
 
 ## Rules 
 
-- List all countries and starting score
-- Iterate each year, starting from 1950
 
 **Considerations**
 
 
-- Start with 10 countries only  
-- Should an iteration always act based on previous iteration? 
-- Create a score for each function War Score, Trade Score...etc
+- Should an iteration always act based on previous iteration? [hidden values ]
 - Be careful to make scores consistent between functions (maybe 1 to 10)
 
-FUNCTIONS 
+- OFFER BONUS REWARDS AT CERTAIN TIME INTERVALS
+- ONLY UNLOCK WAR AFTER 5 YEARS
 
-### MAIN FUNCTION 
+## ATTRIBUTES
 
-- Print Year
-- Increment Year
+- Score (initialised as GDP)
+- Trade points
+- War points
+- ...
+
+- Chance
+- Enemy
+- Ally 
+- publicContentment
+
+# FUNCTIONS 
+
+### START MENU
+
+- Start Menu
+	- Pick team
+	- Load Game
+	- other options
+	- Start game
+
+- Enter Name
+
+### MAIN MENU 
+
+- Print playing nation
+- Print Year and Month
 	- COUNTRY LOOP
 	- Random order	
 	- Select Function 
@@ -32,15 +63,42 @@ FUNCTIONS
 	- Tally Points
 - Finalise scores
 
-### WAR FUNCTION
 
-### CIVIL WAR FUNCTION 
+### NEXT YEAR FUNCTION
+
+- Increment Month
+- Environment affect (all small countries gan 10% cash)
+	- China declares war on Taiwan..(all scores drop 10%)
+
+
 
 ### TRADE FUNCTION 
+
+- Spend purchasing points
+
+- Invest
+
+- Borrow
+
+
+
+
+
+
+
+
+### WAR FUNCTION
+
+- Limit Major war to once every 5 years
+
+### CIVIL WAR FUNCTION 
 
 ### ESPIONAGE FUNCTION 
 
 ### NEUTRAL FUNCTION 
+
+
+### CIVIL WAR
 
 ### SIZE MULTIPLIER FUNCTION 
 
