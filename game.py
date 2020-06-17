@@ -441,13 +441,13 @@ for x in range(0, 5):
 
 
 
-# fast_print('Good morning commander ' + str(userName) + '..... \n')
-# fast_print('')
-# time.sleep(0.80)
-# fast_print('The year is 1949, the devestating and costly war has finally come to an end.\nIt is your responsibility to lead ' + str(myNation[-1]) + ' greatness. \n')
-# time.sleep(0.80)
-# fast_print('There are many ways to win, trade, politics, war....the path is up to you? \n')
-# time.sleep(1.50)
+fast_print('Good morning commander ' + str(userName) + '..... \n')
+fast_print('')
+time.sleep(0.80)
+fast_print('The year is 1949, the devestating and costly war has finally come to an end.\nIt is your responsibility to lead ' + str(myNation[-1]) + ' greatness. \n')
+time.sleep(0.80)
+fast_print('There are many ways to win, trade, politics, war....the path is up to you? \n')
+time.sleep(1.50)
 
 """
 # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
