@@ -209,87 +209,89 @@ if gameLoaded:
 
 year = 1949
 
-
-assistant = 'Arbiter: '
-fast_print('**rustle**....**clunk** ..."oh not again!" \n')
-fast_print(str(assistant) + '....wait... \n')
-time.sleep(0.7)
-fast_print(str(assistant) +'..who the hell are you? How did you get in here? ... \n')
-
-userName = input('Enter your name \n')
-print(' ')
-med_print(str(userName) + ': ... im ' + str(userName) + '\n')
-
-fast_print(str(assistant) + 'ah, so YOU are the one. \n')
-time.sleep(0.4)
-fast_print(str(assistant) + 'Its truly an honour to meet you ' + str(userName) +  ' please know that we all appreciate your sacrifice  \n')
-fast_print(str(assistant) + '...are you ready?  \n ')
-print('')
-input(' Press any key to start..')
-fast_print(str(assistant) + 'executing dynamic cascade sequence now, this should feel... uh..uh....  \n ')
-time.sleep(0.6)
-fast_print('....a little weird \n ')
-time.sleep(1.50)
-clearScreen()
-time.sleep(1.50)
-
-for y in range(0,3):
-    for x in range(0,10):
-        print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-    time.sleep(0.50)
-med_print('..........universe destruction in progress......\n')
-for x in range(0,10):
-    print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-time.sleep(0.50)
-for x in range(0,10):
-    print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-time.sleep(0.50)
-for x in range(0,10):
-    print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-med_print('....booting up universe simulation #16725 omega .......\n')
-for y in range(0,3):
-    for x in range(0,10):
-        print('><><><>><><><>><><><>><><><>><><><>><><><>><><><>><><><')
-    time.sleep(0.50)
-time.sleep(0.580)
-for y in range(0,3):
-    for x in range(0,10):
-        print('asklfdj;l;j;adfj;kj;afdkjaklsdjfaghaldg;asdkjf;lkja;ajd')
-    time.sleep(0.50)
-for y in range(0,3):
-    for x in range(0,10):
-        print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-    time.sleep(0.50)
-clearScreen()
-time.sleep(1.10)
-med_print('....Lead me, follow me, or get out of my way ........ \n')
-print('(George S Patton)')
-time.sleep(1.90)
-clearScreen()
-for x in range(0,20):
-    print(' ')
-time.sleep(0.50)
-print('')
-y = 5
-for x in range(0, 5):
-    print(str(y))
-    y= y-1
-    time.sleep(1.20)
-    clearScreen()
+# MUST UNCOMENT FOR FULL GAME
 
 
+# assistant = 'Arbiter: '
+# fast_print('**rustle**....**clunk** ..."oh not again!" \n')
+# fast_print(str(assistant) + '....wait... \n')
+# time.sleep(0.7)
+# fast_print(str(assistant) +'..who the hell are you? How did you get in here? ... \n')
 
+# userName = input('Enter your name \n')
+# print(' ')
+# med_print(str(userName) + ': ... im ' + str(userName) + '\n')
 
+# fast_print(str(assistant) + 'ah, so YOU are the one. \n')
+# time.sleep(0.4)
+# fast_print(str(assistant) + 'Its truly an honour to meet you ' + str(userName) +  ' please know that we all appreciate your sacrifice  \n')
+# fast_print(str(assistant) + '...are you ready?  \n ')
+# print('')
+# input(' Press any key to start..')
+# fast_print(str(assistant) + 'executing dynamic cascade sequence now, this should feel... uh..uh....  \n ')
+# time.sleep(0.6)
+# fast_print('....a little weird \n ')
+# time.sleep(1.50)
+# clearScreen()
+# time.sleep(1.50)
+
+# for y in range(0,3):
+#     for x in range(0,10):
+#         print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+#     time.sleep(0.50)
+# med_print('..........universe destruction in progress......\n')
+# for x in range(0,10):
+#     print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+# time.sleep(0.50)
+# for x in range(0,10):
+#     print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+# time.sleep(0.50)
+# for x in range(0,10):
+#     print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+# med_print('....booting up universe simulation #16725 omega .......\n')
+# for y in range(0,3):
+#     for x in range(0,10):
+#         print('><><><>><><><>><><><>><><><>><><><>><><><>><><><>><><><')
+#     time.sleep(0.50)
+# time.sleep(0.580)
+# for y in range(0,3):
+#     for x in range(0,10):
+#         print('asklfdj;l;j;adfj;kj;afdkjaklsdjfaghaldg;asdkjf;lkja;ajd')
+#     time.sleep(0.50)
+# for y in range(0,3):
+#     for x in range(0,10):
+#         print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+#     time.sleep(0.50)
+# clearScreen()
+# time.sleep(1.10)
+# med_print('....Lead me, follow me, or get out of my way ........ \n')
+# print('(George S Patton)')
+# time.sleep(1.90)
+# clearScreen()
+# for x in range(0,20):
+#     print(' ')
+# time.sleep(0.50)
+# print('')
+# y = 5
+# for x in range(0, 5):
+#     print(str(y))
+#     y= y-1
+#     time.sleep(1.20)
+#     clearScreen()
 
 
 
-fast_print('Good morning commander ' + str(userName) + '..... \n')
-fast_print('')
-time.sleep(0.80)
-fast_print('The year is 1949, the devestating and costly war has finally come to an end.\nIt is your responsibility to lead ' + str(myNation[-1]) + ' greatness. \n')
-time.sleep(0.80)
-fast_print('There are many ways to win, trade, politics, war....the path is up to you? \n')
-time.sleep(1.50)
+
+
+
+
+# fast_print('Good morning commander ' + str(userName) + '..... \n')
+# fast_print('')
+# time.sleep(0.80)
+# fast_print('The year is 1949, the devestating and costly war has finally come to an end.\nIt is your responsibility to lead ' + str(myNation[-1]) + ' greatness. \n')
+# time.sleep(0.80)
+# fast_print('There are many ways to win, trade, politics, war....the path is up to you? \n')
+# time.sleep(1.50)
 
 
 # ---------------------------------------------------------------------
@@ -312,7 +314,9 @@ def AIaction(index,currentNation,NATION_ARRAY):
             flag = 1
         amount = random.randint(1,creditsAvailable)
         NATION_ARRAY[index][0]['nextmove'] = 'gamble',amount
-        print(str(currentNation[1]) + ' will gamble ' +  str(amount))
+        #print(str(currentNation[1]) + ' will gamble ' +  str(amount))
+    else:
+        NATION_ARRAY[index][0]['nextmove'] = 'pass'
     return(NATION_ARRAY)
 
 
@@ -393,7 +397,7 @@ def financeBeuro():
 
 def nextYear(year,myNation,NATION_ARRAY):
     clearScreen()
-    print('Processing next year....')
+    med_print('Processing next year....')
     print('')
     for x in range(0, len(NATION_ARRAY)):
         currentNation = NATION_ARRAY[x]
@@ -401,9 +405,10 @@ def nextYear(year,myNation,NATION_ARRAY):
 
         # AI DECISIONS 
         if currentNation != myNation: 
-            NATION_ARRAY = AIaction(index,currentNation,NATION_ARRAY)
-
+            NATION_ARRAY = AIaction(index,currentNation,NATION_ARRAY) 
         NATION_ARRAY = action(index,currentNation,NATION_ARRAY)
+        print('')
+        print('')
     year = year + 1
     buffer = input('Press any button to continue')
     return(year, NATION_ARRAY)

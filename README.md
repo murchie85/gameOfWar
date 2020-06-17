@@ -19,12 +19,13 @@ If you have any issues please contact me.
 ## Rules 
 
 
-**Considerations**
+**TO DO**
 
 
+- Ensure user name is on menu
+- user rank
 - Should an iteration always act based on previous iteration? [hidden values ]
 - Be careful to make scores consistent between functions (maybe 1 to 10)
-
 - OFFER BONUS REWARDS AT CERTAIN TIME INTERVALS
 - ONLY UNLOCK WAR AFTER 5 YEARS
 
