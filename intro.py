@@ -23,7 +23,7 @@ def start(userName,myNation):
     fast_print(str(assistant) + 'Its truly an honour to meet you ' + str(userName) +  ' please know that we all appreciate your sacrifice  \n')
     fast_print(str(assistant) + '...are you ready?  \n ')
     print('')
-    input(' Press any key to start..')
+    input(' Press enter to continue..')
     fast_print(str(assistant) + 'executing dynamic cascade sequence now, this should feel... uh..uh....  \n ')
     time.sleep(0.6)
     fast_print('....a little weird \n ')

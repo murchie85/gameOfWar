@@ -7,6 +7,16 @@ from conquest_utilities import superfast_print as superfast_print
 from conquest_utilities import clearScreen as clearScreen
 from conquest_utilities	 import preferencePrint as preferencePrint
 
+
+
+
+"""
+# $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+#                           FINANCEBEURO
+# $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+"""
+
+
 """
 # =====================================================================
 # =====================================================================
@@ -58,6 +68,15 @@ def financeBeuro(myNation,year):
 
 			
 
+"""
+# SUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENU
+# =====================================================================
+#                           SUB MENU
+# =====================================================================
+# =====================================================================
+"""
+
+
 def gambleMenu(myNation,year):
 	clearScreen()
 	print('My Team: ' + str(myNation[1]))
@@ -94,10 +113,18 @@ def gambleMenu(myNation,year):
 	myNation[0]['Finance']['wealth'] = myNation[0]['Finance']['wealth'] - gambleAmount
 	myNation[0]['Nextmove'] = 'gamble',gambleAmount
 	print('You will gamble ' + str(myNation[0]['Nextmove'][1]) + ' in the next round')
-	buffer = input('press any key to continue')
+	buffer = input('Press enter to continue \n ')
 	skipflag = 'y'
 	return(myNation)
 	
+
+"""
+# SUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENU
+# =====================================================================
+#                           SUB MENU
+# =====================================================================
+# =====================================================================
+"""
 
 
 
@@ -140,10 +167,6 @@ def buyMenu(myNation,year):
 		print(financeSelection)
 		if financeSelection == '1':
 
-			# buy funcion 
-			# (item, price, credits)
-			# max = round(credits/price) down
-			# input('How many do you want to buy? ' )
 			fast_print('Bought Gold')
 			print('')
 		if financeSelection == '2':
@@ -163,6 +186,14 @@ def buyMenu(myNation,year):
 
 
 
+
+"""
+# SUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENU
+# =====================================================================
+#                           SUB MENU
+# =====================================================================
+# =====================================================================
+"""
 
 
 def tradeMenu(myNation,year):

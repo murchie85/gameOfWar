@@ -13,9 +13,6 @@
 # ---------------------------------------------------------------------
 """
 
-
-
-
 """
 THINGS TO SAVE
 
@@ -74,7 +71,7 @@ from conquest_utilities import music as music
 
 USA           = {'Score': 0, 'Finance':{'wealth': 10, 'gold':120, 'gems':30, 'raremetals':10, 'oil':200} , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmove' : 'pass'}
 CHINA         = {'Score': 0, 'Finance':{'wealth': 8,  'gold':40, 'gems':20, 'raremetals':200, 'oil':20} , 'Tech':{'level': 4, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmove' : 'pass'}
-INDIA         = {'Score': 0, 'Finance':{'wealth': 3,  'gold':1000, 'gems':30, 'raremetals':30, 'oil':20} , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmove' : 'pass'}
+INDIA         = {'Score': 0, 'Finance':{'wealth': 3,  'gold':100, 'gems':30, 'raremetals':30, 'oil':20} , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmove' : 'pass'}
 RUSSIA        = {'Score': 0, 'Finance':{'wealth': 2,  'gold':50, 'gems':10, 'raremetals':20, 'oil':200} , 'Tech':{'level': 2, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmove' : 'pass'}
 UK            = {'Score': 0, 'Finance':{'wealth': 2,  'gold':90, 'gems':10, 'raremetals':0, 'oil':120} , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmove' : 'pass'}
 GERMANY       = {'Score': 0, 'Finance':{'wealth': 2,  'gold':50, 'gems':10, 'raremetals':30, 'oil':10} , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmove' : 'pass'}
@@ -98,7 +95,8 @@ KENYA         = {'Score': 0, 'Finance':{'wealth': 1,  'gold':100, 'gems':100, 'r
 #PHILIPPINES   = {'Score': 0, 'Finance':{'wealth': 8} , 'Tech':{'level': 0, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmove' : 'pass'}
 #BANGLADESH    = {'Score': 0, 'Finance':{'wealth': 8} , 'Tech':{'level': 0, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmove' : 'pass'}
 
-SYSTEM_TRACKER = {'gold': {'price': 100, 'stock': 10000},'raremetals': {'price': 100, 'stock': 10000}, 'gems': {'price': 100, 'stock': 10000}, 'oil': {'price': 100, 'stock': 10000}}
+# PRice is % of remaining available 
+PRICE_TRACKER = {'gold': {'price': 100, 'stock': 10000, 'available': 3000},'raremetals': {'price': 100, 'stock': 10000, 'available': 3000}, 'gems': {'price': 100, 'stock': 10000, 'available': 3000}, 'oil': {'price': 100, 'stock': 10000, 'available': 3000}}
 
 NATION_ARRAY = [[USA,'USA'],[CHINA,'CHINA'],[INDIA,'INDIA'],[RUSSIA,'RUSSIA'],[UK,'UK'],[GERMANY,'GERMANY'],[ITALY,'ITALY'],[SPAIN,'SPAIN'],[FRANCE,'FRANCE'],[JAPAN,'JAPAN'],[BRAZIL,'BRAZIL'],[SOUTHKOREA,'SOUTHKOREA'],[SOUTHAFRICA,'SOUTHAFRICA'],[PAKISTAN,'PAKISTAN'],[INDONESIA,'INDONESIA'],[NIGERIA,'NIGERIA'],[MEXICO,'MEXICO'],[EGYPT,'EGYPT'],[VIETNAM,'VIETNAM'],[IRAN,'IRAN'],[KENYA,'KENYA']]
 
@@ -122,20 +120,6 @@ p = 'All'
 # =======================================================================
 """
 
-
-
-
-"""
-# ---------------------------------------------------------------------
-# SUB MENU SUB MENU SUB MENU SUB MENU SUB MENU SUB MENU SUB MENU SUB MENU
-# ---------------------------------------------------------------------
-#                      SUB MENU
-# ---------------------------------------------------------------------
-# SUB MENU SUB MENU SUB MENU SUB MENU SUB MENU SUB MENU SUB MENU SUB MENU
-# ---------------------------------------------------------------------
-"""
-
-
 def selectNation(NATION_ARRAY):
 	clearScreen()
 	NationChoice = ''
@@ -156,7 +140,7 @@ def selectNation(NATION_ARRAY):
 
 		fast_print('Your chosen country is : ' +    str(NATION_ARRAY[NationChoice][-1]) + '\n')
 		print('')
-		buffer = input('Press any button to continue \n')
+		buffer = input('Press Enter to continue \n')
 		clearScreen()
 		myNation = NATION_ARRAY[NationChoice]
 		myNationIndex = NationChoice
@@ -189,7 +173,7 @@ def stats():
 
 		print('|' + score + '|' + tradeScore + '|' + techScore + '|' + '   ' + str(NATION_ARRAY[index][-1])  )
 
-	buffer = input('Press any button to continue \n')
+	buffer = input('Press enter to continue \n')
 	clearScreen()
 
 
@@ -249,11 +233,11 @@ while selection != 'Done':
 		fast_print('This can be by winning on trade, military, culture or other. \n')
 		fast_print('Remember, every action has its own consequence! \n')
 		fast_print('Good Luck commander! \n' )
-		buffer = input('Press any button to continue \n ')
+		buffer = input('Press enter to continue \n ')
 		clearScreen()
 	if selection == 5:
 		fast_print('All credits go to Adam McMurchie... me! . \n')
-		buffer = input('Press any button to continue \n ')
+		buffer = input('Press enter to continue \n ')
 		clearScreen()
 	if selection == 6:
 		import webbrowser
@@ -317,39 +301,6 @@ userName = start(userName,myNation)
 
 
 
-"""
-# =======================================================================
-# =======================================================================
-# MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU 
-# =======================================================================
-#                           MAIN MENU MODE 
-#     1. SELECT NATION OPTION
-#     2. VIEW COUNTRY
-#     3. VIEW RULES
-#     4. VIEW CREDITS
-#     5. START GAME 
-# =======================================================================
-# MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU
-# =======================================================================
-"""
-
-
-
-
-
-"""
-# SUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENUSUBMENU
-# =====================================================================
-#                           SUB MENU
-# =====================================================================
-# =====================================================================
-"""
-
-"""
-# $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-#                           FINANCEBEURO
-# $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-"""
 import finance as fin 
 import warMenu as warMenu
 import politics as politics
@@ -365,22 +316,12 @@ import politics as politics
 
 
 """
-# END-SUBMENU END-SUBMENU END-SUBMENU END-SUBMENU END-SUBMENU END-SUBMENU 
+# FUNCTIONS FUNCTIONS FUNCTIONS FUNCTIONS FUNCTIONS FUNCTIONS FUNCTIONS 
 # =====================================================================
-#                          END  SUB MENU END
+#                          FUNCTIONS FUNCTIONS 
 # =====================================================================
 # =====================================================================
 """
-
-
-
-
-"""
-# ---------------------------------------------------------------------
-#                           MAIN FUNCTIONS
-# ---------------------------------------------------------------------
-"""
-
 
 def setAIMoves(index,currentNation,NATION_ARRAY):
 
@@ -445,6 +386,12 @@ def action(index, currentNation,NATION_ARRAY,p,myNationIndex):
 		
  
 
+
+
+
+
+
+
 #ENDROUNDENDROUNDENDROUNDENDROUNDENDROUND 
 #       EEEE N    N DD
 #       E    N N  N D D
@@ -507,7 +454,7 @@ def nextYear(year,myNation,NATION_ARRAY,myNationIndex):
 	print('*Hint* You can change how much you see in the options menu')
 	print('')
 	print('')
-	buffer = input('Press any button to continue')
+	buffer = input('Press enter to continue \n')
 	return(year, NATION_ARRAY)
 	
 
@@ -526,20 +473,23 @@ def nextYear(year,myNation,NATION_ARRAY,myNationIndex):
 
 
 
+
 """
-# =====================================================================
-# =====================================================================
-# =====================================================================
-#                           MAIN MENU
+# =======================================================================
+# =======================================================================
+# MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU 
+# =======================================================================
+#                           MAIN MENU MODE 
 #     1. View Leaderboard
 #     2. Finance Beuro
-#     3. Ministry of War (not available)
-#     4. Political Cabinet (not available)
+#     3. Ministry of war
+#     4. Political Cabinet
 #     5. Next Year
-# =====================================================================
-# =====================================================================
-# =====================================================================
+# =======================================================================
+# MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU
+# =======================================================================
 """
+
 
 
 menuSelection = ' '
