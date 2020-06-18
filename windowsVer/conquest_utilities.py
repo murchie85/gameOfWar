@@ -89,13 +89,8 @@ def options(p):
 def music():
 	import webbrowser
 	clearScreen()
-	
-	print('***************************************************')
-	print('                🎸🎸 MUSIC  🎺🎺                  ')
-	print('***************************************************')
-	# print('***************************************************')
-	# print('             [+][+]   MUSIC  [+][+]                ')
-	# print('***************************************************')
+	fast_print('This will open music in your webbrowser. \n' )
+	print('')
 	print('1. Game Music')
 	print('2. SciFi Chill')
 	print('3. LO FI')
@@ -105,8 +100,6 @@ def music():
 	print('7. Asian Pop')
 	print('8. Exit')
 	print('')
-	print('')
-	fast_print('This will open music in your webbrowser. \n' )
 	print('')
 
 	decision = str(input('Please select an option. \n'))
@@ -135,5 +128,4 @@ def music():
 	if decision == '8':
 		fast_print('Exiting')
 		clearScreen()
-
 

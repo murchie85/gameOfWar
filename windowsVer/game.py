@@ -320,7 +320,7 @@ year = 1949
 
 from intro import start as start
 userName = 'DonnerKebab'
-#userName = start(userName,myNation)
+userName = start(userName,myNation)
 
 
 
@@ -359,10 +359,27 @@ userName = 'DonnerKebab'
 # $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 """
 import finance as fin 
-import warMenu as warMenu
-import politics as politics
 
 
+
+def warMinistry(NATION_ARRAY):
+		print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
+		print('        WELCOME TO THE MINISTRY OF WAR             ')
+		print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
+		print('')
+		print('My Team: ' + str(myNation[1]))
+		print('Year: ' + str(year))
+		print('')
+		print('[1] Purchase Weapons')
+		print('[2] Exit')
+		print(' ')
+		print(' ')
+		print('****************************************')
+		print(' ')
+		print(' ')
+
+def politicalCabinet(NATION_ARRAY):
+	fast_print('This feature is not ready yet...')
 
 
 
@@ -579,9 +596,9 @@ while menuSelection != 'E':
 	if menuSelection == '2':
 		myNation = fin.financeBeuro(myNation,year)
 	if menuSelection == '3':
-		myNation = warMenu.warMinistry(myNation,year)
+		NATION_ARRAY = warMinistry(NATION_ARRAY)
 	if menuSelection == '4':
-		myNation = politics.politicalCabinet(myNation,year)
+		NATION_ARRAY = politicalCabinet(NATION_ARRAY)
 	if menuSelection == '5' or menuSelection == '':
 		year, NATION_ARRAY = nextYear(year,myNation,NATION_ARRAY,myNationIndex)
 	if menuSelection == 'O':

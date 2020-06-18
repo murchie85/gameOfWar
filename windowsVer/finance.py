@@ -27,11 +27,8 @@ def financeBeuro(myNation,year):
 	while financeSelection != '':
 		clearScreen()
 		print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-		print('     WELCOME TO THE FINANCE BEURO    😊💰        ')
+		print('        WELCOME TO THE FINANCE BEURO $£          ')
 		print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-		# print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-		# print('     WELCOME TO THE FINANCE BEURO    ;-)         ')
-		# print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
 		print('')
 		print('My Team: ' + str(myNation[1]))
 		print('Wealth : ' + str(myNation[0]['Finance']['wealth']) )
@@ -102,15 +99,12 @@ def gambleMenu(myNation,year):
 
 
 def buyMenu(myNation,year):
+	clearScreen()
 	financeSelection = ' '
 	while financeSelection != '':
-		clearScreen()
 		print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-		print('         💰💰💰  BUY BUY BUY      💰💰💰💰     ')
+		print('         $$$  BUY BUY BUY      $$$               ')
 		print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-		# print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-		# print('            £££  BUY BUY BUY     $$$             ')
-		# print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
 		print('')
 		print('My Team: ' + str(myNation[1]))
 		print('Year: ' + str(year))
@@ -135,7 +129,6 @@ def buyMenu(myNation,year):
 		print('***************************************************')
 		print(' ')
 		print(' ')
-		fast_print('These features are not ready yet....sorry :( \n')
 		financeSelection = str(input('Please chose an option \n'))
 		print(financeSelection)
 		if financeSelection == '1':
@@ -150,11 +143,8 @@ def buyMenu(myNation,year):
 			fast_print('Bought Gems')
 			print('')
 		if financeSelection == '3':
-			fast_print('Bought metals')
-			print('')
-		if financeSelection == '4':
-			fast_print('Bought Oil')
-			print('')
+			print('exiting...')
+			return(myNation)
 		if financeSelection == 'R' or financeSelection == 'r':
 			return(myNation)
 		if financeSelection == 'M' or financeSelection == 'm':
@@ -166,15 +156,12 @@ def buyMenu(myNation,year):
 
 
 def tradeMenu(myNation,year):
+	clearScreen()
 	financeSelection = ' '
 	while financeSelection != '':
-		clearScreen()
 		print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-		print('         💰💰💰  TRADE EXCHANGE   💰💰💰💰     ')
+		print('         $$$$  TRADE EXCHANGE   $$$$$            ')
 		print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-		# print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-		# print('           $$$$  TRADE EXCHANGE   ££££           ')
-		# print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
 		print('')
 		print('My Team: ' + str(myNation[1]))
 		print('Year: ' + str(year))
