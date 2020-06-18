@@ -319,8 +319,9 @@ year = 1949
 # MUST UNCOMENT FOR FULL GAME
 
 from intro import start as start
-userName = 'DonnerKebab'
-#userName = start(userName,myNation)
+#userName = 'DonnerKebab'
+print('hi Marcin')
+userName = start(userName,myNation)
 
 
 
