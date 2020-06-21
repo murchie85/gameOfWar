@@ -28,10 +28,12 @@ NOTES:
 myNation is a list, with the first element pointing to the country dict 
 myNationIndex may be required
 
-FEATURES TO ADD
+TODO
 
+- VIEW STATS OF ANY COUNTRY ...
+- VIEW AVERAGE OF TRADE
 - UNLOCK MORE MUSIC At certain points
-- GOLD VALUATION LOOKS AT HOW MUCH GOLD HAS BEEN BOUGHT/SOLD OVER LAST ROUND 
+- Shop
 
 
 
@@ -64,10 +66,10 @@ from functions import selectNation as selectNation
 from functions import stats as stats
 from actionFunctions import action as action
 from actionFunctions import nextYear as nextYear
-from actionFunctions import setAIMoves as setAIMoves
+#from AIFunctions import setAIMoves as setAIMoves
 
 # CUSTOM MENUES
-import finance as fin 
+import financeMenu as fin 
 import warMenu as warMenu
 import politics as politics
 
@@ -79,37 +81,38 @@ import politics as politics
 # END UTILITIES
 # ---------------------------------------------------------------------
 """
-
-USA           = {'Score': 0, 'Finance':{'wealth': 10000, 'gold':120, 'gems':30, 'raremetals':10, 'oil':200} , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':70, 'innovation':80, 'materialism':70, 'prudence':30} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-CHINA         = {'Score': 0, 'Finance':{'wealth': 8000,  'gold':40, 'gems':20, 'raremetals':200, 'oil':20}  , 'Tech':{'level': 4, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':70, 'innovation':30, 'materialism':90, 'prudence':60} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-INDIA         = {'Score': 0, 'Finance':{'wealth': 3000,  'gold':100, 'gems':30, 'raremetals':30, 'oil':20}  , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':40, 'innovation':30, 'materialism':20, 'prudence':50} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-RUSSIA        = {'Score': 0, 'Finance':{'wealth': 2000,  'gold':50, 'gems':10, 'raremetals':20, 'oil':200}  , 'Tech':{'level': 2, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':80, 'innovation':20, 'materialism':60, 'prudence':40} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-UK            = {'Score': 0, 'Finance':{'wealth': 2000,  'gold':90, 'gems':10, 'raremetals':0, 'oil':120}   , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':60, 'innovation':70, 'materialism':65, 'prudence':50} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-GERMANY       = {'Score': 0, 'Finance':{'wealth': 2000,  'gold':50, 'gems':10, 'raremetals':30, 'oil':10}   , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':40, 'innovation':70, 'materialism':60, 'prudence':40} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-ITALY 		  = {'Score': 0, 'Finance':{'wealth': 2000,  'gold':80, 'gems':20, 'raremetals':0, 'oil':30}    , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':50, 'innovation':70, 'materialism':60, 'prudence':50} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-SPAIN 		  = {'Score': 0, 'Finance':{'wealth': 2000,  'gold':90, 'gems':20, 'raremetals':10, 'oil':20}   , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':50, 'innovation':70, 'materialism':50, 'prudence':60} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-FRANCE        = {'Score': 0, 'Finance':{'wealth': 2000,  'gold':80, 'gems':50, 'raremetals':10, 'oil':10}   , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':60, 'innovation':70, 'materialism':40, 'prudence':50} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-JAPAN         = {'Score': 0, 'Finance':{'wealth': 2000,  'gold':70, 'gems':20, 'raremetals':100, 'oil':20}  , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':30, 'innovation':70, 'materialism':40, 'prudence':40} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-BRAZIL        = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':30, 'gems':30, 'raremetals':30, 'oil':80}   , 'Tech':{'level': 2, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':60, 'innovation':70, 'materialism':70, 'prudence':70} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-SOUTHKOREA    = {'Score': 0, 'Finance':{'wealth': 2000,  'gold':50, 'gems':20, 'raremetals':80, 'oil':10}   , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':40, 'innovation':70, 'materialism':40, 'prudence':60} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-SOUTHAFRICA   = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':90, 'gems':70, 'raremetals':10, 'oil':60}   , 'Tech':{'level': 2, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':40, 'innovation':70, 'materialism':70, 'prudence':50} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-PAKISTAN      = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':80, 'gems':0, 'raremetals':10, 'oil':80}    , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':70, 'innovation':70, 'materialism':100, 'prudence':40} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-INDONESIA     = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':40, 'gems':30, 'raremetals':40, 'oil':30}   , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':40, 'innovation':70, 'materialism':70, 'prudence':60} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-NIGERIA       = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':80, 'gems':60, 'raremetals':0, 'oil':90}    , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':40, 'innovation':70, 'materialism':80, 'prudence':55} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-MEXICO        = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':0,  'gems':30, 'raremetals':30, 'oil':90}   , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':50, 'innovation':70, 'materialism':70, 'prudence':40} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-EGYPT         = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':120, 'gems':0, 'raremetals':0, 'oil':110}   , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':60, 'innovation':70, 'materialism':300, 'prudence':65} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-VIETNAM       = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':20, 'gems':20, 'raremetals':130, 'oil':30}  , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':40, 'innovation':70, 'materialism':70, 'prudence':45} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-IRAN          = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':120, 'gems':10, 'raremetals':0, 'oil':180}  , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':70, 'innovation':70, 'materialism':20, 'prudence':50} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
-KENYA         = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':100, 'gems':70, 'raremetals':10, 'oil':80}  , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':50, 'innovation':70, 'materialism':70, 'prudence':45} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmoves' : []}
+# FINANCE LEVEL: PickPocket, Penny Pusher, Assistant, gambler, huslter, business magnate. 
+USA           = {'Score': 0, 'Finance':{'wealth': 5000,  'gold':60, 'gems':3, 'raremetals':10,  'oil':200, 'level': 'PickPocket'}  , 'War':{'might': 100, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':70, 'innovation':80, 'materialism':70, 'prudence':30, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+CHINA         = {'Score': 0, 'Finance':{'wealth': 5000,  'gold':20, 'gems':2, 'raremetals':200, 'oil':20,  'level': 'PickPocket'}  , 'War':{'might': 90, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 4, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':70, 'innovation':30, 'materialism':90, 'prudence':60, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+INDIA         = {'Score': 0, 'Finance':{'wealth': 4000,  'gold':50, 'gems':3, 'raremetals':30,  'oil':20,  'level': 'PickPocket'}  , 'War':{'might': 60, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':40, 'innovation':30, 'materialism':20, 'prudence':50, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+RUSSIA        = {'Score': 0, 'Finance':{'wealth': 2000,  'gold':25, 'gems':1, 'raremetals':20,  'oil':200, 'level': 'PickPocket'}  , 'War':{'might': 80, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 2, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':80, 'innovation':20, 'materialism':60, 'prudence':40, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+UK            = {'Score': 0, 'Finance':{'wealth': 3000,  'gold':45, 'gems':1, 'raremetals':20,  'oil':120, 'level': 'PickPocket'}  , 'War':{'might': 60, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':60, 'innovation':70, 'materialism':65, 'prudence':50, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+GERMANY       = {'Score': 0, 'Finance':{'wealth': 3000,  'gold':25, 'gems':1, 'raremetals':30,  'oil':10,  'level': 'PickPocket'}  , 'War':{'might': 60, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':40, 'innovation':70, 'materialism':60, 'prudence':40, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+ITALY 		  = {'Score': 0, 'Finance':{'wealth': 2000,  'gold':40, 'gems':2, 'raremetals':10,  'oil':30,  'level': 'PickPocket'}  , 'War':{'might': 60, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':50, 'innovation':70, 'materialism':60, 'prudence':50, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+SPAIN 		  = {'Score': 0, 'Finance':{'wealth': 2000,  'gold':45, 'gems':2, 'raremetals':10,  'oil':20,  'level': 'PickPocket'}  , 'War':{'might': 60, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':50, 'innovation':70, 'materialism':50, 'prudence':60, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+FRANCE        = {'Score': 0, 'Finance':{'wealth': 2000,  'gold':40, 'gems':5, 'raremetals':10,  'oil':10,  'level': 'PickPocket'}  , 'War':{'might': 60, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':60, 'innovation':70, 'materialism':40, 'prudence':50, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+JAPAN         = {'Score': 0, 'Finance':{'wealth': 3500,  'gold':35, 'gems':12, 'raremetals':100, 'oil':20,  'level': 'PickPocket'}  , 'War':{'might': 60, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':30, 'innovation':70, 'materialism':40, 'prudence':40, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+BRAZIL        = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':15, 'gems':23, 'raremetals':30,  'oil':80,  'level': 'PickPocket'}  , 'War':{'might': 60, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 2, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':60, 'innovation':70, 'materialism':70, 'prudence':70, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+SOUTHKOREA    = {'Score': 0, 'Finance':{'wealth': 2000,  'gold':25, 'gems':22, 'raremetals':80,  'oil':10,  'level': 'PickPocket'}  , 'War':{'might': 60, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 3, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':40, 'innovation':70, 'materialism':40, 'prudence':60, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+SOUTHAFRICA   = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':45, 'gems':27, 'raremetals':10,  'oil':60,  'level': 'PickPocket'}  , 'War':{'might': 40, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 2, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':40, 'innovation':70, 'materialism':70, 'prudence':50, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+PAKISTAN      = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':40, 'gems':23, 'raremetals':10,  'oil':80,  'level': 'PickPocket'}  , 'War':{'might': 40, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':70, 'innovation':70, 'materialism':100,'prudence':40, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+INDONESIA     = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':20, 'gems':23, 'raremetals':40,  'oil':30,  'level': 'PickPocket'}  , 'War':{'might': 40, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':40, 'innovation':70, 'materialism':70, 'prudence':60, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+NIGERIA       = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':40, 'gems':26, 'raremetals':10,  'oil':90,  'level': 'PickPocket'}  , 'War':{'might': 40, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':40, 'innovation':70, 'materialism':80, 'prudence':55, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+MEXICO        = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':20, 'gems':23, 'raremetals':30,  'oil':90,  'level': 'PickPocket'}  , 'War':{'might': 40, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':50, 'innovation':70, 'materialism':70, 'prudence':40, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+EGYPT         = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':60, 'gems':24, 'raremetals':10,  'oil':110, 'level': 'PickPocket'}  , 'War':{'might': 40, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':60, 'innovation':70, 'materialism':300, 'prudence':65, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0},'hints':'on', 'Nextmoves' : []}
+VIETNAM       = {'Score': 0, 'Finance':{'wealth': 1500,  'gold':20, 'gems':22, 'raremetals':130, 'oil':30,  'level': 'PickPocket'}  , 'War':{'might': 40, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':40, 'innovation':70, 'materialism':70, 'prudence':45, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+IRAN          = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':60, 'gems':21, 'raremetals':10,  'oil':180, 'level': 'PickPocket'}  , 'War':{'might': 40, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':70, 'innovation':70, 'materialism':20, 'prudence':50, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
+KENYA         = {'Score': 0, 'Finance':{'wealth': 1000,  'gold':50, 'gems':27, 'raremetals':10,  'oil':80,  'level': 'PickPocket'}  , 'War':{'might': 40, 'level': 'private', 'weapons':{'soldiers':100,'tanks':100,'fighterJets':100,'Nukes':100}, 'engineering':0}  , 'Tech':{'level': 1, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0, 'moveLimit':2, 'agression':50, 'innovation':70, 'materialism':70, 'prudence':45, 'notes': []} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'hints':'on', 'Nextmoves' : []}
 #TURKEY 	      = {'Score': 0, 'Finance':{'wealth': 8} , 'Tech':{'level': 0, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmove' : 'pass'}
 #ETHIOPA       = {'Score': 0, 'Finance':{'wealth': 8} , 'Tech':{'level': 0, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmove' : 'pass'}
 #PHILIPPINES   = {'Score': 0, 'Finance':{'wealth': 8} , 'Tech':{'level': 0, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmove' : 'pass'}
 #BANGLADESH    = {'Score': 0, 'Finance':{'wealth': 8} , 'Tech':{'level': 0, 'science':0, 'engineering':0},  'Politics':{'leadership':0, 'stability':0} , 'Special':{'chance': 0} , 'Friendship':{} , 'Citizens':{'population': 0, 'contentment': 0, 'fertility': 0}, 'Nextmove' : 'pass'}
 
 # PRice is % of remaining available 
-PRICE_TRACKER = {'gold': {'price': 120, 'stock': 10000, 'priceChange': 0},'raremetals': {'price': 60, 'stock': 2000, 'priceChange': 0}, 'gems': {'price': 250, 'stock': 2000, 'priceChange': 0}, 'oil': {'price': 12, 'stock': 10000, 'priceChange': 0}}
+PRICE_TRACKER = {'gold': {'price': 120, 'stock': 10000, 'priceChange': '+0', 'history':[120],'average':120},'raremetals': {'price': 60, 'stock': 2000, 'priceChange': '+0', 'history':[60],'average':60}, 'gems': {'price': 250, 'stock': 2000, 'priceChange': '+0', 'history':[250],'average':250}, 'oil': {'price': 12, 'stock': 10000, 'priceChange': '+0', 'history':[12],'average':12}}
+WAR_BRIEFING = {}
 
-NATION_ARRAY = [[USA,'USA'],[CHINA,'CHINA'],[INDIA,'INDIA'],[RUSSIA,'RUSSIA'],[UK,'UK'],[GERMANY,'GERMANY'],[ITALY,'ITALY'],[SPAIN,'SPAIN'],[FRANCE,'FRANCE'],[JAPAN,'JAPAN'],[BRAZIL,'BRAZIL'],[SOUTHKOREA,'SOUTHKOREA'],[SOUTHAFRICA,'SOUTHAFRICA'],[PAKISTAN,'PAKISTAN'],[INDONESIA,'INDONESIA'],[NIGERIA,'NIGERIA'],[MEXICO,'MEXICO'],[EGYPT,'EGYPT'],[VIETNAM,'VIETNAM'],[IRAN,'IRAN'],[KENYA,'KENYA']]
+NATION_ARRAY = [[USA,'USA'],[UK,'UK'],[GERMANY,'GERMANY'],[CHINA,'CHINA'],[INDIA,'INDIA'],[RUSSIA,'RUSSIA'],[ITALY,'ITALY'],[SPAIN,'SPAIN'],[FRANCE,'FRANCE'],[JAPAN,'JAPAN'],[BRAZIL,'BRAZIL'],[SOUTHKOREA,'SOUTHKOREA'],[SOUTHAFRICA,'SOUTHAFRICA'],[PAKISTAN,'PAKISTAN'],[INDONESIA,'INDONESIA'],[NIGERIA,'NIGERIA'],[MEXICO,'MEXICO'],[EGYPT,'EGYPT'],[VIETNAM,'VIETNAM'],[IRAN,'IRAN'],[KENYA,'KENYA']]
 
 
 myNation = ''
@@ -149,7 +152,7 @@ while selection != 'Done':
 	print('[4] Game rules')
 	print('[5] Credits')
 	print('[6] JukeBox')
-	print('[7] Exit')
+	print('[7] Back')
 	print('')
 	print('')
 
@@ -211,7 +214,7 @@ year = 1949
 
 from intro import start as start
 userName = 'DonnerKebab'
-userName = start(userName,myNation)
+#userName = start(userName,myNation)
 
 
 
@@ -233,7 +236,11 @@ userName = start(userName,myNation)
 # MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU
 # =======================================================================
 """
-
+def menuUpdate():
+	for item in myNation[0]['Special']['notes']:
+		if item == 'finance':
+			med_print('**CONGRATULATIONS!** Finance Level UP!!')
+	myNation[0]['Special']['notes'] = []
 
 
 menuSelection = ' '
@@ -243,33 +250,69 @@ while menuSelection != 'E':
 	print('')
 	print('My Team: ' + str(myNation[1]))
 	print('Year: ' + str(year))
+	print('Wealth : ' + str(myNation[0]['Finance']['wealth']))
 	print('Rank: ' + 'Junior')
 	print('')
-	print('[1] View Leaderboard')
-	print('[2] Finance Beuro')
-	print('[3] Ministry of War (not available)')
-	print('[4] Political Cabinet (not available)')
-	print('[5] Next Year')
+	print('[L] View Leaderboard')
+	print('[F] Finance Beuro')
+	print('[W] Ministry of War (not available)')
+	print('[P] Political Cabinet (not available)')
+	print('[N] Next Year')
+	print(' ')
+
+	print("""\ 
+	─────█─▄▀█──█▀▄─█─────
+	────▐▌──────────▐▌────
+	────█▌▀▄──▄▄──▄▀▐█────
+	───▐██──▀▀──▀▀──██▌───
+	──▄████▄──▐▌──▄████▄──
+				""")
+	print("""\ 
+	╭∩╮(Ο_Ο)╭∩╮
+				""")
+	print("""\ 
+	@('_')@
+				""")
+	print("""\ 
+	龴ↀ◡ↀ龴
+				""")
+	print("""\ 
+	•|龴◡龴|•
+				""")
+	print("""\ 
+	⨌⨀_⨀⨌
+				""")
+	print(""" 
+	✌(◕‿-)✌
+				""")
+
+
+
+
+
+	print(' ')
+	menuUpdate()
 	print(' ')
 	print(' ')
 	print('[O] Options')
 	print('[X] Exit')
 	print(' ')
+	print('Moves: ' + str(myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])     ))	
 	print('****************************************')
 	print(' ')
 	print(' ')
 	menuSelection = str(input('What would you like to do ' + str(userName) + '? \n')).upper()
 	
-	if menuSelection == '1':
+	if menuSelection == 'L':
 		stats(NATION_ARRAY)
-	if menuSelection == '2':
+	if menuSelection == 'F':
 		myNation = fin.financeBeuro(myNation,year,PRICE_TRACKER)
-	if menuSelection == '3':
+	if menuSelection == 'W':
 		myNation = warMenu.warMinistry(myNation,year,PRICE_TRACKER)
-	if menuSelection == '4':
+	if menuSelection == 'P':
 		myNation = politics.politicalCabinet(myNation,year,PRICE_TRACKER)
-	if menuSelection == '5' or menuSelection == '':
-		year, NATION_ARRAY,PRICE_TRACKER = nextYear(year,myNation,NATION_ARRAY,myNationIndex,PRICE_TRACKER,p)
+	if menuSelection == 'N' or menuSelection == '':
+		year, NATION_ARRAY,PRICE_TRACKER,p = nextYear(year,myNation,NATION_ARRAY,myNationIndex,PRICE_TRACKER,p)
 	if menuSelection == 'O':
 		p = options(p)
 	if menuSelection == 'X':

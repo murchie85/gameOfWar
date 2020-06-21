@@ -32,6 +32,7 @@ from conquest_utilities	 import preferencePrint as preferencePrint
 # =====================================================================
 """
 
+
 def financeBeuro(myNation,year,PRICE_TRACKER):
 	financeSelection = ' '
 	while financeSelection != 'XYZFFJJJJJJ':
@@ -44,26 +45,25 @@ def financeBeuro(myNation,year,PRICE_TRACKER):
 		# print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
 		print('')
 		print('My Team: ' + str(myNation[1]))
-		print('Wealth : ' + str(myNation[0]['Finance']['wealth']) )
 		print('Year: ' + str(year))
+		print('Wealth : ' + str(myNation[0]['Finance']['wealth']) )
+		print('Level  : ' + str(myNation[0]['Finance']['level']))
 		print('')
 		print('[G] Gamble')
 		print('[T] Trade Exchange')
-		print('[X] Exit')
+		print('[R] Return')
 		print(' ')
 		print(' ')
 		print('Moves: ' + str(myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])     ))
-		print('****************************************')
+		print('**************************************************')
 		print(' ')
 		print(' ')
 		financeSelection = str(input('Please chose an option \n')).upper()
-		print(financeSelection)
 		if financeSelection == 'G':
 			myNation = gambleMenu(myNation,year)
 		if financeSelection == 'T':
 			myNation = tradeMenu(myNation,year,PRICE_TRACKER)
-		if financeSelection == 'X' or financeSelection == '':
-			print('exiting...')
+		if financeSelection == 'R' or financeSelection == '':
 			return(myNation)
 	return(myNation)
 
@@ -88,8 +88,10 @@ def gambleMenu(myNation,year):
 	
 
 	# CHECK MAX MOVES
-	moveLimit = myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])
-	if moveLimit < 1: 
+	movesLeft = myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])
+	print('moves left: ' + str(movesLeft))
+
+	if movesLeft < 1: 
 		input('you have used up all your moves for this round')
 		return(myNation)
 
@@ -189,15 +191,16 @@ def buyMenu(myNation,year,PRICE_TRACKER):
 		print('My Team: ' + str(myNation[1]))
 		print('Year: ' + str(year))
 		print('Wealth : ' + str(myWealth))
-		print('Stash: ' + str(myNation[0]['Finance']['gold']) + ' : ' + str(myNation[0]['Finance']['gems']) + ' : ' + str(myNation[0]['Finance']['raremetals'])  + ' : ' + str(myNation[0]['Finance']['oil'])  ) 
+		print('Level  : ' + str(myNation[0]['Finance']['level']))
+		print('Stash: Gld:' + str(myNation[0]['Finance']['gold']) + ' Gms: ' + str(myNation[0]['Finance']['gems']) + ' Rm: ' + str(myNation[0]['Finance']['raremetals'])  + ' Oil: ' + str(myNation[0]['Finance']['oil'])  ) 
 		print('')
 		print('')
 		print('     ***EXCHANGE RATES***')
 		print('')
-		print('     Gold        : ' + '$' + str(goldPrice))  
-		print('     Gems        : ' + '$' + str(gemPrice) )   
-		print('     Rare Metals : ' + '$' + str(metalPrice)) 
-		print('     Oil         : ' + '$' + str(oilPrice)  )   
+		print('     Gold        : ' + '$' + str(goldPrice)   + ' ' + str(PRICE_TRACKER['gold']['priceChange']))  
+		print('     Gems        : ' + '$' + str(gemPrice)    + ' ' + str(PRICE_TRACKER['gems']['priceChange']))   
+		print('     Rare Metals : ' + '$' + str(metalPrice)  + ' ' + str(PRICE_TRACKER['raremetals']['priceChange'])) 
+		print('     Oil         : ' + '$' + str(oilPrice)    + ' ' + str(PRICE_TRACKER['oil']['priceChange']))   
 		print('')
 		print('')
 		print('')
@@ -205,6 +208,9 @@ def buyMenu(myNation,year,PRICE_TRACKER):
 		print('[P] Buy Precious Gems')
 		print('[R] Buy Rare Metals')
 		print('[O] Buy Oil')
+		print('[A] Show median rates')
+		print('[H] Show historical prices')
+		print('[M] Show Marketplace stock')
 		print('')
 		print('')
 		print('[R] Return')
@@ -223,7 +229,6 @@ def buyMenu(myNation,year,PRICE_TRACKER):
 
 
 		financeSelection = str(input('Please chose an option \n')).upper()
-		print(financeSelection)
 		if financeSelection == 'G':
 			myNation = buy(myWealth,goldPrice,myNation, 'gold')
 		if financeSelection == 'P':
@@ -232,10 +237,21 @@ def buyMenu(myNation,year,PRICE_TRACKER):
 			myNation = buy(myWealth,metalPrice,myNation, 'raremetals')
 		if financeSelection == 'O':
 			myNation = buy(myWealth,oilPrice,myNation, 'oil')
+		if financeSelection == 'A':
+			for item in PRICE_TRACKER:
+				print('Average ' + str(item) + ' price: ' +str(PRICE_TRACKER[item]['average']))
+			input('Press enter to continue \n')
+		if financeSelection == 'H':
+			for item in PRICE_TRACKER:
+				print('Historical ' + str(item) + ' prices: ' + str((PRICE_TRACKER[item]['history'])) )
+				print('')
+			input('Press enter to continue \n')
+		if financeSelection == 'M':
+			for item in PRICE_TRACKER:
+				print(str(item) + ' stock available to buy : ' + str((PRICE_TRACKER[item]['stock'])) )
+				print('')
+			input('Press enter to continue \n')
 		if financeSelection == 'R' or financeSelection == 'r' or financeSelection == '':
-			return(myNation)
-		if financeSelection == 'M' or financeSelection == 'm':
-			print('exiting...') 
 			return(myNation)
 
 
@@ -293,15 +309,16 @@ def sellMenu(myNation,year,PRICE_TRACKER):
 		print('My Team: ' + str(myNation[1]))
 		print('Year: ' + str(year))
 		print('Wealth : ' + str(myWealth))
-		print('Stash: ' + str(myNation[0]['Finance']['gold']) + ' : ' + str(myNation[0]['Finance']['gems']) + ' : ' + str(myNation[0]['Finance']['raremetals'])  + ' : ' + str(myNation[0]['Finance']['oil'])  ) 
+		print('Level  : ' + str(myNation[0]['Finance']['level']))
+		print('Stash: Gld:' + str(myNation[0]['Finance']['gold']) + ' Gms: ' + str(myNation[0]['Finance']['gems']) + ' Rm: ' + str(myNation[0]['Finance']['raremetals'])  + ' Oil: ' + str(myNation[0]['Finance']['oil'])  ) 
 		print('')
 		print('')
 		print('     ***EXCHANGE RATES***')
 		print('')
-		print('     Gold        : ' + '$' + str(goldPrice))  
-		print('     Gems        : ' + '$' + str(gemPrice))
-		print('     Rare Metals : ' + '$' + str(metalPrice))
-		print('     Oil         : ' + '$' + str(oilPrice))
+		print('     Gold        : ' + '$' + str(goldPrice)  + ' ' + str(PRICE_TRACKER['gold']['priceChange'])) 
+		print('     Gems        : ' + '$' + str(gemPrice)   + ' ' + str(PRICE_TRACKER['gems']['priceChange']))
+		print('     Rare Metals : ' + '$' + str(metalPrice) + ' ' + str(PRICE_TRACKER['raremetals']['priceChange']))
+		print('     Oil         : ' + '$' + str(oilPrice)   + ' ' + str(PRICE_TRACKER['oil']['priceChange']))
 		print('')
 		print('')
 		print('')
@@ -309,6 +326,9 @@ def sellMenu(myNation,year,PRICE_TRACKER):
 		print('[P] Sell Precious Gems')
 		print('[R] Sell Rare Metals')
 		print('[O] Sell Oil')
+		print('[A] Show median rates')
+		print('[H] Show historical prices')
+		print('[M] Show Marketplace stock')
 		print('')
 		print('')
 		print('[R] Return')
@@ -327,7 +347,6 @@ def sellMenu(myNation,year,PRICE_TRACKER):
 
 
 		financeSelection = str(input('Please chose an option \n')).upper()
-		print(financeSelection)
 		if financeSelection == 'G':
 			myNation = sell(myWealth,goldPrice,myNation, 'gold')
 		if financeSelection == 'P':
@@ -336,6 +355,20 @@ def sellMenu(myNation,year,PRICE_TRACKER):
 			myNation = sell(myWealth,metalPrice,myNation, 'raremetals')
 		if financeSelection == 'O':
 			myNation = sell(myWealth,oilPrice,myNation, 'oil')
+		if financeSelection == 'A':
+			for item in PRICE_TRACKER:
+				print('Average ' + str(item) + ' price: ' +str(PRICE_TRACKER[item]['average']))
+			input('Press enter to continue \n')
+		if financeSelection == 'H':
+			for item in PRICE_TRACKER:
+				print('Historical ' + str(item) + ' prices: ' + str((PRICE_TRACKER[item]['history'])) )
+				print('')
+			input('Press enter to continue \n')
+		if financeSelection == 'M':
+			for item in PRICE_TRACKER:
+				print(str(item) + ' stock available to buy : ' + str((PRICE_TRACKER[item]['stock'])) )
+				print('')
+			input('Press enter to continue \n')
 		if financeSelection == 'R' or financeSelection == 'r' or financeSelection == '':
 			return(myNation)
 		if financeSelection == 'M' or financeSelection == 'm':
@@ -357,6 +390,11 @@ def tradeMenu(myNation,year,PRICE_TRACKER):
 	financeSelection = ' '
 	while financeSelection != 'XYZFFJJJJJJ':
 		clearScreen()
+		goldPrice   = PRICE_TRACKER['gold']['price']
+		gemPrice    = PRICE_TRACKER['gems']['price']
+		metalPrice  = PRICE_TRACKER['raremetals']['price']
+		oilPrice    = PRICE_TRACKER['oil']['price']
+		myWealth    = myNation[0]['Finance']['wealth']
 		print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
 		print('         💰💰💰  TRADE EXCHANGE   💰💰💰💰     ')
 		print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
@@ -367,6 +405,15 @@ def tradeMenu(myNation,year,PRICE_TRACKER):
 		print('My Team: ' + str(myNation[1]))
 		print('Year: ' + str(year))
 		print('Wealth : ' + str(myNation[0]['Finance']['wealth']))
+		print('Level  : ' + str(myNation[0]['Finance']['level']))
+		print('')
+		print('     ***EXCHANGE RATES***')
+		print('')
+		print('     Gold        : ' + '$' + str(goldPrice)  + ' ' + str(PRICE_TRACKER['gold']['priceChange'])) 
+		print('     Gems        : ' + '$' + str(gemPrice)   + ' ' + str(PRICE_TRACKER['gems']['priceChange']))
+		print('     Rare Metals : ' + '$' + str(metalPrice) + ' ' + str(PRICE_TRACKER['raremetals']['priceChange']))
+		print('     Oil         : ' + '$' + str(oilPrice)   + ' ' + str(PRICE_TRACKER['oil']['priceChange']))
+		print('')
 		print('')
 		print('Gold        : ' + str(myNation[0]['Finance']['gold']))
 		print('Gems        : ' + str(myNation[0]['Finance']['gems']))
@@ -375,7 +422,10 @@ def tradeMenu(myNation,year,PRICE_TRACKER):
 		print('')
 		print('[B] Buy')
 		print('[S] Sell')
-		print('[X] Exit')
+		print('[A] Show median rates')
+		print('[H] Show historical prices')
+		print('[M] Show Marketplace stock')
+		print('[R] Return')
 		print(' ')
 		print(' ')
 		print('Moves: ' + str(myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])     ))
@@ -383,12 +433,25 @@ def tradeMenu(myNation,year,PRICE_TRACKER):
 		print(' ')
 		print(' ')
 		financeSelection = str(input('Please chose an option \n')).upper()
-		print(financeSelection)
 		if financeSelection == 'B':
 			myNation = buyMenu(myNation,year,PRICE_TRACKER)
 		if financeSelection == 'S':
 			myNation = sellMenu(myNation,year,PRICE_TRACKER)
-		if financeSelection == 'E' or financeSelection == '':
+		if financeSelection == 'A':
+			for item in PRICE_TRACKER:
+				print('Average ' + str(item) + ' price: ' +str(PRICE_TRACKER[item]['average']))
+			input('Press enter to continue \n')
+		if financeSelection == 'H':
+			for item in PRICE_TRACKER:
+				print('Historical ' + str(item) + ' prices: ' + str((PRICE_TRACKER[item]['history'])) )
+				print('')
+			input('Press enter to continue \n')
+		if financeSelection == 'M':
+			for item in PRICE_TRACKER:
+				print(str(item) + ' stock available to buy : ' + str((PRICE_TRACKER[item]['stock'])) )
+				print('')
+			input('Press enter to continue \n')
+		if financeSelection == 'R' or financeSelection == '':
 			print('exiting...')
 			return(myNation)
 
