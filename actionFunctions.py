@@ -15,6 +15,7 @@ import random
 
 import financeFunction as financeFunction
 import AIFunctions as AI 
+import warFunction as warFunction
 
 
 
@@ -35,6 +36,10 @@ def action(index, currentNation,NATION_ARRAY,p,myNationIndex,PRICE_TRACKER):
 
 		if 'sell' in nextMove:
 			NATION_ARRAY,PRICE_TRACKER = financeFunction.sellAction(nextMove,NATION_ARRAY,currentNation,PRICE_TRACKER,p,index,myNationIndex)
+	
+		if 'drill' in nextMove:
+			NATION_ARRAY = warFunction.drill(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex)
+
 
 	return(NATION_ARRAY,PRICE_TRACKER)
 		

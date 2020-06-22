@@ -9,21 +9,31 @@ import time
 
 def start(userName,myNation):
     assistant = 'Arbiter: '
+    print(""" 
+    @('_')@
+                """)
     fast_print('**rustle**....**clunk** ..."oh not again!" \n')
     fast_print(str(assistant) + '....wait... \n')
     time.sleep(0.7)
     fast_print(str(assistant) +'..who the hell are you? How did you get in here? ... \n')
-
     userName = input('Enter your name \n')
+    clearScreen()
     print(' ')
     med_print(str(userName) + ': ... im ' + str(userName) + '\n')
-
+    clearScreen()
+    print("""
+    @('_')@
+                """)
     fast_print(str(assistant) + 'ah, so YOU are the one. \n')
     time.sleep(0.4)
     fast_print(str(assistant) + 'Its truly an honour to meet you ' + str(userName) +  ' please know that we all appreciate your sacrifice  \n')
     fast_print(str(assistant) + '...are you ready?  \n ')
     print('')
     input(' Press enter to continue..')
+    clearScreen()
+    print(""" 
+    @('_')@
+                """)
     fast_print(str(assistant) + 'executing dynamic cascade sequence now, this should feel... uh..uh....  \n ')
     time.sleep(0.6)
     fast_print('....a little weird \n ')
