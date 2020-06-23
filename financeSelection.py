@@ -42,7 +42,7 @@ def financeBeuro(myNation,year,PRICE_TRACKER):
 		print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
 		# print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
 		# print('     WELCOME TO THE FINANCE BEURO    ;-)         ')
-		# print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+		# print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')	
 		print('')
 		print('My Team: ' + str(myNation[1]))
 		print('Year: ' + str(year))
@@ -54,7 +54,7 @@ def financeBeuro(myNation,year,PRICE_TRACKER):
 		print('[R] Return')
 		print(' ')
 		print(' ')
-		print('Moves: ' + str(myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])     ))
+		print('Moves: ' + str( myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])  + str(sum(myNation[0]['Nextmoves'], [])).count('pending')))
 		print('**************************************************')
 		print(' ')
 		print(' ')
@@ -88,7 +88,7 @@ def gambleMenu(myNation,year):
 	
 
 	# CHECK MAX MOVES
-	movesLeft = myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])
+	movesLeft = int(myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves']) + str(sum(myNation[0]['Nextmoves'], [])).count('pending') )
 	print('moves left: ' + str(movesLeft))
 
 	if movesLeft < 1: 
@@ -142,7 +142,7 @@ def gambleMenu(myNation,year):
 
 def buy(credits, price,myNation, name):
 	maxpurchase = int(credits // price)
-	print('You can buy up to ' + str(maxpurchase) + ' ' + str(name))
+	print('You can buy up to ' + str(maxpurchase) + ' ' + str(name) + ' for a cost of $' + str(price) + ' each.')
 
 
 	try:
@@ -216,13 +216,13 @@ def buyMenu(myNation,year,PRICE_TRACKER):
 		print('[R] Return')
 		#print('[M] Main Menu')
 		print(' ')
-		print('Moves: ' + str(myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])     ))
+		print('Moves: ' + str( myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])  + str(sum(myNation[0]['Nextmoves'], [])).count('pending')))
 		print('***************************************************')
 		print(' ')
 		print(' ')
 
 		# CHECK MAX MOVES SINCE INSIDE WHILE LOOP
-		moveLimit = myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])
+		moveLimit = int(myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves']) + str(sum(myNation[0]['Nextmoves'], [])).count('pending') )
 		if moveLimit < 1: 
 			input('you have used up all your moves for this round')
 			return(myNation)
@@ -230,14 +230,19 @@ def buyMenu(myNation,year,PRICE_TRACKER):
 
 		financeSelection = str(input('Please chose an option \n')).upper()
 		if financeSelection == 'G':
+			clearScreen()
 			myNation = buy(myWealth,goldPrice,myNation, 'gold')
 		if financeSelection == 'P':
+			clearScreen()
 			myNation = buy(myWealth,gemPrice,myNation, 'gems')
 		if financeSelection == 'R':
+			clearScreen()
 			myNation = buy(myWealth,metalPrice,myNation, 'raremetals')
 		if financeSelection == 'O':
+			clearScreen()
 			myNation = buy(myWealth,oilPrice,myNation, 'oil')
 		if financeSelection == 'A':
+			clearScreen()
 			for item in PRICE_TRACKER:
 				print('Average ' + str(item) + ' price: ' +str(PRICE_TRACKER[item]['average']))
 			input('Press enter to continue \n')
@@ -259,7 +264,7 @@ def buyMenu(myNation,year,PRICE_TRACKER):
 
 def sell(credits, price,myNation, name):
 	myStock = myNation[0]['Finance'][name]
-	print('You can sell up to ' + str(myStock) + ' ' + str(name))
+	print('You can sell up to ' + str(myStock) + ' ' + str(name) + ' for $' + str(price) + ' each')
 
 
 	try:
@@ -267,7 +272,7 @@ def sell(credits, price,myNation, name):
 	except:
 		print("Entered incorrectly, please try again")
 		return(myNation)
-
+	clearScreen()
 	value = sellAmount * price
 	if sellAmount > myStock:
 		input('Not enough to sell \n')
@@ -334,13 +339,13 @@ def sellMenu(myNation,year,PRICE_TRACKER):
 		print('[R] Return')
 		#print('[M] Main Menu')
 		print(' ')
-		print('Moves: ' + str(myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])     ))
+		print('Moves: ' + str( myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])  + str(sum(myNation[0]['Nextmoves'], [])).count('pending')))
 		print('***************************************************')
 		print(' ')
 		print(' ')
 
 		# CHECK MAX MOVES SINCE INSIDE WHILE LOOP
-		moveLimit = myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])
+		moveLimit = int(myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves']) + str(sum(myNation[0]['Nextmoves'], [])).count('pending') )
 		if moveLimit < 1: 
 			input('you have used up all your moves for this round')
 			return(myNation)
@@ -428,7 +433,7 @@ def tradeMenu(myNation,year,PRICE_TRACKER):
 		print('[R] Return')
 		print(' ')
 		print(' ')
-		print('Moves: ' + str(myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])     ))
+		print('Moves: ' + str( myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])  + str(sum(myNation[0]['Nextmoves'], [])).count('pending')))
 		print('***************************************************')
 		print(' ')
 		print(' ')

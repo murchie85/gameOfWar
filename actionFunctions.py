@@ -19,58 +19,10 @@ import warFunction as warFunction
 
 
 
-
-def action(index, currentNation,NATION_ARRAY,p,myNationIndex,PRICE_TRACKER):
-	
-	# PROCESS PASS
-	for nextMove in currentNation[0]['Nextmoves']:
-		preferencePrint(str(''),p,index,myNationIndex)
-		if 'pass' in nextMove:
-			preferencePrint(str(str(currentNation[1]) + ' chose to pass'),p,index,myNationIndex)
-			
-		if 'gamble' in nextMove:
-			NATION_ARRAY = financeFunction.gambleAction(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex)
-
-		if 'buy' in nextMove:
-			NATION_ARRAY,PRICE_TRACKER = financeFunction.buyAction(nextMove,NATION_ARRAY,currentNation,PRICE_TRACKER,p,index,myNationIndex)
-
-		if 'sell' in nextMove:
-			NATION_ARRAY,PRICE_TRACKER = financeFunction.sellAction(nextMove,NATION_ARRAY,currentNation,PRICE_TRACKER,p,index,myNationIndex)
-	
-		if 'drill' in nextMove:
-			NATION_ARRAY = warFunction.drill(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex)
+# ENTRANCE FUNCTION   
 
 
-	return(NATION_ARRAY,PRICE_TRACKER)
-		
- 
-
-
-
-
-# TALLY UP SCORES FOR ALL TEAMS 
-def tallyScores(NATION_ARRAY):
-	for x in range(0, len(NATION_ARRAY)):    
-		#SUM UP SUBSCORES
-		financeScore = NATION_ARRAY[x][0]['Finance']['wealth']
-		techScore = NATION_ARRAY[x][0]['Tech']['level']
-		totalSubScores = financeScore + techScore
-		NATION_ARRAY[x][0]['Score'] = totalSubScores
-	return(NATION_ARRAY)
-
-
-
-# DEFAULTS ALL TEAM ACTIONS TO 'PASS'
-def defaultNextStep(NATION_ARRAY):
-	for x in range(0, len(NATION_ARRAY)):    
-		NATION_ARRAY[x][0]['Nextmoves'] = []
-	return(NATION_ARRAY)
-
-
-
-
-# END OF ROUND 
-def nextYear(year,myNation,NATION_ARRAY,myNationIndex,PRICE_TRACKER,p):
+def nextYear(year,myNation,NATION_ARRAY,myNationIndex,PRICE_TRACKER,WAR_BRIEFING,p):
 	clearScreen()
 	fast_print('Processing next year....')
 	print('')
@@ -84,7 +36,7 @@ def nextYear(year,myNation,NATION_ARRAY,myNationIndex,PRICE_TRACKER,p):
 
 		# AI TEAM DECISION
 		if currentNation != myNation: 
-			currentNation = AI.setAIMoves(index,currentNation,PRICE_TRACKER) 
+			currentNation = AI.setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING) 
 
 		# ACTION CARRIED OUT FOR ALL USERS
 		NATION_ARRAY,PRICE_TRACKER = action(index,currentNation,NATION_ARRAY,p,myNationIndex,PRICE_TRACKER)
@@ -193,7 +145,87 @@ def nextYear(year,myNation,NATION_ARRAY,myNationIndex,PRICE_TRACKER,p):
 	print('')
 	print('')
 	buffer = input('Press enter to continue \n')
-	return(year, NATION_ARRAY,PRICE_TRACKER, p)
+	return(year, NATION_ARRAY,PRICE_TRACKER,WAR_BRIEFING,p)
+
+
+def action(index, currentNation,NATION_ARRAY,p,myNationIndex,PRICE_TRACKER):
 	
+	# PROCESS PASS
+	for nextMove in currentNation[0]['Nextmoves']:
+		preferencePrint(str(''),p,index,myNationIndex)
+
+		# REMEMBER TO UPDATE NATION ARRAY (NOT CURRENT NATION)
+		if 'pass' in nextMove:
+			preferencePrint(str(str(currentNation[1]) + ' chose to pass'),p,index,myNationIndex)
+			
+		if 'gamble' in nextMove:
+			NATION_ARRAY = financeFunction.gambleAction(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex)
+
+		if 'buy' in nextMove:
+			NATION_ARRAY,PRICE_TRACKER = financeFunction.buyAction(nextMove,NATION_ARRAY,currentNation,PRICE_TRACKER,p,index,myNationIndex)
+
+		if 'sell' in nextMove:
+			NATION_ARRAY,PRICE_TRACKER = financeFunction.sellAction(nextMove,NATION_ARRAY,currentNation,PRICE_TRACKER,p,index,myNationIndex)
+	
+		if 'drill' in nextMove:
+			NATION_ARRAY = warFunction.drill(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex)
+
+		# Even if prices change, you get it for the order you placed
+		if 'WeaponsBuild' in nextMove:
+			NATION_ARRAY = warFunction.build(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex)
+
+		if 'WeaponsScrap' in nextMove:
+			NATION_ARRAY = warFunction.scrap(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex)
+
+
+	return(NATION_ARRAY,PRICE_TRACKER)
+		
+ 
+
+
+
+
+# TALLY UP SCORES FOR ALL TEAMS 
+def tallyScores(NATION_ARRAY):
+	for x in range(0, len(NATION_ARRAY)):    
+		#SUM UP SUBSCORES
+		financeScore   = NATION_ARRAY[x][0]['Finance']['wealth']
+		techScore      = NATION_ARRAY[x][0]['Tech']['level']
+		warScore       = NATION_ARRAY[x][0]['War']['might']
+		politicsScore  = NATION_ARRAY[x][0]['Politics']['leadership']
+		totalSubScores = financeScore + techScore + warScore + politicsScore
+		NATION_ARRAY[x][0]['Score'] = totalSubScores
+	return(NATION_ARRAY)
+
+
+
+
+
+
+def preserveNextMove(country):
+	adjustedNextMove = []
+	for nextMove in country['Nextmoves']:
+		if 'pending' in nextMove:
+			adjustedNextMove = adjustedNextMove + [nextMove]
+		else:
+			adjustedNextMove = adjustedNextMove + []
+	return(adjustedNextMove)	
+
+# DEFAULTS ALL TEAM ACTIONS TO 'PASS' unless exceptions 
+def defaultNextStep(NATION_ARRAY):
+	for x in range(0, len(NATION_ARRAY)):
+		country = NATION_ARRAY[x][0]
+		# print(NATION_ARRAY[x][1])
+		# print(NATION_ARRAY[x][0]['Nextmoves'])
+		adjustedNextMove = preserveNextMove(country)
+		NATION_ARRAY[x][0]['Nextmoves'] = adjustedNextMove
+		# print(NATION_ARRAY[x][1])
+		# print(NATION_ARRAY[x][0]['Nextmoves'])
+	return(NATION_ARRAY)
+
+
+
+
+
 
 

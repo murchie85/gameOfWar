@@ -58,7 +58,8 @@ def stats(NATION_ARRAY):
 	clearScreen()
 	print('Printing nation list')
 	print('')
-	print('|  Score   |Wealth    |Tech Level|   Name   ')
+	print('|    NAME      |  SCORE   |WEALTH    |MILITARY SCORE|TECH LEVEL|POLITICS  |   ')
+	print('___________________________________________________________________________')
 
 	rankCounter = []
 	for x in range(0, len(NATION_ARRAY)):
@@ -68,16 +69,28 @@ def stats(NATION_ARRAY):
 	for x in range(0, len(rankCounter)):
 		index = rankCounter[x][1]
 
+		name = str(NATION_ARRAY[index][-1])
+		for a in range(0, (14 - len(name))): name = name + ' '
+
 		score = str(NATION_ARRAY[index][0]['Score'])
-		for y in range(0, (10 - len(score))): score = score + ' '
+		for b in range(0, (10 - len(score))): score = score + ' '
 
 		tradeScore = str(NATION_ARRAY[index][0]['Finance']['wealth'])
-		for z in range(0, (10 - len(tradeScore))): tradeScore = tradeScore + ' '
+		for c in range(0, (10 - len(tradeScore))): tradeScore = tradeScore + ' '
 
 		techScore = str(NATION_ARRAY[index][0]['Tech']['level'])
-		for z in range(0, (10 - len(techScore))): techScore = techScore + ' '
+		for d in range(0, (10 - len(techScore))): techScore = techScore + ' '
 
-		print('|' + score + '|' + tradeScore + '|' + techScore + '|' + '   ' + str(NATION_ARRAY[index][-1])  )
+		warScore = str(NATION_ARRAY[index][0]['War']['might'])
+		for e in range(0, (14 - len(warScore))): warScore = warScore + ' '
+
+		politics = str(NATION_ARRAY[index][0]['Politics']['leadership'])
+		for f in range(0, (10 - len(politics))): politics = politics + ' '
+
+		print( '|' + name + '|' + score + '|' + tradeScore + '|' + warScore + '|' + techScore + '|' + politics + '|' + '   '  )
+	print('___________________________________________________________________________')
+	print('')
+	print('')
 
 	buffer = input('Press enter to continue \n')
 	clearScreen()

@@ -4,58 +4,15 @@ import copy
 import random
 
 
-
-
-def aiBuy(PRICE_TRACKER,currentNation,name):
-	# decrease wealth
-	# submit order
-	commodity    = name
-	price        = PRICE_TRACKER[commodity]['price']
-	credits      = currentNation[0]['Finance']['wealth']
-	aggression   = (currentNation[0]['Special']['aggression'] / 100)
-	maxpurchase = int(credits // price)
-
-	compensatedMax = round(aggression * maxpurchase)
-	if compensatedMax < 1:
-		currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + [['pass']]
-		return(currentNation)
-
-	purchaseAmount = random.randint(1, compensatedMax)
-	cost = purchaseAmount * price
-
-	# Deduct cost & Place Order 
-	currentNation[0]['Finance']['wealth'] = currentNation[0]['Finance']['wealth'] - cost
-	currentNation[0]['Nextmoves']        = currentNation[0]['Nextmoves'] + [['buy',commodity, purchaseAmount]]
-	return(currentNation)
-
-
-def aiSell(PRICE_TRACKER,currentNation,name):
-	# decrease stock
-	# submit order
-	commodity    = name
-	price        = PRICE_TRACKER[commodity]['price']
-	myStock       = currentNation[0]['Finance'][commodity]
-	aggression   = (currentNation[0]['Special']['aggression'] / 100)
-
-	compensatedMax = round(aggression * myStock)
-	if compensatedMax > myStock or compensatedMax < 1:
-		currentNation[0]['Nextmoves']= currentNation[0]['Nextmoves'] + [['pass']]
-		return(currentNation)
-
-	# purchase choice
-	purchaseAmount = random.randint(1, compensatedMax)
-	value = purchaseAmount * price
-
-	# Deduct stock & Place Order 
-	currentNation[0]['Finance'][commodity]   = currentNation[0]['Finance'][commodity] - purchaseAmount
-	currentNation[0]['Nextmoves']            = currentNation[0]['Nextmoves'] + [['sell',commodity, purchaseAmount, value]]
-	return(currentNation)
+# TO DO ------
 
 
 
+# Need to make buying more sophisticated rather than chosing a random commodity
+# Remember to deduct might from hard drill
+# Buffer drill by tech level 
 
-
-def setAIMoves(index,currentNation,PRICE_TRACKER):
+def setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING):
 
 	# Capping AI at one for now 
 	moveLimit    = int(currentNation[0]['Special']['moveLimit'])
@@ -127,6 +84,7 @@ def setAIMoves(index,currentNation,PRICE_TRACKER):
 			else:
 				maxSellProbabiliy = 10
 
+
 		# HAS WAR BIAS
 		if bias == 1:
 			troops     = currentNation[0]['War']['weapons']['troops']
@@ -145,40 +103,180 @@ def setAIMoves(index,currentNation,PRICE_TRACKER):
 			# DRILL
 			#--------
 			# Pick a military branch, save asset details to array, place order 
-			branchSelection = []
-			if army > 0: 
-				branchSelection.append(('army',     ('troops','tanks'),army))
-			if navy > 0: 
-				branchSelection.append(('navy',     ('gunboats','destroyers','carriers'),navy))
-			if airforce > 0: 
-				branchSelection.append(('airforce', ('jets','bombers'),airforce))
-			if len(branchSelection) ==0:
-				currentNation[0]['Nextmoves']= [['pass']]
-				break
+			currentNation = drill(currentNation,army,navy,airforce)
 
-			branch = random.choice(branchSelection)
-			#print(branch)
-			units = []
+			#--------
+			# BUILD
+			#--------
+			# Restrict by tech level
+			# money consideration
+			# might consideration
+			# spend = % of agression * random 
 
-			#filling an array to say what units and how many belong to this branch 
-			for asset in branch[1]:
-				package = (str(asset),currentNation[0]['War']['weapons'][asset])
-				units.append(package)
+			# The more aggressive and materialistic...
+			buildBias = 1
+			if (aggression + materialism) > 150:
+				buildBias = 2
+			elif (aggression + materialism) > 100:
+				buildBias = 3
+			elif (aggression + materialism) > 75:
+				buildBias = 4
+			else:
+				buildBias = 10
+			buildProbability = random.randint(0, buildBias)
+			if buildProbability == 1:
+				currentNation = build(currentNation,WAR_BRIEFING)
 
-			exposure = random.choice(('soft','medium','hard'))
-			drillOrder = ['drill',branch[0],exposure, units]
-			#print(str(currentNation[1]) + ' order ' + str(drillOrder))
-			# Deduct units
-			for unit in units:
-				currentNation[0]['War']['weapons'][unit] = 0
-			# Place Order
-			currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + [drillOrder]
 
 	# If No moves, then pass
 	if len(currentNation[0]['Nextmoves']) == 0:
 		currentNation[0]['Nextmoves']= [['pass']]
 		
 	return(currentNation)
+
+
+
+
+
+def build(currentNation,WAR_BRIEFING):
+
+	wealth               = currentNation[0]['Finance']['wealth'] 
+	aggressionAdjusted   = (currentNation[0]['Special']['aggression']) / 100
+	techLevel            = currentNation[0]['Tech']['level']
+	print('tech level ' + str(techLevel))
+	print('agression')
+	print(aggressionAdjusted)
+
+	allowedAssets = []
+	if techLevel == 0:
+		allowedAssets = ['troops']
+	if techLevel > 1:
+		allowedAssets = ['troops','tanks']
+	if techLevel > 2:
+		allowedAssets = ['troops','tanks','gunboats']
+	if techLevel > 3:
+		allowedAssets = ['troops','tanks','gunboats','destroyers']
+	if techLevel > 5:
+		allowedAssets = ['troops','tanks','gunboats','destroyers','jets']
+	if techLevel > 7:
+		allowedAssets = ['troops','tanks','gunboats','destroyers','jets','bombers']
+	if techLevel > 8:
+		allowedAssets = ['troops','tanks','gunboats','destroyers','jets','bombers','carriers']
+	if techLevel > 9:
+		allowedAssets = ['troops','tanks','gunboats','destroyers','jets','bombers','carriers','Nukes']
+
+	unit = random.choice(allowedAssets)
+	print('unit ' + str(unit))
+	price      = WAR_BRIEFING['weapons'][unit][0]
+	wait       = WAR_BRIEFING['weapons'][unit][1]
+	bonusMight = WAR_BRIEFING['weapons'][unit][2]
+
+	maxpurchase = int(wealth // price)
+	adjusted    = round((aggressionAdjusted * maxpurchase))
+
+	if adjusted > 0:
+		maxBuy = round(random.randint(adjusted, maxpurchase))
+	else:
+		maxBuy = round(random.randint(0,maxpurchase))
+	
+
+
+	# If they can't afford even one  
+	if maxBuy < 1:
+		print('cant afford')
+		return(currentNation)
+
+	purchaseAmount = random.randint(1,maxBuy)
+	cost = purchaseAmount * price
+
+	# Deduct cost & Place Order 
+	currentNation[0]['Finance']['wealth'] = currentNation[0]['Finance']['wealth'] - cost
+	currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + [['submitted','WeaponsBuild',unit, purchaseAmount,wait,bonusMight]]
+	return(currentNation)
+
+
+
+
+
+def drill(currentNation,army,navy,airforce):
+	branchSelection = []
+	if army > 0: 
+		branchSelection.append(('army',     ('troops','tanks'),army))
+	if navy > 0: 
+		branchSelection.append(('navy',     ('gunboats','destroyers','carriers'),navy))
+	if airforce > 0: 
+		branchSelection.append(('airforce', ('jets','bombers'),airforce))
+	if len(branchSelection) ==0:
+		currentNation[0]['Nextmoves']= [['pass']]
+		print('failed to drill')
+		return(currentNation)
+
+	branch = random.choice(branchSelection)
+	#print(branch)
+	units = []
+
+	#filling an array to say what units and how many belong to this branch 
+	for asset in branch[1]:
+		package = (str(asset),currentNation[0]['War']['weapons'][asset])
+		units.append(package)
+
+	exposure = random.choice(('soft','medium','hard'))
+	drillOrder = ['drill',branch[0],exposure, units]
+	#print(str(currentNation[1]) + ' order ' + str(drillOrder))
+	# Deduct units
+	for unit in units:
+		currentNation[0]['War']['weapons'][unit] = 0
+	# Place Order
+	currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + [drillOrder]
+	return(currentNation)
+
+
+def aiBuy(PRICE_TRACKER,currentNation,name):
+	# decrease wealth
+	# submit order
+	commodity    = name
+	price        = PRICE_TRACKER[commodity]['price']
+	credits      = currentNation[0]['Finance']['wealth']
+	aggression   = (currentNation[0]['Special']['aggression'] / 100)
+	maxpurchase = int(credits // price)
+
+	compensatedMax = round(aggression * maxpurchase)
+	if compensatedMax < 1:
+		currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + [['pass']]
+		return(currentNation)
+
+	purchaseAmount = random.randint(1, compensatedMax)
+	cost = purchaseAmount * price
+
+	# Deduct cost & Place Order 
+	currentNation[0]['Finance']['wealth'] = currentNation[0]['Finance']['wealth'] - cost
+	currentNation[0]['Nextmoves']        = currentNation[0]['Nextmoves'] + [['buy',commodity, purchaseAmount]]
+	return(currentNation)
+
+
+def aiSell(PRICE_TRACKER,currentNation,name):
+	# decrease stock
+	# submit order
+	commodity    = name
+	price        = PRICE_TRACKER[commodity]['price']
+	myStock       = currentNation[0]['Finance'][commodity]
+	aggression   = (currentNation[0]['Special']['aggression'] / 100)
+
+	compensatedMax = round(aggression * myStock)
+	if compensatedMax > myStock or compensatedMax < 1:
+		currentNation[0]['Nextmoves']= currentNation[0]['Nextmoves'] + [['pass']]
+		return(currentNation)
+
+	# purchase choice
+	purchaseAmount = random.randint(1, compensatedMax)
+	value = purchaseAmount * price
+
+	# Deduct stock & Place Order 
+	currentNation[0]['Finance'][commodity]   = currentNation[0]['Finance'][commodity] - purchaseAmount
+	currentNation[0]['Nextmoves']            = currentNation[0]['Nextmoves'] + [['sell',commodity, purchaseAmount, value]]
+	return(currentNation)
+
+
 
 
 

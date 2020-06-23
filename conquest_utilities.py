@@ -28,7 +28,7 @@ def superfast_print(s):
 	for c in s:
 		sys.stdout.write(c)
 		sys.stdout.flush()
-		time.sleep(0.005)
+		time.sleep(0.01)
 
 def clearScreen():
 	for x in range(0,70):
