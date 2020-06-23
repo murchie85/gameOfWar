@@ -14,7 +14,7 @@ import copy
 import random
 
 import financeFunction as financeFunction
-import AIFunctions as AI 
+import AIOrderFunctions as AI 
 import warFunction as warFunction
 
 
@@ -36,7 +36,7 @@ def nextYear(year,myNation,NATION_ARRAY,myNationIndex,PRICE_TRACKER,WAR_BRIEFING
 
 		# AI TEAM DECISION
 		if currentNation != myNation: 
-			currentNation = AI.setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING) 
+			currentNation = AI.setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING,NATION_ARRAY) 
 
 		# ACTION CARRIED OUT FOR ALL USERS
 		NATION_ARRAY,PRICE_TRACKER = action(index,currentNation,NATION_ARRAY,p,myNationIndex,PRICE_TRACKER)

@@ -66,7 +66,7 @@ from functions import selectNation as selectNation
 from functions import stats as stats
 from actionFunctions import action as action
 from actionFunctions import nextYear as nextYear
-#from AIFunctions import setAIMoves as setAIMoves
+#from AIOrderFunctions import setAIMoves as setAIMoves
 
 # CUSTOM MENUES
 import financeSelection as fin 

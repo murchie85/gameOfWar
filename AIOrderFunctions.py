@@ -12,7 +12,7 @@ import random
 # Remember to deduct might from hard drill
 # Buffer drill by tech level 
 
-def setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING):
+def setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING,NATION_ARRAY):
 
 	# Capping AI at one for now 
 	moveLimit    = int(currentNation[0]['Special']['moveLimit'])
@@ -21,6 +21,7 @@ def setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING):
 	materialism  = currentNation[0]['Special']['materialism']
 	prudence     = currentNation[0]['Special']['prudence']
 	wealth       = currentNation[0]['Finance']['wealth'] 
+	wealthArray = []
 
 
 
@@ -108,11 +109,6 @@ def setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING):
 			#--------
 			# BUILD
 			#--------
-			# Restrict by tech level
-			# money consideration
-			# might consideration
-			# spend = % of agression * random 
-
 			# The more aggressive and materialistic...
 			buildBias = 1
 			if (aggression + materialism) > 150:
@@ -126,6 +122,19 @@ def setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING):
 			buildProbability = random.randint(0, buildBias)
 			if buildProbability == 1:
 				currentNation = build(currentNation,WAR_BRIEFING)
+			#--------
+			# SCRAP
+			# 25% chance to scrap if poor, 10% otherwise 
+			#--------
+			scrapProbability = 10
+			# Check to see if current country is poorer than 80% of average
+			for country in NATION_ARRAY: wealthArray.append(country[0]['Finance']['wealth'])
+			averageWealth = round((sum(wealthArray)/len(wealthArray)))
+			poor          = 0.8*averageWealth
+			if wealth < poor: scrapProbability = 3
+
+			if random.randint(0,scrapProbability) == 2:
+				scrap(currentNation,WAR_BRIEFING)
 
 
 	# If No moves, then pass
@@ -143,30 +152,11 @@ def build(currentNation,WAR_BRIEFING):
 	wealth               = currentNation[0]['Finance']['wealth'] 
 	aggressionAdjusted   = (currentNation[0]['Special']['aggression']) / 100
 	techLevel            = currentNation[0]['Tech']['level']
-	print('tech level ' + str(techLevel))
-	print('agression')
-	print(aggressionAdjusted)
 
 	allowedAssets = []
-	if techLevel == 0:
-		allowedAssets = ['troops']
-	if techLevel > 1:
-		allowedAssets = ['troops','tanks']
-	if techLevel > 2:
-		allowedAssets = ['troops','tanks','gunboats']
-	if techLevel > 3:
-		allowedAssets = ['troops','tanks','gunboats','destroyers']
-	if techLevel > 5:
-		allowedAssets = ['troops','tanks','gunboats','destroyers','jets']
-	if techLevel > 7:
-		allowedAssets = ['troops','tanks','gunboats','destroyers','jets','bombers']
-	if techLevel > 8:
-		allowedAssets = ['troops','tanks','gunboats','destroyers','jets','bombers','carriers']
-	if techLevel > 9:
-		allowedAssets = ['troops','tanks','gunboats','destroyers','jets','bombers','carriers','Nukes']
-
+	allowedAssets = allowedTech(techLevel)
 	unit = random.choice(allowedAssets)
-	print('unit ' + str(unit))
+
 	price      = WAR_BRIEFING['weapons'][unit][0]
 	wait       = WAR_BRIEFING['weapons'][unit][1]
 	bonusMight = WAR_BRIEFING['weapons'][unit][2]
@@ -193,6 +183,66 @@ def build(currentNation,WAR_BRIEFING):
 	currentNation[0]['Finance']['wealth'] = currentNation[0]['Finance']['wealth'] - cost
 	currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + [['submitted','WeaponsBuild',unit, purchaseAmount,wait,bonusMight]]
 	return(currentNation)
+
+
+
+def scrap(currentNation,WAR_BRIEFING):
+	wealth               = currentNation[0]['Finance']['wealth'] 
+	aggressionAdjusted   = (currentNation[0]['Special']['aggression']) / 100
+	techLevel            = currentNation[0]['Tech']['level']
+
+
+	allowedAssets = []
+	allowedAssets = allowedTech(techLevel)
+	unit = random.choice(allowedAssets)
+
+	print(str(currentNation[1] + '** SCRAPPING**	'))
+	print('unit: ' + str(unit))
+	print('tech level ' + str(techLevel))
+	print('agression' + str(aggressionAdjusted))
+
+	price        = WAR_BRIEFING['weapons'][unit][0]
+	reducedMight = WAR_BRIEFING['weapons'][unit][2]
+	stock        = currentNation[0]['War']['weapons'][unit]
+	adjusted    = round((aggressionAdjusted * stock))
+	maxScrap    = round(random.randint(adjusted, stock))
+
+	if stock < 0 or maxScrap < 0:
+		print('none to scrap')
+		print('stock :' + str(stock))
+		print('maxscrap: ' + str(maxscrap))
+		return(currentNation)
+
+	scrapAmount = random.randint(1,maxScrap)
+	valuation   = scrapAmount * price
+
+	# Deducts units and places order 
+	currentNation[0]['War']['weapons'][unit] = currentNation[0]['War']['weapons'][unit] - scrapAmount
+	currentNation[0]['Nextmoves']            = currentNation[0]['Nextmoves'] + [['WeaponsScrap',unit, scrapAmount,valuation,reducedMight]]
+	return(currentNation)
+
+
+def allowedTech(techLevel):
+	if techLevel == 0:
+		allowedAssets = ['troops']
+	if techLevel > 1:
+		allowedAssets = ['troops','tanks']
+	if techLevel > 2:
+		allowedAssets = ['troops','tanks','gunboats']
+	if techLevel > 3:
+		allowedAssets = ['troops','tanks','gunboats','destroyers']
+	if techLevel > 5:
+		allowedAssets = ['troops','tanks','gunboats','destroyers','jets']
+	if techLevel > 7:
+		allowedAssets = ['troops','tanks','gunboats','destroyers','jets','bombers']
+	if techLevel > 8:
+		allowedAssets = ['troops','tanks','gunboats','destroyers','jets','bombers','carriers']
+	if techLevel > 9:
+		allowedAssets = ['troops','tanks','gunboats','destroyers','jets','bombers','carriers','Nukes']
+
+	return(allowedAssets)
+
+
 
 
 

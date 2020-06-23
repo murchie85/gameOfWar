@@ -39,6 +39,10 @@ ONCE TECH IS DONE
 
 P = 'All'
 
+# Takes the build order placed by currentNation
+# Awards the unit
+# Awards might proportional to mightvalue x totalMight X 1/2 the number of units ordered
+# This scales the more you buy and type you buy
 
 def build(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex):
 	pending    = nextMove[0]
@@ -72,7 +76,7 @@ def build(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex):
 		preferencePrint(str(str(unit) + ' total : ' + str(NATION_ARRAY[index][0]['War']['weapons'][unit])),p,index,myNationIndex)
 		
 		# Reward Mightg
-		bonusAdjustment = round(NATION_ARRAY[index][0]['War']['might'] * bonusMight)
+		bonusAdjustment = round((NATION_ARRAY[index][0]['War']['might'] * bonusMight) * (amount/2))
 		if bonusAdjustment < 1:
 			bonusAdjustment = 1
 		NATION_ARRAY[index][0]['War']['might'] = NATION_ARRAY[index][0]['War']['might'] + bonusAdjustment
@@ -89,14 +93,16 @@ def build(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex):
 	return(NATION_ARRAY)
 
 
-
+# Takes the scrap order placed by currentNation
+# Awards money
+# Deducts might proportional to mightvalue x totalMight x 1/5 the number of units scrapped
 
 def scrap(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex):
-	job        = nextMove[0]
-	unit       = nextMove[1]
-	amount     = nextMove[2]
-	valuation  = nextMove[3]
-	bonusMight = nextMove[4]
+	job           = nextMove[0]
+	unit          = nextMove[1]
+	amount        = nextMove[2]
+	valuation     = nextMove[3]
+	reducedMight  = nextMove[4]
 
 	preferencePrint(str(str(currentNation[1]) + ' chose to scrap'),p,index,myNationIndex)
 	preferencePrint('------------------',p,index,myNationIndex)
@@ -104,7 +110,7 @@ def scrap(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex):
 
 	# Award Credits and reduce might
 	NATION_ARRAY[index][0]['Finance']['wealth'] = NATION_ARRAY[index][0]['Finance']['wealth'] + valuation
-	Adjustment = round(NATION_ARRAY[index][0]['War']['might'] * bonusMight)
+	Adjustment = round((NATION_ARRAY[index][0]['War']['might'] * reducedMight) * (amount/5))
 	NATION_ARRAY[index][0]['War']['might'] = NATION_ARRAY[index][0]['War']['might'] - Adjustment
 	
 	preferencePrint(str('Might lost    : -' + str(Adjustment)),p,index,myNationIndex)
