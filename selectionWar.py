@@ -1,14 +1,13 @@
 # All WAR Menu Function
 
-from conquest_utilities import slow_print as slow_print
-from conquest_utilities import med_print as med_print
-from conquest_utilities import fast_print as fast_print
-from conquest_utilities import superfast_print as superfast_print
-from conquest_utilities import clearScreen as clearScreen
-from conquest_utilities	 import preferencePrint as preferencePrint
+from gameConquest_utilities import slow_print as slow_print
+from gameConquest_utilities import med_print as med_print
+from gameConquest_utilities import fast_print as fast_print
+from gameConquest_utilities import superfast_print as superfast_print
+from gameConquest_utilities import clearScreen as clearScreen
+from gameConquest_utilities	 import preferencePrint as preferencePrint
 
 
-import warFunction as War
 """
 # =====================================================================
 # =====================================================================
@@ -703,6 +702,7 @@ def drill(myNation, branch,units,WAR_BRIEFING):
 		print('[I] More Info')
 		print('[R] Return')
 		intensity = input('How hard do you want to train your ' + str(branch) + '?\n').upper()
+		clearScreen()
 		if intensity == 'S':
 			drillOrder = ['drill',branch,'soft',units]
 			break
@@ -789,6 +789,7 @@ def drillMenu(myNation,year,WAR_BRIEFING):
 			return(myNation)
 
 		drillSelection = input('Select a divison to train \n').upper()
+		clearScreen()
 		if drillSelection == 'G':
 			if (troops + tanks) < 1:
 				input('No army assets to train... \n')

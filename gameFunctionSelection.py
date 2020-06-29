@@ -1,12 +1,12 @@
 # IMPORT UNIVERSAL UTILITIES
-from conquest_utilities import slow_print as slow_print
-from conquest_utilities import med_print as med_print
-from conquest_utilities import fast_print as fast_print
-from conquest_utilities import superfast_print as superfast_print
-from conquest_utilities import clearScreen as clearScreen
-from conquest_utilities import preferencePrint as preferencePrint
-from conquest_utilities import options as options
-from conquest_utilities import music as music
+from gameConquest_utilities import slow_print as slow_print
+from gameConquest_utilities import med_print as med_print
+from gameConquest_utilities import fast_print as fast_print
+from gameConquest_utilities import superfast_print as superfast_print
+from gameConquest_utilities import clearScreen as clearScreen
+from gameConquest_utilities import preferencePrint as preferencePrint
+from gameConquest_utilities import options as options
+from gameConquest_utilities import music as music
 
 
 
@@ -58,7 +58,7 @@ def stats(NATION_ARRAY):
 	clearScreen()
 	print('Printing nation list')
 	print('')
-	print('|    NAME      |  SCORE   |WEALTH    |MILITARY SCORE|TECH LEVEL|POLITICS  |   ')
+	print('|    NAME      |  SCORE   |WEALTH LV |   MIGHT LV   |  TECH LV |INFLUENCE |   ')
 	print('___________________________________________________________________________')
 
 	rankCounter = []
@@ -84,7 +84,7 @@ def stats(NATION_ARRAY):
 		warScore = str(NATION_ARRAY[index][0]['War']['might'])
 		for e in range(0, (14 - len(warScore))): warScore = warScore + ' '
 
-		politics = str(NATION_ARRAY[index][0]['Politics']['leadership'])
+		politics = str(NATION_ARRAY[index][0]['Politics']['influence'])
 		for f in range(0, (10 - len(politics))): politics = politics + ' '
 
 		print( '|' + name + '|' + score + '|' + tradeScore + '|' + warScore + '|' + techScore + '|' + politics + '|' + '   '  )

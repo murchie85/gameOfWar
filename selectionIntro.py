@@ -1,9 +1,9 @@
-from conquest_utilities import slow_print as slow_print
-from conquest_utilities import med_print as med_print
-from conquest_utilities import fast_print as fast_print
-from conquest_utilities import superfast_print as superfast_print
-from conquest_utilities import clearScreen as clearScreen
-from conquest_utilities import preferencePrint as preferencePrint
+from gameConquest_utilities import slow_print as slow_print
+from gameConquest_utilities import med_print as med_print
+from gameConquest_utilities import fast_print as fast_print
+from gameConquest_utilities import superfast_print as superfast_print
+from gameConquest_utilities import clearScreen as clearScreen
+from gameConquest_utilities import preferencePrint as preferencePrint
 import sys
 import time
 
@@ -54,7 +54,7 @@ def start(userName,myNation):
     time.sleep(0.50)
     for x in range(0,10):
         print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-    fast_print('....booting up universe simulation #16725 omega .......\n')
+    fast_print('....booting up universe simulation #734 omega .......\n')
     for y in range(0,3):
         for x in range(0,10):
             print('><><><>><><><>><><><>><><><>><><><>><><><>><><><>><><><')

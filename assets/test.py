@@ -62,16 +62,17 @@ from conquest_utilities import options as options
 from conquest_utilities import music as music
 
 # FUNCTIONS
-from functions import selectNation as selectNation
-from functions import stats as stats
+from gameFunctionSelection import selectNation as selectNation
+from gameFunctionSelection import stats as stats
 from actionFunctions import action as action
 from actionFunctions import nextYear as nextYear
 #from AIFunctions import setAIMoves as setAIMoves
 
 # CUSTOM MENUES
-import financeSelection as fin 
-import warSelection as warMenu
-import politicsSelection as politics
+import selectionFinance  as fin 
+import selectionWar      as warMenu
+import selectionPolitics as politics
+import selectionIntro    as start
 
 
 
@@ -214,7 +215,6 @@ year = 1949
 
 # MUST UNCOMENT FOR FULL GAME
 
-from intro import start as start
 userName = 'DonnerKebab'
 userName = start(userName,myNation)
 

@@ -3,4 +3,4 @@
 
 BASEDIR=$(dirname "$0")
 cd $BASEDIR
-python game.py
+python universe734.py

@@ -1,14 +1,7 @@
 	# All Finance Menu Function
 
 # IMPORT UNIVERSAL UTILITIES
-from conquest_utilities import slow_print as slow_print
-from conquest_utilities import med_print as med_print
-from conquest_utilities import fast_print as fast_print
-from conquest_utilities import superfast_print as superfast_print
-from conquest_utilities import clearScreen as clearScreen
-from conquest_utilities import preferencePrint as preferencePrint
-from conquest_utilities import options as options
-from conquest_utilities import music as music
+from gameConquest_utilities import preferencePrint as preferencePrint
 
 import sys
 import time
@@ -130,7 +123,14 @@ def drill(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex):
 	units     = nextMove[3]
 	might     = NATION_ARRAY[index][0]['War']['might']
 	credits   = NATION_ARRAY[index][0]['Finance']['wealth']
+	techLevel = NATION_ARRAY[index][0]['Tech']['level']
+	#['drill',branch,'soft',units]
+	#units = [('troops',troops),('tanks',tanks)]
 
+
+	# Return Units 
+	for unit, quantity in units:
+		NATION_ARRAY[index][0]['War']['weapons'][unit] = quantity
 
 	preferencePrint('',p,index,myNationIndex)
 	preferencePrint(str(str(currentNation[1]) + ' chose to train their ' + str(branch)),p,index,myNationIndex)
@@ -140,6 +140,10 @@ def drill(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex):
 	if intensity == 'soft':
 		bonusMight = round((random.randint(1,15) / 100) * might)
 		NATION_ARRAY[index][0]['War']['might'] = NATION_ARRAY[index][0]['War']['might']  + bonusMight
+		preferencePrint(str('Might gained    : ' + str(bonusMight)),p,index,myNationIndex)
+		preferencePrint(str('New Might Total : ' + str(NATION_ARRAY[index][0]['War']['might'])),p,index,myNationIndex)
+		return(NATION_ARRAY)
+
 	if intensity == 'medium':
 		# WIN MIGTH
 		bonusMight = round((random.randint(10,25) / 100) * might)
@@ -148,18 +152,19 @@ def drill(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex):
 		# WIN CREDITS
 		bonusCredits = round((random.randint(1,10) / 100) * credits)
 		NATION_ARRAY[index][0]['Finance']['wealth'] = NATION_ARRAY[index][0]['Finance']['wealth']  + bonusCredits
+		preferencePrint(str(str(NATION_ARRAY[index][0]) + ' impressed the top leadership and won financial support.'),p,index,myNationIndex)
 		preferencePrint(str('Credits gained    : ' + str(NATION_ARRAY[index][0]['Finance']['wealth'])),p,index,myNationIndex)
 
 		# LOSE A PORTION OF UNITS 
-		lossProbability = random.randint(0,14)
-		lossAmount = 0.35
-		if lossProbability < 5:
+		lossProbability = random.randint(0,8)
+		lossAmount = 0.25
+		if lossProbability == 3:
 			for unit, quantity in units:
 				original = quantity
 				if quantity < 1:
 					continue
 				if random.randint(0,1) == 1:
-					loss = round(quantity * (1-lossAmount))
+					loss = round(quantity * lossAmount)
 					if loss == quantity:
 						quantity = quantity - 1
 					else:
@@ -168,6 +173,9 @@ def drill(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex):
 					preferencePrint(str(str(original - quantity) + ' ' + str(unit) +  ' lost'),p,index,myNationIndex)
 					preferencePrint(str(str(quantity) + ' remaining'),p,index,myNationIndex)
 				NATION_ARRAY[index][0]['War']['weapons'][unit] = quantity
+		preferencePrint(str('Might gained    : ' + str(bonusMight)),p,index,myNationIndex)
+		preferencePrint(str('New Might Total : ' + str(NATION_ARRAY[index][0]['War']['might'])),p,index,myNationIndex)
+		return(NATION_ARRAY)
 
 
 	if intensity == 'hard':
@@ -180,15 +188,16 @@ def drill(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex):
 		preferencePrint(str('Credits gained    : ' + str(NATION_ARRAY[index][0]['Finance']['wealth'])),p,index,myNationIndex)
 
 		# LOSE A PORTION OF UNITS 
-		lossProbability = random.randint(0,5)
-		lossAmount = 0.2
-		if lossProbability < 5:
+		lossProbability = random.randint(0,4)
+		lossAmount = 0.25
+		if lossProbability == 3:
+			preferencePrint(str('XXXX UNITS LOST IN TRAINING XXXX'),p,index,myNationIndex)
 			for unit, quantity in units:
 				original = quantity
 				if quantity < 1:
 					continue
-				if random.randint(0,1) == 1: # don't take all of their asset types
-					loss = round(quantity * (1-lossAmount))
+				if random.randint(0,1) == 1:
+					loss = round(quantity * lossAmount)
 					if loss == quantity:
 						quantity = quantity - 1
 					else:
@@ -198,19 +207,92 @@ def drill(nextMove,NATION_ARRAY,currentNation,p,index,myNationIndex):
 					preferencePrint(str(str(quantity) + ' remaining'),p,index,myNationIndex)
 				NATION_ARRAY[index][0]['War']['weapons'][unit] = quantity
 
+		preferencePrint(str('Might gained    : ' + str(bonusMight)),p,index,myNationIndex)
+		preferencePrint(str('New Might Total : ' + str(NATION_ARRAY[index][0]['War']['might'])),p,index,myNationIndex)
+		preferencePrint(str(''),p,index,myNationIndex)
+
 		# WIN BONUS UNITS
-		winProbability = random.randint(0,7)
-		winProbability == 5;
+		winProbability = random.randint(0,5)
+		winProbability = 5;
 		if winProbability == 5:
-			luckyWheel = [('troops',random.randint(1,100)),('tanks',random.randint(1,20)),('gunboats',random.randint(1,100)),('destroyers',random.randint(1,20)),('carriers',random.randint(1,3)),('jets',random.randint(1,5)),('bombers',random.randint(1,3)),('Nukes',random.randint(1,1))]
-			bonus = random.choice(luckyWheel)
+
+			allowedAssets = allowedTech(techLevel)
+			bonus = random.choice(allowedAssets)
 			preferencePrint(str('**BONUS** The brass have gifted ' + str(NATION_ARRAY[index][1]) + ' ' + str(bonus[1]) + ' ' + str(bonus[0])),p,index,myNationIndex)
 			NATION_ARRAY[index][0]['War']['weapons'][bonus[0]] = NATION_ARRAY[index][0]['War']['weapons'][bonus[0]] + bonus[1]
+		return(NATION_ARRAY)
 
 
-
-	preferencePrint(str('Might gained    : ' + str(bonusMight)),p,index,myNationIndex)
-	preferencePrint(str('New Might Total : ' + str(NATION_ARRAY[index][0]['War']['might'])),p,index,myNationIndex)
 	return(NATION_ARRAY)
 
 
+
+
+def allowedTech(techLevel):
+	if techLevel == 0:
+		allowedAssets = [('troops',random.randint(1,100))]
+	if techLevel > 1:
+		allowedAssets = [('troops',random.randint(1,100)),('tanks',random.randint(1,20))]
+	if techLevel > 2:
+		allowedAssets = [('troops',random.randint(1,100)),('tanks',random.randint(1,20)),('gunboats',random.randint(1,100))]
+	if techLevel > 3:
+		allowedAssets = [('troops',random.randint(1,100)),('tanks',random.randint(1,20)),('gunboats',random.randint(1,100)),('destroyers',random.randint(1,20))]
+	if techLevel > 5:
+		allowedAssets = [('troops',random.randint(1,100)),('tanks',random.randint(1,20)),('gunboats',random.randint(1,100)),('destroyers',random.randint(1,20)),('jets',random.randint(1,5))]
+	if techLevel > 7:
+		allowedAssets = [('troops',random.randint(1,100)),('tanks',random.randint(1,20)),('gunboats',random.randint(1,100)),('destroyers',random.randint(1,20)),('jets',random.randint(1,5)),('bombers',random.randint(1,3))]
+	if techLevel > 8:
+		allowedAssets = [('troops',random.randint(1,100)),('tanks',random.randint(1,20)),('gunboats',random.randint(1,100)),('destroyers',random.randint(1,20)),('jets',random.randint(1,5)),('bombers',random.randint(1,3)),('carriers')]
+	if techLevel > 9:
+		allowedAssets = [('troops',random.randint(1,100)),('tanks',random.randint(1,20)),('gunboats',random.randint(1,100)),('destroyers',random.randint(1,20)),('jets',random.randint(1,5)),('bombers',random.randint(1,3)),('carriers'),('Nukes',random.randint(1,1))]
+
+	return(allowedAssets)
+
+
+def promotion(currentNation,p,index,myNationIndex):
+	warRank = ['Private', 'Lieutenant', 'Captain', 'Major', 'Commander', 'General', 'Supreme Commander']
+	might   = currentNation[0]['War']['might']
+	rank   = currentNation[0]['War']['level']
+	if might > 150 and rank == warRank[0]:
+		currentNation[0]['War']['level'] = warRank[1]
+		rank   = currentNation[0]['Finance']['level']
+		currentNation[0]['Special']['notes'].append('warLevel') 
+		preferencePrint(str(currentNation[1] ) + ' levelled up! New War rank is ' + str(currentNation[0]['War']['level']),p,index,myNationIndex)
+
+	if might > 300 and rank == warRank[1]:
+		currentNation[0]['War']['level'] = warRank[2]
+		rank   = currentNation[0]['Finance']['level']
+		currentNation[0]['Special']['notes'].append('warLevel') 
+		preferencePrint(str(currentNation[1] ) + ' levelled up! New War rank is ' + str(currentNation[0]['War']['level']),p,index,myNationIndex)
+
+	if might > 500 and rank == warRank[2]:
+		currentNation[0]['War']['level'] = warRank[3]
+		rank   = currentNation[0]['Finance']['level']
+		currentNation[0]['Special']['notes'].append('warLevel') 
+		preferencePrint(str(currentNation[1] ) + ' levelled up! New War rank is ' + str(currentNation[0]['War']['level']),p,index,myNationIndex)
+
+	if might > 800 and rank == warRank[3]:
+		currentNation[0]['War']['level'] = warRank[4]
+		rank   = currentNation[0]['Finance']['level']
+		currentNation[0]['Special']['notes'].append('warLevel') 
+		preferencePrint(str(currentNation[1] ) + ' levelled up! New War rank is ' + str(currentNation[0]['War']['level']),p,index,myNationIndex)
+
+	if might > 2000 and rank == warRank[4]:
+		currentNation[0]['War']['level'] = warRank[5]
+		rank   = currentNation[0]['Finance']['level']
+		currentNation[0]['Special']['notes'].append('warLevel') 
+		preferencePrint(str(currentNation[1] ) + ' levelled up! New War rank is ' + str(currentNation[0]['War']['level']),p,index,myNationIndex)
+
+	if might > 5000 and rank == warRank[5]:
+		currentNation[0]['War']['level'] = warRank[6]
+		rank   = currentNation[0]['Finance']['level']
+		currentNation[0]['Special']['notes'].append('warLevel') 
+		preferencePrint(str(currentNation[1] ) + ' levelled up! New War rank is ' + str(currentNation[0]['War']['level']),p,index,myNationIndex)
+	return(currentNation)
+
+def firepower(currentNation,p,index,myNationIndex):
+	warRank = ['Private', 'Lieutenant', 'Captain', 'Major', 'Commander', 'General', 'Supreme Commander']
+	might   = currentNation[0]['War']['might']
+	rank   = currentNation[0]['War']['level']
+
+	return(currentNation)

@@ -1,12 +1,12 @@
 # IMPORT UNIVERSAL UTILITIES
-from conquest_utilities import slow_print as slow_print
-from conquest_utilities import med_print as med_print
-from conquest_utilities import fast_print as fast_print
-from conquest_utilities import superfast_print as superfast_print
-from conquest_utilities import clearScreen as clearScreen
-from conquest_utilities import preferencePrint as preferencePrint
-from conquest_utilities import options as options
-from conquest_utilities import music as music
+from gameConquest_utilities import slow_print as slow_print
+from gameConquest_utilities import med_print as med_print
+from gameConquest_utilities import fast_print as fast_print
+from gameConquest_utilities import superfast_print as superfast_print
+from gameConquest_utilities import clearScreen as clearScreen
+from gameConquest_utilities import preferencePrint as preferencePrint
+from gameConquest_utilities import options as options
+from gameConquest_utilities import music as music
 
 import sys
 import time
@@ -82,36 +82,36 @@ def promotion(currentNation,p,index,myNationIndex):
 	if wealth > 5100 and rank == financeRank[0]:
 		currentNation[0]['Finance']['level'] = financeRank[1]
 		rank   = currentNation[0]['Finance']['level']
-		currentNation[0]['Special']['notes'].append('finance') 
+		currentNation[0]['Special']['notes'].append('financeLevel') 
 		preferencePrint(str(currentNation[1] ) + ' levelled up! New Finance rank is ' + str(currentNation[0]['Finance']['level']),p,index,myNationIndex)
 
 	if wealth > 10000 and rank == financeRank[1]:
 		currentNation[0]['Finance']['level'] = financeRank[2]
 		rank   = currentNation[0]['Finance']['level']
-		currentNation[0]['Special']['notes'].append('finance') 
+		currentNation[0]['Special']['notes'].append('financeLevel') 
 		preferencePrint(str(currentNation[1] ) + ' levelled up! New Finance rank is ' + str(currentNation[0]['Finance']['level']),p,index,myNationIndex)
 
 	if wealth > 15000 and rank == financeRank[2]:
 		currentNation[0]['Finance']['level'] = financeRank[3]
 		rank   = currentNation[0]['Finance']['level']
-		currentNation[0]['Special']['notes'].append('finance') 
+		currentNation[0]['Special']['notes'].append('financeLevel') 
 		preferencePrint(str(currentNation[1] ) + ' levelled up! New Finance rank is ' + str(currentNation[0]['Finance']['level']),p,index,myNationIndex)
 
 	if wealth > 20000 and rank == financeRank[3]:
 		currentNation[0]['Finance']['level'] = financeRank[4]
 		rank   = currentNation[0]['Finance']['level']
-		currentNation[0]['Special']['notes'].append('finance') 
+		currentNation[0]['Special']['notes'].append('financeLevel') 
 		preferencePrint(str(currentNation[1] ) + ' levelled up! New Finance rank is ' + str(currentNation[0]['Finance']['level']),p,index,myNationIndex)
 
 	if wealth > 30000 and rank == financeRank[4]:
 		currentNation[0]['Finance']['level'] = financeRank[5]
 		rank   = currentNation[0]['Finance']['level']
-		currentNation[0]['Special']['notes'].append('finance') 
+		currentNation[0]['Special']['notes'].append('financeLevel') 
 		preferencePrint(str(currentNation[1] ) + ' levelled up! New Finance rank is ' + str(currentNation[0]['Finance']['level']),p,index,myNationIndex)
 
 	if wealth > 40000 and rank == financeRank[5]:
 		currentNation[0]['Finance']['level'] = financeRank[6]
 		rank   = currentNation[0]['Finance']['level']
-		currentNation[0]['Special']['notes'].append('finance') 
+		currentNation[0]['Special']['notes'].append('financeLevel') 
 		preferencePrint('****' +  str(currentNation[1] ) + ' levelled up!***** New Finance rank is ' + str(currentNation[0]['Finance']['level']),p,index,myNationIndex)
 	return(currentNation)

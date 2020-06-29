@@ -43,9 +43,9 @@ def setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING,NATION_ARRAY):
 		# HAS FINANCE BIAS
 		if bias == 0:
 
-			# GAMBLE
-			gambleAction = random.randint(0,6)
-			if gambleAction > 2:
+			# Roughly 25% chance of having a gamble
+			gambleAction = random.randint(0,10)
+			if gambleAction < 3:
 				creditsAvailable = int(currentNation[0]['Finance']['wealth'])
 				maxSpend = round((int(currentNation[0]['Special']['aggression'])/100) * creditsAvailable)
 				if maxSpend > 1:
@@ -55,6 +55,8 @@ def setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING,NATION_ARRAY):
 
 
 			# BUY
+			# Probability of purchase depends how much the price is lower than average
+
 			commodity = random.choice(('gold','gems','raremetals','oil'))
 			percentageDecrease = ((PRICE_TRACKER[commodity]['average'] - PRICE_TRACKER[commodity]['price'])/PRICE_TRACKER[commodity]['average'])
 			# Higher materialism increases buy probability
@@ -74,6 +76,7 @@ def setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING,NATION_ARRAY):
 
 
 			# SELL
+			# Same as for buy but in reverse
 			commodity = random.choice(('gold','gems','raremetals','oil'))
 			percentageIncrease = ((PRICE_TRACKER[commodity]['price'] - PRICE_TRACKER[commodity]['average'])/PRICE_TRACKER[commodity]['average'])
 			if percentageIncrease > 0.80:
@@ -86,7 +89,7 @@ def setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING,NATION_ARRAY):
 				maxSellProbabiliy = 10
 
 
-		# HAS WAR BIAS
+		# HAS BIAS TOWARDS WAR
 		if bias == 1:
 			troops     = currentNation[0]['War']['weapons']['troops']
 			tanks      = currentNation[0]['War']['weapons']['tanks']
@@ -169,8 +172,6 @@ def build(currentNation,WAR_BRIEFING):
 	else:
 		maxBuy = round(random.randint(0,maxpurchase))
 	
-
-
 	# If they can't afford even one  
 	if maxBuy < 1:
 		print('cant afford')
@@ -195,11 +196,6 @@ def scrap(currentNation,WAR_BRIEFING):
 	allowedAssets = []
 	allowedAssets = allowedTech(techLevel)
 	unit = random.choice(allowedAssets)
-
-	print(str(currentNation[1] + '** SCRAPPING**	'))
-	print('unit: ' + str(unit))
-	print('tech level ' + str(techLevel))
-	print('agression' + str(aggressionAdjusted))
 
 	price        = WAR_BRIEFING['weapons'][unit][0]
 	reducedMight = WAR_BRIEFING['weapons'][unit][2]
