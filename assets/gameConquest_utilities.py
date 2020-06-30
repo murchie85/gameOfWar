@@ -3,7 +3,7 @@
 import sys
 import time
 
-#p = 'All'
+p = 'All'
 
 def slow_print(s):
 	for c in s:
@@ -81,7 +81,7 @@ def options(p,NATION_ARRAY):
 	if selection == '2':
 		p = printupdates(p)
 		return(p)
-	if selection == '3':
+	if selection == '1':
 		developer(NATION_ARRAY)
 
 
@@ -148,78 +148,18 @@ def developer(NATION_ARRAY):
 	print('***************************************************')
 	print('')
 	print('1. Select Country')
-	print('2. Exit')
+	print('2. Change End of Round Updates')
+	print('3. Developer Insights')
 
 	selection = str(input('Please select an option \n'))
-	countrySelected = '	'
-	NationChoice = 9999
 	if selection == '1':
-		while countrySelected != 'Y':
-		    print('')
-		    print('Printing nation list')
-		    print('')
-
-		    for x in range(0, len(NATION_ARRAY)):
-		        print(str(x) + '. ' + str(NATION_ARRAY[x][-1]))
-		    print('')
-		    while NationChoice not in range(0, len(NATION_ARRAY)):
-		        try:
-		            NationChoice = int(input('Please chose a country \n'))
-		        except:
-		            print("Entered incorrectly, please try again")
-
-		    fast_print('Your chosen country is : ' +    str(NATION_ARRAY[NationChoice][-1]) + '\n')
-		    print('')   
-		    countrySelected = 'Y'
-		    
-		for key in NATION_ARRAY[NationChoice][0].keys():
-		    print(key)
-		    print(NATION_ARRAY[NationChoice][0][key])
-		    print('')
-		    buffer = input('Press Enter to continue \n')
-		    clearScreen()
-		print('all')
-		print(NATION_ARRAY[NationChoice])
-		input()
+		countryChoice = input('Enter Country name to view stats \n')
+		for item in NATION_ARRAY:
+		    if item[1] == countryChoice:
+		        print(item[0])
 
 	if selection == '2':
-		fast_print('Exiting')
-		clearScreen()
-
-
-def checkMoves(myNation,duplicateToCheck):
-    movesLeft = int(myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'] ) + str(sum(myNation[0]['Nextmoves'], [])).count('pending') )
-    print('')
-    if movesLeft < 1: 
-        return(movesLeft,1)
-    for item in myNation[0]['Nextmoves']:
-        if duplicateToCheck in item:
-            print('you have already carried out '  + str(duplicateToCheck) + ' in this round')
-            return(movesLeft,1)
-    return(movesLeft,0)
-
-def selectCountry(NATION_ARRAY,myNation,printMessage):
-    NationChoice = 9999
-    countrySelected = ''
-    clearScreen()
-    while countrySelected != 'Y':
-        print('')
-        print(printMessage)
-        print('')
-        for x in range(0, len(NATION_ARRAY)):
-            if NATION_ARRAY[x][-1] != myNation[-1]:
-                print(str(x) + '. ' + str(NATION_ARRAY[x][-1]))
-        print('')
-        while NationChoice not in range(0, len(NATION_ARRAY)):
-            try:
-                 NationChoice = int(input('Please select a country. \n'))
-            except:
-                print("Entered incorrectly, please try again")
-        if NATION_ARRAY[NationChoice][-1] == myNation[-1]:
-            print('You cant select your own country ' + str(NATION_ARRAY[NationChoice][-1]) + ' nice try...')
-            return(1,NationChoice)
-        print('Your chosen country is : ' + str(NATION_ARRAY[NationChoice][-1]) + '\n')
-        input('')
-        countrySelected = 'Y'
-        clearScreen()
-    return(0,NationChoice)
+		p = printupdates(p)
+		return(p)
+	if selection == '1':
+		developer(NATION_ARRAY)
