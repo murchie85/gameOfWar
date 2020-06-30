@@ -26,6 +26,7 @@ def nextYear(year,myNation,NATION_ARRAY,myNationIndex,PRICE_TRACKER,WAR_BRIEFING
 	fast_print('Processing next year....')
 	print('')
 
+	input('Debug: next moves ' + str(myNation[0]['Nextmoves']))
 	previousPrices = copy.deepcopy (PRICE_TRACKER)
 
 	# ITERATE FOR EACH TEAM 
@@ -59,6 +60,7 @@ def nextYear(year,myNation,NATION_ARRAY,myNationIndex,PRICE_TRACKER,WAR_BRIEFING
 	# INCREMENT THE YEARS
 	year = year + 1
 	print('**todo** FUNCTION TO CHECK WHEN STOCK IS 10% AND PUT ALERTS')
+	input('Debug: next moves ' + str(myNation[0]['Nextmoves']))
 	return(year, NATION_ARRAY,PRICE_TRACKER,WAR_BRIEFING,p)
 
 

@@ -908,6 +908,7 @@ def missionsMenu(myNation,NATION_ARRAY,year,WAR_BRIEFING):
         print('[D] Declare War')
         print('[F] Show International Relations')
         print('[S] Show Military Assets')
+        print('[H] Help  & Explanation')
         print('[R] Return')
         print(' ')
         print(' ')
@@ -933,6 +934,16 @@ def missionsMenu(myNation,NATION_ARRAY,year,WAR_BRIEFING):
             friendshipFlag = 'Y'
         if missionSelection == 'S':
             flag = 'yes'
+        if missionSelection == 'H':
+            print('*****Explanation of Options *****')
+            print('')
+            print('Espionage: Obtains intel about enemy, forces them to skip a round. May incur loss in friendship if found out.')
+            print('Covert Operations: Damage an enemy moderately, possibility of stealing resources, May incur signiciant loss in friendship if found out.')
+            print('Tactical Strike: Damage an enemy severely, signiciant drop in friendship and possible repercussions.')
+            print('Declare war: Forces the enemy into a round by round battle of attrition, only military moves can be carried out. You can win, lose, surrender or offer a truce. Will lose some global backing.')
+            print('***All Options depend on your frienship levels with the nation state.')
+            print('')
+            input('Enter to continue')
         if missionSelection == 'R' or missionSelection == '':
             return(myNation)
     return(myNation)
@@ -993,15 +1004,15 @@ def covert(myNation,NATION_ARRAY,WAR_BRIEFING):
 
 
 def espionage(myNation,NATION_ARRAY,WAR_BRIEFING):
-    espionageThreshold = -5
     # CHECK MAX MOVES
     returnCode = checkMoves(myNation,'covert')[1]
     if returnCode > 0: return(myNation)
-    
+    # SELECT COUNTRY
     returnCode,NationChoice = selectCountry(NATION_ARRAY,myNation,'****CHOOSE A TARGET****')
     if returnCode > 0: return(myNation)
     
-    # CHECK FRIENDSHIP 
+    # CHECK FRIENDSHIP EXCEEDS THRESHOLD
+    espionageThreshold = -5
     if myNation[0]['Friendship'][NATION_ARRAY[NationChoice][-1]]['level'] > espionageThreshold:
         print('Sorry, your friendship with ' + str(NATION_ARRAY[NationChoice][-1]) + ' is ' + str(myNation[0]['Friendship'][NATION_ARRAY[NationChoice][-1]]['level']) + '. Espionage is only available when friendship deteriorates below < ' + str(espionageThreshold) + '. \n Please check international relations option to view friendship levels.')
         input('')
@@ -1042,6 +1053,7 @@ def espionage(myNation,NATION_ARRAY,WAR_BRIEFING):
 
     espionageOrder = ['espionage',NationChoice]
     myNation[0]['Nextmoves'] = myNation[0]['Nextmoves'] + [covertOrder]
+    int('Espionage orders given..')
 
     return(myNation)
 

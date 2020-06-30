@@ -7,7 +7,7 @@
 
 JUST RUN THIS COMMAND TO START 
   
-`python game.py` 
+`python universe734.py` 
   
 **OR**  
 
