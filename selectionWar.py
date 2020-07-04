@@ -110,6 +110,10 @@ def warMinistry(myNation,NATION_ARRAY,year,WAR_BRIEFING):
         print('[C] Combat Manevres')
         print('[W] Weapons')
         print('[O] Offensive Missions')
+        print(' ')
+        print(' ')
+        print(' ')
+        print(' ')
         print('[A] Show Military Assets')
         print('[R] Return')
         print(' ')
@@ -121,7 +125,7 @@ def warMinistry(myNation,NATION_ARRAY,year,WAR_BRIEFING):
         print(' ')
         warSelection = str(input('Please chose an option \n')).upper()
         if warSelection == 'C':
-            myNation = drillMenu(myNation,year,WAR_BRIEFING)
+            myNation = manoeuvresMenu(myNation,year,WAR_BRIEFING)
         if warSelection == 'W':
             myNation = weaponsMenu(myNation,year,WAR_BRIEFING)
         if warSelection == 'O':
@@ -195,6 +199,8 @@ def weaponsMenu(myNation,year,WAR_BRIEFING):
         print('')
         print('[B] Build')
         print('[S] Scrap')
+        print(' ')
+        print(' ')
         print('[V] View my units')
         print('[R] Return')
         print(' ')
@@ -702,6 +708,73 @@ def scrapUnits(myNation,year,WAR_BRIEFING,unit):
 
 
 
+def manoeuvresMenu(myNation,year,WAR_BRIEFING):
+    manoeuvresSelection = ' '
+    flag = ''
+    while manoeuvresSelection != 'XYZFFJJJJJJ':
+        clearScreen()
+        troops     = myNation[0]['War']['weapons']['troops']
+        tanks      = myNation[0]['War']['weapons']['tanks']
+        gunboats   = myNation[0]['War']['weapons']['gunboats']
+        destroyers = myNation[0]['War']['weapons']['destroyers']
+        carriers   = myNation[0]['War']['weapons']['carriers']
+        jets       = myNation[0]['War']['weapons']['jets']
+        bombers    = myNation[0]['War']['weapons']['bombers']
+        nukes      = myNation[0]['War']['weapons']['Nukes']
+
+
+        print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
+        print('       !!MILITARY MANOEUVRES HQ!!        :X        ')
+        print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
+        print('')
+        print('My Team   : ' + str(myNation[1]))
+        print('Year      : ' + str(year))
+        print('Might     : ' + str(myNation[0]['War']['might']) )
+        print('Rank     : ' + str(myNation[0]['War']['level']))
+        print('Army      : ' + str(troops + tanks))
+        print('Navy      : ' + str(gunboats + destroyers + carriers))
+        print('Airforce  : ' + str(jets + bombers))
+        print('Nuclear   : ' + str(nukes))
+        print('Firepower : ' + str(myNation[0]['War']['firePower']) )
+        print(' ')
+        print(' ')
+        flag = showAssets(myNation,year,flag)
+        print('')
+        print('[D] Drill and train your forces')
+        print('[J] Joint manoeuvres')
+        print('[I] Intimidation manoeuvres')
+        print(' ')
+        print(' ')
+        print('[D] Detailed forces review')
+        print('[R] Return')
+        print(' ')
+        print(' ')
+        print(' ')
+        print('Moves: ' + str(checkMoves(myNation,"%^")[0]) )
+        print('****************************************')
+        print(' ')
+        print(' ')
+        # CHECK MAX MOVES SINCE INSIDE WHILE LOOP
+        returnCode = checkMoves(myNation,'%^')[1]
+        if returnCode > 0: 
+            fast_print('All moves used up')
+            return(myNation)
+
+        manoeuvresSelection = input('Select an option \n').upper()
+        clearScreen()
+        if manoeuvresSelection == 'D':
+            myNation = drillMenu(myNation,year,WAR_BRIEFING)
+        if manoeuvresSelection == 'J':
+            print('Not ready')
+        if manoeuvresSelection == 'I':
+            print('Not ready')
+        if manoeuvresSelection == 'D':
+            flag = 'yes'
+        if manoeuvresSelection == 'R' or manoeuvresSelection == '':
+            return(myNation)
+    return(myNation)    
+
+
 """
 # =====================================================================
 # =====================================================================
@@ -722,17 +795,13 @@ def scrapUnits(myNation,year,WAR_BRIEFING,unit):
 
 
 def drill(myNation, branch,units,WAR_BRIEFING):
-    # CHECK MAX MOVES
-    movesLeft = myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])
     print('')
-    if movesLeft < 1: 
-        input('you have used up all your moves for this round..')
+    # CHECK MAX MOVES 
+    returnCode = checkMoves(myNation,'drill')[1]
+    if returnCode > 0: 
+        fast_print('All moves used up, or already drilling this round.')
         return(myNation)
 
-    for item in myNation[0]['Nextmoves']:
-        if 'drill' in item:
-            input('you have already carried out a drill this round..')
-            return(myNation)
 
     intensity = 'low'
     while intensity != 'XYZFFJJJJJJ':
@@ -811,6 +880,8 @@ def drillMenu(myNation,year,WAR_BRIEFING):
         print('[G] Ground Forces')
         print('[N] Navy')
         print('[A] Airforce')
+        print(' ')
+        print(' ')
         print('[D] Detailed forces review')
         print('[R] Return')
         print(' ')
@@ -906,9 +977,12 @@ def missionsMenu(myNation,NATION_ARRAY,year,WAR_BRIEFING):
         print('[C] Covert Operations')
         print('[T] Tactical Strike')
         print('[D] Declare War')
-        print('[F] Show International Relations')
+        print(' ')
+        print(' ')
+        print(' ')
+        print('[F] Show Friendships (Internaitonal Relations)')
         print('[S] Show Military Assets')
-        print('[H] Help  & Explanation')
+        print('[H] Help & Explanation')
         print('[R] Return')
         print(' ')
         print(' ')
@@ -923,7 +997,7 @@ def missionsMenu(myNation,NATION_ARRAY,year,WAR_BRIEFING):
             return(myNation)
         missionSelection = str(input('Please chose an option \n')).upper()
         if missionSelection == 'E':
-            fast_print('not ready')
+            myNation = espionage(myNation,NATION_ARRAY,WAR_BRIEFING)
         if missionSelection == 'C':
             myNation = covert(myNation,NATION_ARRAY,WAR_BRIEFING)
         if missionSelection == 'T':
@@ -937,10 +1011,10 @@ def missionsMenu(myNation,NATION_ARRAY,year,WAR_BRIEFING):
         if missionSelection == 'H':
             print('*****Explanation of Options *****')
             print('')
-            print('Espionage: Obtains intel about enemy, forces them to skip a round. May incur loss in friendship if found out.')
-            print('Covert Operations: Damage an enemy moderately, possibility of stealing resources, May incur signiciant loss in friendship if found out.')
-            print('Tactical Strike: Damage an enemy severely, signiciant drop in friendship and possible repercussions.')
-            print('Declare war: Forces the enemy into a round by round battle of attrition, only military moves can be carried out. You can win, lose, surrender or offer a truce. Will lose some global backing.')
+            print('ESPIONAGE: Obtains intel about enemy, a small amount of points and forces them to skip a round. May incur loss in friendship if found out.')
+            print('COVERT OPERATIONS: Damage an enemy moderately, possibility of stealing resources, May incur signiciant loss in friendship if found out.')
+            print('TACTICAL STRIKE: Damage an enemy severely, signiciant drop in friendship and possible repercussions.')
+            print('DECLARE WAR: Forces the enemy into a round by round battle of attrition, only military moves can be carried out. You can win, lose, surrender or offer a truce. Will lose some global backing.')
             print('***All Options depend on your frienship levels with the nation state.')
             print('')
             input('Enter to continue')
@@ -961,7 +1035,7 @@ def covert(myNation,NATION_ARRAY,WAR_BRIEFING):
     
     # CHECK FRIENDSHIP 
     if myNation[0]['Friendship'][NATION_ARRAY[NationChoice][-1]]['level'] > covertThreshold:
-        print('Sorry, your friendship with ' + str(NATION_ARRAY[NationChoice][-1]) + ' is ' + str(myNation[0]['Friendship'][NATION_ARRAY[NationChoice][-1]]['level']) + '. Covert operations are only available when friendship deteriorates below < ' + str(covertThreshold) + '. \n Please check international relations option to view friendship levels.')
+        print('Sorry, your friendship with ' + str(NATION_ARRAY[NationChoice][-1]) + ' is ' + str(myNation[0]['Friendship'][NATION_ARRAY[NationChoice][-1]]['level']) + '.  \n Covert operations are only available when friendship deteriorates below < ' + str(covertThreshold) + '. \n Please check international relations option to view friendship levels.')
         input('')
         return(myNation)
 
@@ -972,6 +1046,8 @@ def covert(myNation,NATION_ARRAY,WAR_BRIEFING):
         print('[M] Military')
         print('[S] Science')
         print('[P] Politics')
+        print(' ')
+        print(' ')
         print('[I] More Info')
         print('[R] Return')
         covertChoice = input('What branch of the ' + str(NationChoice) + ' government do you wish to attack? \n').upper()
@@ -1012,7 +1088,7 @@ def espionage(myNation,NATION_ARRAY,WAR_BRIEFING):
     if returnCode > 0: return(myNation)
     
     # CHECK FRIENDSHIP EXCEEDS THRESHOLD
-    espionageThreshold = -5
+    espionageThreshold = 0
     if myNation[0]['Friendship'][NATION_ARRAY[NationChoice][-1]]['level'] > espionageThreshold:
         print('Sorry, your friendship with ' + str(NATION_ARRAY[NationChoice][-1]) + ' is ' + str(myNation[0]['Friendship'][NATION_ARRAY[NationChoice][-1]]['level']) + '. Espionage is only available when friendship deteriorates below < ' + str(espionageThreshold) + '. \n Please check international relations option to view friendship levels.')
         input('')
@@ -1052,8 +1128,8 @@ def espionage(myNation,NATION_ARRAY,WAR_BRIEFING):
     #         return(myNation)
 
     espionageOrder = ['espionage',NationChoice]
-    myNation[0]['Nextmoves'] = myNation[0]['Nextmoves'] + [covertOrder]
-    int('Espionage orders given..')
+    myNation[0]['Nextmoves'] = myNation[0]['Nextmoves'] + [espionageOrder]
+    input('Espionage orders given..')
 
     return(myNation)
 

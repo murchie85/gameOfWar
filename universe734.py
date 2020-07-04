@@ -27,7 +27,7 @@ selected country
 NOTES: 
 
 myNation is a list, with the first element pointing to the country dict 
-myNationIndex may be required
+playerNationIndex may be required
 
 TODO
 
@@ -61,11 +61,14 @@ from gameConquest_utilities import clearScreen as clearScreen
 from gameConquest_utilities import preferencePrint as preferencePrint
 from gameConquest_utilities import options as options
 from gameConquest_utilities import music as music
+from gameConquest_utilities import updateTechNames as updateTechNames
+from gameConquest_utilities  import checkMoves as checkMoves
 
 # FUNCTIONS
 from gameFunctionSelection import selectNation as selectNation
 from gameFunctionSelection import stats as stats
 from gameSetVariables      import setVariables
+from gameSetVariables      import returnTechMap
 from actionFunctions import action as action
 from actionFunctions import nextYear as nextYear
 #from AIOrderFunctions import setAIMoves as setAIMoves
@@ -75,6 +78,7 @@ import selectionFinance  as fin
 import selectionWar      as warMenu
 import selectionPolitics as politics
 import selectionIntro    as start
+import selectionScience  as tech
 
 
 
@@ -88,10 +92,27 @@ import selectionIntro    as start
 # PRice is % of remaining available 
 PRICE_TRACKER = {'gold': {'price': 120, 'stock': 10000, 'priceChange': '+0', 'history':[120],'average':120},'raremetals': {'price': 60, 'stock': 2000, 'priceChange': '+0', 'history':[60],'average':60}, 'gems': {'price': 250, 'stock': 2000, 'priceChange': '+0', 'history':[250],'average':250}, 'oil': {'price': 12, 'stock': 10000, 'priceChange': '+0', 'history':[12],'average':12}}
 
-# numbers are price, wait time, might valuation as percentage (ADDED ON). 
-WAR_BRIEFING = {'weapons':{'troops':(10,2,0.001),'tanks':(300,2,0.01),'gunboats':(100,2,0.005),'destroyers':(2000,3,0.1),'carriers':(20000,4,1),'jets':(5000,2,0.3),'bombers':(7000,3,0.35),'Nukes':(100000,4,5)}}
+# numbers are price, wait time, might-valuation as percentage (ADDED ON). 
+WAR_BRIEFING = {'weapons':{'troops':(10,2,0.01),'tanks':(300,2,0.1),'gunboats':(100,2,0.005),'destroyers':(2000,3,0.1),'carriers':(20000,4,1),'jets':(5000,2,0.3),'bombers':(7000,3,0.35),'Nukes':(100000,4,5)}}
 
-NATION_ARRAY = setVariables()
+# WAR_BRIEFING = {'weapons':{
+# 'StoneAge': {'one':(10,2,0.01,'pikeman'),'two':(300,2,0.1,'knight'),'three':(100,2,0.005,'archer'),'four':(2000,3,0.1,'catapult'),'five':(20000,4,1,'fireArchers'),'six':(5000,2,0.3,'hoursemen'),'seven':(7000,3,0.35,'mountedKnights'),'eight':(100000,4,5,'kingsGuard')}, 
+# 'InformationAge':{'one':(10,2,0.01,'troops'),'two':(300,2,0.1,'tanks'),'three':(100,2,0.005,'gunboats'),'four':(2000,3,0.1,'destroyers'),'five':(20000,4,1,'carriers'),'six':(5000,2,0.3,'jets'),'seven':(7000,3,0.35,'bombers'),'eight':(100000,4,5,'Nukes')}}
+# }
+
+
+# Era - map for all names of each age
+# EraBonus- map for bonuses awarded when completing that tech
+# EraCost - Cost to level up by 1% 
+
+TECH_MAP = returnTechMap()
+
+NATION_ARRAY = setVariables(WAR_BRIEFING)
+
+NATION_ARRAY = updateTechNames(NATION_ARRAY,TECH_MAP)
+
+ARRAY_DICT = {'PRICE_TRACKER':PRICE_TRACKER,'WAR_BRIEFING':WAR_BRIEFING,'TECH_MAP':TECH_MAP,'NATION_ARRAY':NATION_ARRAY}
+
 
 myNation = ''
 buffer = ''
@@ -130,7 +151,7 @@ while selection != 'Done':
 	print('[4] Game rules')
 	print('[5] Credits')
 	print('[6] JukeBox')
-	print('[7] Back')
+	print('[7] Exit')
 	print('')
 	print('')
 
@@ -142,12 +163,12 @@ while selection != 'Done':
 
 	if selection == 1:
 		if myNation == '':
-			myNation,myNationIndex =selectNation(NATION_ARRAY)
+			myNation,playerNationIndex =selectNation(NATION_ARRAY)
 		fast_print('Starting game... \n')
 		clearScreen()
 		break
 	if selection == 2:
-		myNation,myNationIndex = selectNation(NATION_ARRAY)
+		myNation,playerNationIndex = selectNation(NATION_ARRAY)
 	if selection == 3:
 		stats(NATION_ARRAY)
 	if selection == 4:
@@ -231,7 +252,7 @@ def menuUpdate():
 		myNation[0]['Special']['notes'] = []
 	
 
-
+debug = 'n'
 menuSelection = ' '
 while menuSelection != 'E':
 	clearScreen()
@@ -258,7 +279,7 @@ while menuSelection != 'E':
 	print('[F] Finance bureau')
 	print('[W] Ministry of War')
 	print('[P] Political Cabinet (not available)')
-	print('[S] Science Department (not available)')
+	print('[T] Technology Institute')
 	print('[N] Next Year')
 	print(' ')
 	print(' ')
@@ -268,7 +289,12 @@ while menuSelection != 'E':
 	print('[O] Options')
 	print('[X] Exit')
 	print(' ')
-	print('Moves: ' + str( myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])  + str(sum(myNation[0]['Nextmoves'], [])).count('pending')))
+	#print(myNation[0]['Special']['moveLimit'])
+	#print(len(myNation[0]['Nextmoves']))
+	#print(str( sum(myNation[0]['Nextmoves'], []) ).count('pending'))
+	#print(myNation[0]['Nextmoves'])
+	#print('Moves: ' + str( myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])  + str(sum(myNation[0]['Nextmoves'], [])).count('pending')))
+	print('Moves: ' + str(checkMoves(myNation,"%^")[0]) )
 	print('****************************************')
 	print(' ')
 	print(' ')
@@ -277,17 +303,18 @@ while menuSelection != 'E':
 	if menuSelection == 'L':
 		stats(NATION_ARRAY)
 	if menuSelection == 'F':
-		myNation = fin.financeBeuro(myNation,year,PRICE_TRACKER)
+		myNation = fin.financeBeuro(myNation,year,PRICE_TRACKER,NATION_ARRAY)
 	if menuSelection == 'W':
 		myNation = warMenu.warMinistry(myNation,NATION_ARRAY,year,WAR_BRIEFING)
 	if menuSelection == 'P':
 		myNation = politics.politicalCabinet(myNation,year,PRICE_TRACKER)
-	if menuSelection == 'S':
-		fast_print('Not ready yet, sorry....')
+	if menuSelection == 'T':
+		myNation = tech.techMenu(myNation,year,PRICE_TRACKER,TECH_MAP)
 	if menuSelection == 'N' or menuSelection == '':
-		year, NATION_ARRAY,PRICE_TRACKER,WAR_BRIEFING,p = nextYear(year,myNation,NATION_ARRAY,myNationIndex,PRICE_TRACKER,WAR_BRIEFING,p)
+		year, NATION_ARRAY,PRICE_TRACKER,WAR_BRIEFING,p = nextYear(year,myNation,ARRAY_DICT,playerNationIndex,p,debug)
+	
 	if menuSelection == 'O':
-		p = options(p,NATION_ARRAY)
+		p,debug = options(p,NATION_ARRAY,debug)
 	if menuSelection == 'X':
 		exit()
 		

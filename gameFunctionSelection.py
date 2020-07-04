@@ -49,16 +49,16 @@ def selectNation(NATION_ARRAY):
 		buffer = input('Press Enter to continue \n')
 		clearScreen()
 		myNation = NATION_ARRAY[NationChoice]
-		myNationIndex = NationChoice
+		playerNationIndex = NationChoice
 		nationSelected = 'Y'
-	return(myNation,myNationIndex)
+	return(myNation,playerNationIndex)
 
 
 def stats(NATION_ARRAY):
 	clearScreen()
 	print('Printing nation list')
 	print('')
-	print('|    NAME      |  SCORE   |WEALTH LV |   MIGHT LV   |  TECH LV |INFLUENCE |   ')
+	print('|    NAME      |  SCORE   |WEALTH LV |   MIGHT LV   |KNOWLEDGE |INFLUENCE |   ')
 	print('___________________________________________________________________________')
 
 	rankCounter = []
@@ -78,7 +78,7 @@ def stats(NATION_ARRAY):
 		tradeScore = str(NATION_ARRAY[index][0]['Finance']['wealth'])
 		for c in range(0, (10 - len(tradeScore))): tradeScore = tradeScore + ' '
 
-		techScore = str(NATION_ARRAY[index][0]['Tech']['level'])
+		techScore = str(NATION_ARRAY[index][0]['Tech']['knowledge'])
 		for d in range(0, (10 - len(techScore))): techScore = techScore + ' '
 
 		warScore = str(NATION_ARRAY[index][0]['War']['might'])

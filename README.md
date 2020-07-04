@@ -42,6 +42,8 @@ If you have any issues please contact me `@murchie85@gmail.com`.
 - OFF WORLD MINING COLONIES
 - REPLICANTS
 - TRADE MIGHT FOR TECHLEVEL ETC...
+- Higher friendship produces more positive actions....
+- Allies can buy stuff/weapons off each other for reduced prices
 
 
 
@@ -51,6 +53,47 @@ NewsArray = []
 
 storyList  - each story comes with an affect (i.e. value of gold has increased)
 updateList - LevelUP, X&Y are at war etc 
+
+### TECH  
+
+# TODO 
+Work out how to rename wararray
+update warbriefing for different functions
+
+  
+# TECH PROMOTION
+LEVEL = %Completion/50
+ON COMPLETION OF TECH = GAIN BONUS
+
+
+TECH_ARRAY = [{'EON':
+{'INDUSTRIAL REVOLUTION':    ,
+'INFORMATION AGE' {'ONE': ['Tech']['knowledge'] ,   } .
+},
+
+}]
+- GROW VERTICALLY
+- Gain Research points
+- Spend Research points to up level
+- When level = 10 = unlock next Era
+
+- need more uses for reseaech points
+- GROW HORIZONTALLY
+
+- .... (maybe unlock Era early)
+- 50,000 credits 2000 might to unlock information era
+- You get the tech, but you lack the knowledge points
+- Knowledge increases overall score but also boosts politics, etc
+
+- Spend Research points to unlock industry
+
+
+
+- Weapons change based on Era
+- (Buy Microchips knowledge x 10 each round)
+
+
+
 ## COMPETITION 
 
 Friendship - 40
