@@ -45,6 +45,8 @@ def setAIMoves(index,currentNation,ARRAY_DICT,AI_DEBUG):
                 currentNation = aiSell(PRICE_TRACKER,currentNation,aggression,materialism)
                 # Invest Resource
                 currentNation = investResource(currentNation,PRICE_TRACKER)
+                # Invest in nation
+                currentNation = investNation(currentNation,PRICE_TRACKER,NATION_ARRAY)
 
             # HAS BIAS TOWARDS WAR
             if bias == 1:
@@ -60,6 +62,7 @@ def setAIMoves(index,currentNation,ARRAY_DICT,AI_DEBUG):
             # HAS BIAS TOWARDS SCIENCE
             if bias == 2:
 
+                currentNation = advanceEra(currentNation,NATION_ARRAY,aggression,TECH_MAP)
                 currentNation = gainResearchPoints(currentNation,NATION_ARRAY,aggression,TECH_MAP)
                 currentNation = researchTechnology(currentNation,NATION_ARRAY,aggression,TECH_MAP)
 
@@ -376,7 +379,7 @@ def investResource(currentNation,PRICE_TRACKER):
         resource = 'oil'
 
     if resource == 'N':
-        print('dropped out')
+        #print('dropped out')
         return(currentNation)
 
     returnCode,spendAmount = arbitrarySpendAmount(currentNation)
@@ -391,6 +394,40 @@ def investResource(currentNation,PRICE_TRACKER):
     currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + [['Submitted','investResource',resource,spendAmount,investedPrice,wait]]
 
     return(currentNation)
+
+
+def investNation(currentNation,PRICE_TRACKER,NATION_ARRAY):
+
+    # CHECK MAX MOVES
+    returnCode = checkMoves(currentNation,'investCountry')[1]
+    if returnCode > 0: 
+        return(currentNation)
+
+    # MORE LOGIC REQUIRED
+    friendList = returnBestFriends(currentNation)
+    friend = random.choice(friendList)
+    if friend[0] < 30:
+        return(currentNation)
+
+    # Pick a random value to invest
+    returnCode,spendAmount = arbitrarySpendAmount(currentNation)
+    if returnCode > 0: 
+        print('not enough')
+        return(currentNation)
+
+    # get index by using value as lookup
+    for x in range(0,len(NATION_ARRAY)): 
+        if NATION_ARRAY[x][1] == friend[1]:
+            friendIndex = x
+
+    # PLACE ORDER Decrement wealth now
+    currentNation[0]['Finance']['wealth'] -= spendAmount
+    friendsOriginalWealth = NATION_ARRAY[friendIndex][0]['Finance']['wealth']
+    wait = 4
+    currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + [['Submitted','investCountry',friendIndex,spendAmount,friendsOriginalWealth,wait]]
+
+    return(currentNation)
+
 
 def non_increasing(L):
     return all(x>=y for x, y in zip(L, L[1:]))
@@ -424,7 +461,22 @@ def arbitrarySpendAmount(currentNation):
         return(1,amount)
     return(1,amount)
 
+# Get top 3 best friends by iterating array extracted from dict, then saving popping max val
+def returnBestFriends(currentNation):
+    friendList = []
+    friendshipArray = []
 
+    for friend in currentNation[0]['Friendship']:
+        friendshipArray.append((currentNation[0]['Friendship'][friend]['level'],friend))
+
+    for x in range(0,3):
+        allyValue =  max(friendshipArray,key=lambda item:item[0])[0]
+        allyKey   =  max(friendshipArray,key=lambda item:item[0])[1]
+        allyIndex = friendshipArray.index((allyValue,allyKey))
+        friendList.append([allyValue,allyKey])
+        friendshipArray.pop(allyIndex)
+
+    return(friendList)
 
 # Only attack if aggression high, prudence low, friendship low
 def espionage(currentNation,NATION_ARRAY,aggression,prudence,AI_DEBUG):
@@ -590,9 +642,33 @@ def researchTechnology(currentNation,NATION_ARRAY,aggression,TECH_MAP):
         #PLACE ORDER 
         currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + [['submitted','research',era, choice,required]]
 
+    return(currentNation)
 
+
+def advanceEra(currentNation,NATION_ARRAY,aggression,TECH_MAP):
+    era           = str(currentNation[0]['Tech']['era'])
+    one           = currentNation[0]['Tech']['researched']['one'][2]
+    two           = currentNation[0]['Tech']['researched']['two'][2]
+    three         = currentNation[0]['Tech']['researched']['three'][2]
+    four          = currentNation[0]['Tech']['researched']['four'][2]
+    five          = currentNation[0]['Tech']['researched']['five'][2]
+
+    # CHECK MAX MOVES
+    returnCode = checkMoves(currentNation,'advanceEra')[1]
+    if returnCode > 0: 
+        return(currentNation)
+
+    # Only upgrade if AI has completed all tech streams 5 x 100% completion ==500
+    total = one + two + three + four + five
+    if total < 500:
+        return(currentNation)
+
+    currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + ['advanceEra']
 
     return(currentNation)
+
+
+
 
 def averageRPCost(TECH_MAP,era):
     rpCostArray = []

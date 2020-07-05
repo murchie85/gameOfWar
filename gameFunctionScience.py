@@ -1,4 +1,5 @@
 from gameConquest_utilities import preferencePrint as preferencePrint
+from gameConquest_utilities import updateTechNames as updateTechNames
 
 import sys
 import time
@@ -139,4 +140,16 @@ def gainResearch(nextMove,NATION_ARRAY,TECH_MAP,currentNation,p,index,playerNati
 
     return(NATION_ARRAY)
 
+def advanceEra(nextMove,NATION_ARRAY,TECH_MAP,currentNation,p,index,playerNationIndex,nextMoveIndex):
 
+    era = currentNation[0]['Tech']['era']
+    nextEra = TECH_MAP['nextEra'][era]
+
+    NATION_ARRAY[index][0]['Tech']['era'] = nextEra
+    NATION_ARRAY[index][0]['Tech']['researched'] = {'one':[0,'',0],'two':[0,'',0],'three':[0,'',0],'four':[0,'',0],'five':[0,'',0]}
+    NATION_ARRAY = updateTechNames(NATION_ARRAY,TECH_MAP)
+    preferencePrint('++++++++++++++++++++++++++++++++++++++++++',p,index,playerNationIndex)
+    preferencePrint(str(str(NATION_ARRAY[index][1]) + ' has advanced to the ' + str(nextEra)),p,index,playerNationIndex)
+    preferencePrint('++++++++++++++++++++++++++++++++++++++++++',p,index,playerNationIndex)
+
+    return(NATION_ARRAY)

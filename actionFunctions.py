@@ -126,7 +126,7 @@ def action(index, ARRAY_DICT,currentNation,p,playerNationIndex,debug):
             NATION_ARRAY = financeFunction.investResource(nextMove,NATION_ARRAY,currentNation,PRICE_TRACKER,p,index,playerNationIndex,nextMoveIndex)
 
         if 'investCountry' in nextMove:
-            print('current nation' + str(currentNation[1]))
+            #print('current nation' + str(currentNation[1]))
             NATION_ARRAY = financeFunction.investCountry(nextMove,NATION_ARRAY,currentNation,PRICE_TRACKER,p,index,playerNationIndex,nextMoveIndex)
     
         if 'drill' in nextMove:
@@ -147,8 +147,9 @@ def action(index, ARRAY_DICT,currentNation,p,playerNationIndex,debug):
 
         if 'gainResearch' in nextMove:
             NATION_ARRAY = scienceFunction.gainResearch(nextMove,NATION_ARRAY,TECH_MAP,currentNation,p,index,playerNationIndex,nextMoveIndex)
-        
 
+        if 'advanceEra' in nextMove:
+            NATION_ARRAY = scienceFunction.advanceEra(nextMove,NATION_ARRAY,TECH_MAP,currentNation,p,index,playerNationIndex,nextMoveIndex)        
 
         nextMoveIndex = nextMoveIndex + 1
 

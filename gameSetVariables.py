@@ -68,7 +68,7 @@ def setVariables(WAR_BRIEFING):
         # Add drones, robots, etc later
         nation[0]['War']      = {'might': might,    'level': 'Private', 'weapons':{'troops':troops,'tanks':0,'gunboats':0,'destroyers':0,'carriers':0,'jets':0,'bombers':0,'Nukes':0}, 'firePower':0}
         #nation[0]['War']      = {'might': might,    'level': 'Private', 'weapons':{one:[0,''],two:[0,''],three:[0,''],four:[0,''],five:[0,''],six:[0,''],seven:[0,''],eight:[0,'']}, 'firePower':0}
-        nation[0]['Tech']     = {'knowledge' : 0,'level': 0,'era': 'INDUSTRIAL REVOLUTION','research points': 100, 'researched':{'one':[0,'',0],'two':[0,'',0],'three':[0,'',0],'four':[0,'',0],'five':[0,'',0]}, 'assets':{'universities':0,'techHubs':0,'scientists':0,'engineers':0,'mathematicians':0,'entrepreneurs':0}, 'prestigue':0}
+        nation[0]['Tech']     = {'knowledge' : 0,'level': 0,'era': 'INDUSTRIAL REVOLUTION','research points': 100, 'researched':{'one':[0,'',100],'two':[0,'',100],'three':[0,'',100],'four':[0,'',100],'five':[0,'',100]}, 'assets':{'universities':0,'techHubs':0,'scientists':0,'engineers':0,'mathematicians':0,'entrepreneurs':0}, 'prestigue':0}
         nation[0]['Politics'] = {'influence':0, 'stability':0, 'backing':0}
         nation[0]['Special']  = {'chance': 0, 'moveLimit':2, 'aggression':random.randint(0,100), 'creativity':random.randint(0,100), 'materialism':random.randint(0,100), 'prudence':random.randint(0,100), 'bonusUnits': [], 'notes': []}
 
@@ -103,6 +103,7 @@ def returnTechMap():
                       'SECOND ENLIGHTENMENT':{'one':'Decentralisation','two':'NeuralLink','three':'Artificial Intelligence','four':'Bio Computing','five':'The Convergance'}
                       
                       },
+                'nextEra':{'INDUSTRIAL REVOLUTION':'INFORMATION AGE','INFORMATION AGE':'SECOND ENLIGHTENMENT'},
                 'EraBonus':{
 
                 'INDUSTRIAL REVOLUTION':{

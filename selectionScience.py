@@ -144,6 +144,11 @@ def PrintResearch(paddingArray):
         padding    = ''
         for x in range(0,paddingLen): padding = padding + ' '
         print(str(item[1]) + str(padding) + ' : ' + str(item[2]) + '%')
+    total = paddingArray[0][2] + paddingArray[1][2] +  paddingArray[2][2] + paddingArray[3][2] +paddingArray[4][2]
+    if total > 499:
+        print(' ')
+        fast_print('***CONGRATULATIONS YOU CAN NOW ADVANCE YOUR ERA***')
+    return('off')
             
 def printCurrentResearch(myNation):
 
@@ -153,6 +158,7 @@ def printCurrentResearch(myNation):
 
 def researchMenu(myNation,year,TECH_MAP):
     flag = ''
+    advanceFlag = 'On'
     researchSelection = ' '
     while researchSelection != 'XYZFFJJJJJJ':
         one   = myNation[0]['Tech']['researched']['one']
@@ -175,11 +181,13 @@ def researchMenu(myNation,year,TECH_MAP):
         print('')
         print('Development Completion')
         print('===================')
-        PrintResearch([one,two,three,four,five])
+        if advanceFlag == 'On':
+            advanceFlag = PrintResearch([one,two,three,four,five])
         flag = showAssets(myNation,year,flag)
         print('')
         printCurrentResearch(myNation)
         print('')
+        print('[A] Advance Era')
         print('[D] Develop Technology')
         print('[G] Research Grant')
         print('[P] Purchase Technology')
@@ -192,6 +200,8 @@ def researchMenu(myNation,year,TECH_MAP):
         print(' ')
         print(' ')
         researchSelection = str(input('Please chose an option \n')).upper()
+        if researchSelection == 'A':
+            myNation = advanceEra(myNation,one,two,three,four,five,TECH_MAP,era = myNation[0]['Tech']['era'])
         if researchSelection == 'D':
             myNation = selectTech(myNation,one,two,three,four,five,TECH_MAP)
         if researchSelection == 'G':
@@ -318,3 +328,23 @@ def gainResearchPoints(myNation):
     print('')
     input('Your ' + str(researchOrder[2]) + ' research grant will award you points each round that can be spent on developing technology. \nPress enter to continue  \n')
     return(myNation)
+
+def advanceEra(myNation,one,two,three,four,five,TECH_MAP,era):
+    # Check isn't already researching a tech
+    returnCode = checkMoves(myNation,'advanceEra')[1]
+    if returnCode > 0: 
+        return(myNation)
+
+
+    era           = str(myNation[0]['Tech']['era'])
+    total = one[2] + two[2] + three[2] + four[2] + five[2]
+    if total < 500:
+        input('Not enough Development progress. Please complete development of all five tech stacks first. \n')
+    
+    # Place Order
+    myNation[0]['Nextmoves'] = myNation[0]['Nextmoves'] + ['advanceEra']
+
+    input(str(myNation[1]) + ' will progress to the ' + str( TECH_MAP['nextEra'][era]) )
+
+    return(myNation)
+
