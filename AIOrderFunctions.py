@@ -3,6 +3,7 @@ import time
 import copy
 import random
 
+from gameConquest_utilities  import checkMoves as checkMoves
 
 # TO DO ------
 
@@ -12,7 +13,11 @@ import random
 # Remember to deduct might from hard drill
 # Buffer drill by tech level 
 
-def setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING,NATION_ARRAY,AI_DEBUG):
+def setAIMoves(index,currentNation,ARRAY_DICT,AI_DEBUG):
+    NATION_ARRAY   = ARRAY_DICT['NATION_ARRAY']
+    PRICE_TRACKER  = ARRAY_DICT['PRICE_TRACKER']
+    WAR_BRIEFING   = ARRAY_DICT['WAR_BRIEFING']
+    TECH_MAP       = ARRAY_DICT['TECH_MAP']
 
     # Capping AI at one for now 
     moveLimit    = int(currentNation[0]['Special']['moveLimit'])
@@ -23,42 +28,41 @@ def setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING,NATION_ARRAY,AI_DE
     wealth       = currentNation[0]['Finance']['wealth'] 
 
 
-    # Calculate bias values
-    for moveNumber in range(1, moveLimit):
-        wealth       = currentNation[0]['Finance']['wealth']
-        financeBias  = materialism + random.randint(0,100)
-        warBias      = aggression  + random.randint(0,100)
-        #scienceBias  = creativity  + random.randint(0,100)
-        #politicsBias = prudence    + random.randint(0,100)
-        values = (financeBias,warBias)
-        bias = values.index(max(values))
+    
+    for moveNumber in range(1, 10):
+        moves = checkMoves(currentNation,"%^")[0]
+        #Ensure no countries take more moves than the limit
+        while checkMoves(currentNation,"%^")[0] > 1:
+            bias = calculateBias(currentNation,materialism,aggression,creativity,prudence)
 
-        if 'moves' in AI_DEBUG:
-            print('+++++DEBUG+++++ MOVES')
-            print('values finance, war: ' + str(values) )
-            print('bias: ' + str(bias))
+            # HAS FINANCE BIAS
+            if bias == 0:
+                # GAMBLE 
+                currentNation = gamble(currentNation)
+                # BUY
+                currentNation = aiBuy(PRICE_TRACKER,currentNation,materialism)
+                # SELL
+                currentNation = aiSell(PRICE_TRACKER,currentNation,aggression,materialism)
+                # Invest Resource
+                currentNation = investResource(currentNation,PRICE_TRACKER)
 
+            # HAS BIAS TOWARDS WAR
+            if bias == 1:
+                # TODO: Add logic
+                currentNation = drill(currentNation)
+                # BUILD
+                currentNation = build(currentNation,WAR_BRIEFING,aggression,materialism)
+                # SCRAP
+                currentNation = scrap(currentNation,WAR_BRIEFING,NATION_ARRAY)
+                # ESPIONAGE~
+                currentNation = espionage(currentNation,NATION_ARRAY,aggression,prudence,AI_DEBUG)
+           
+            # HAS BIAS TOWARDS SCIENCE
+            if bias == 2:
 
+                currentNation = gainResearchPoints(currentNation,NATION_ARRAY,aggression,TECH_MAP)
+                currentNation = researchTechnology(currentNation,NATION_ARRAY,aggression,TECH_MAP)
 
-        # HAS FINANCE BIAS
-        if bias == 0:
-            # GAMBLE 
-            currentNation = gamble(currentNation)
-            # BUY
-            currentNation = aiBuy(PRICE_TRACKER,currentNation,materialism)
-            # SELL
-            currentNation = aiSell(PRICE_TRACKER,currentNation,aggression,materialism)
-
-        # HAS BIAS TOWARDS WAR
-        if bias == 1:
-            # TODO: Add logic
-            currentNation = drill(currentNation)
-            # BUILD
-            currentNation = build(currentNation,WAR_BRIEFING,aggression,materialism)
-            # SCRAP
-            currentNation = scrap(currentNation,WAR_BRIEFING,NATION_ARRAY)
-            # ESPIONAGE
-            currentNation = espionage(currentNation,NATION_ARRAY,aggression,prudence,AI_DEBUG)
 
     # If No moves, then pass
     if len(currentNation[0]['Nextmoves']) == 0:
@@ -66,7 +70,16 @@ def setAIMoves(index,currentNation,PRICE_TRACKER,WAR_BRIEFING,NATION_ARRAY,AI_DE
         
     return(currentNation)
 
-
+def calculateBias(currentNation,materialism,aggression,creativity,prudence):
+    # Calculate bias values
+    wealth       = currentNation[0]['Finance']['wealth']
+    financeBias  = materialism + random.randint(0,100)
+    warBias      = aggression  + random.randint(0,100)
+    scienceBias  = creativity  + random.randint(0,100)
+    politicsBias = prudence    + random.randint(0,100)
+    values = (financeBias,warBias,scienceBias)
+    bias = values.index(max(values))
+    return(bias)
 
 
 
@@ -194,6 +207,11 @@ def allowedTech(techLevel):
 # Pick a military branch, save asset details to array, place order 
 def drill(currentNation):
 
+    returnCode = checkMoves(currentNation,'drill')[1]
+    if returnCode > 0: 
+        #print(str(currentNation[1]) + 'Already drilling')
+        return(currentNation)
+
     troops     = currentNation[0]['War']['weapons']['troops']
     tanks      = currentNation[0]['War']['weapons']['tanks']
     army       = troops + tanks
@@ -230,10 +248,12 @@ def drill(currentNation):
 
     exposure = random.choice(('soft','medium','hard'))
     drillOrder = ['drill',branch[0],exposure, units]
+
     #print(str(currentNation[1]) + ' order ' + str(drillOrder))
     # Deduct units
     for unit in units:
         currentNation[0]['War']['weapons'][unit] = 0
+
     # Place Order
     currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + [drillOrder]
     return(currentNation)
@@ -321,14 +341,88 @@ def gamble(currentNation):
     # Roughly 25% chance of having a gamble
     gambleAction = random.randint(0,10)
     if gambleAction < 3:
-        creditsAvailable = int(currentNation[0]['Finance']['wealth'])
-        maxSpend = round((int(currentNation[0]['Special']['aggression'])/100) * creditsAvailable)
-        if maxSpend > 1:
-            amount = random.randint(1,maxSpend)
-            currentNation[0]['Finance']['wealth'] = currentNation[0]['Finance']['wealth'] - amount
-            currentNation[0]['Nextmoves']         = currentNation[0]['Nextmoves'] + [['gamble',amount]]
+
+        returnCode,amount = arbitrarySpendAmount(currentNation)
+        if returnCode > 0: 
+            print('not enough')
+            return(currentNation)
+        currentNation[0]['Finance']['wealth'] = currentNation[0]['Finance']['wealth'] - amount
+        currentNation[0]['Nextmoves']         = currentNation[0]['Nextmoves'] + [['gamble',amount]]
 
     return(currentNation)
+
+
+def investResource(currentNation,PRICE_TRACKER):
+
+    # CHECK MAX MOVES
+    returnCode = checkMoves(currentNation,'investResource')[1]
+    if returnCode > 0: 
+        #print('Already invested or moves used up')
+        return(currentNation)
+
+    gold       = PRICE_TRACKER['gold']['history'][-3:]
+    raremetals = PRICE_TRACKER['raremetals']['history'][-3:]
+    gems       = PRICE_TRACKER['gems']['history'][-3:]
+    oil        = PRICE_TRACKER['oil']['history'][-3:]
+
+    resource = 'N'
+    if non_decreasing(gold) and len(gold) > 2:
+        resource = 'gold'
+    if non_decreasing(raremetals) and len(raremetals) > 2:
+        resource = 'raremetals'
+    if non_decreasing(gems) and len(gems) > 2:
+        resource = 'gems'
+    if non_decreasing(oil) and len(oil) > 2:
+        resource = 'oil'
+
+    if resource == 'N':
+        print('dropped out')
+        return(currentNation)
+
+    returnCode,spendAmount = arbitrarySpendAmount(currentNation)
+    if returnCode > 0: 
+        print('not enough')
+        return(currentNation)
+
+    # PLACE ORDER & Decrement wealth now
+    currentNation[0]['Finance']['wealth'] -=  spendAmount
+    investedPrice = PRICE_TRACKER[resource]['price']
+    wait = 4
+    currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + [['Submitted','investResource',resource,spendAmount,investedPrice,wait]]
+
+    return(currentNation)
+
+def non_increasing(L):
+    return all(x>=y for x, y in zip(L, L[1:]))
+
+def non_decreasing(L):
+    return all(x<=y for x, y in zip(L, L[1:]))
+
+def arbitrarySpendAmount(currentNation):
+    creditsAvailable = int(currentNation[0]['Finance']['wealth'])
+    aggression       = currentNation[0]['Special']['aggression']
+    prudence         = currentNation[0]['Special']['prudence']
+    amount = 0
+
+    # exit if credits too low
+    if creditsAvailable < 10:
+        return(1,amount)
+
+    top = 0.7
+    if aggression > prudence:
+        top = 0.9
+    if prudence > aggression:
+        top = 0.5
+
+
+    maxSpend = round((top) * creditsAvailable)
+
+    if maxSpend > 1:
+        amount = random.randint(1,maxSpend)
+        return(0,amount)
+    else:
+        return(1,amount)
+    return(1,amount)
 
 
 
@@ -388,9 +482,130 @@ def espionage(currentNation,NATION_ARRAY,aggression,prudence,AI_DEBUG):
             print('Espionage orders given..' + str(currentNation[0]['Nextmoves'] ))
     return(currentNation)
 
+# Perform this move to get RP if..
+# AI has less RP than the average required for any tech
+# AI has more than 100
+# Degree of commitment is a factor of agression
 
-def research(currentNation):
-    # Prevent AI from researching two things at the same time 
-    # Make sure AI does not already have this stack completed
+def gainResearchPoints(currentNation,NATION_ARRAY,aggression,TECH_MAP):
+    wealth    = currentNation[0]['Finance']['wealth']
+    era       = currentNation[0]['Tech']['era']
+    rpOwned   = currentNation[0]['Tech']['research points']
+
+    # Work out Average RP required for this Era
+    rpAverageCost = averageRPCost(TECH_MAP,era)
+
+    # CHECK MAX MOVES
+    returnCode = checkMoves(currentNation,'gainResearch')[1]
+    if returnCode > 0: 
+        #print(str(currentNation[1]) + 'Already researching')
+        return(currentNation)
+
+    # CHECK WEALTH
+    if wealth < 100:
+        return(currentNation)
+
+
+    researchProbability = (rpAverageCost/rpOwned) +(aggression/100)
+
+
+    # ELIF SWITCH MAX VALUE SELECTED
+    if researchProbability > 4: # far below average
+        intensity = 'Overtime'
+        investmentPercentage = 25
+        rounds = 8
+    elif researchProbability > 1.8: # quite a bit below average
+        intensity = 'Hard'
+        investmentPercentage = 15
+        rounds = 6
+    elif researchProbability > 1: # just under average
+        intensity = 'Medium'
+        investmentPercentage = 10
+        rounds = 4
+    elif researchProbability > 0.8: # has double required
+        intensity = 'Soft'
+        investmentPercentage = 0
+        rounds = 2
+    else:
+        return(currentNation)
+
+    amount = round((investmentPercentage/100) * wealth)
+    #Deduct in advance
+    currentNation[0]['Finance']['wealth']-= amount
+
+    researchOrder = ['submitted','gainResearch',intensity,investmentPercentage,rounds,amount]
+    currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + [researchOrder]
+    # print(currentNation[1])
+    # print(currentNation[0]['Nextmoves'])
     return(currentNation)
+
+def researchTechnology(currentNation,NATION_ARRAY,aggression,TECH_MAP):
+    wealth        = currentNation[0]['Finance']['wealth']
+    era           = str(currentNation[0]['Tech']['era'])
+    researched    = currentNation[0]['Tech']['researched']
+    rpOwned       = currentNation[0]['Tech']['research points']
+    rpAverageCost = averageRPCost(TECH_MAP,era)
+
+    # CHECK MAX MOVES
+    returnCode = checkMoves(currentNation,'research')[1]
+    if returnCode > 0: 
+       #print(str(currentNation[1]) + ' already researching..')
+        return(currentNation)
+
+    # WORK OUT PROBABILITY FOR INVESTING IN TECH RESEARCH
+    # If AI is behind on development (say 30% of average) then do research
+    averageCompletion = averageResearchCompletion(currentNation)
+    #print('average completion ' + str(averageCompletion))
+    
+    researchTechProbability = 0
+    if averageCompletion < 50:
+        researchTechProbability = 4
+
+    if rpOwned > (0.8 * rpAverageCost):
+        researchTechProbability += 2
+
+    researchTechProbability += random.randint(0,5)
+    
+
+    if researchTechProbability > 4:
+        # Get the index key for the lowest researched tech stream
+        # This could no doubt be done in a loop...lazy coding but it works
+        one    = currentNation[0]['Tech']['researched']['one'][2]
+        two    = currentNation[0]['Tech']['researched']['two'][2]
+        three  = currentNation[0]['Tech']['researched']['three'][2]
+        four   = currentNation[0]['Tech']['researched']['four'][2]
+        five   = currentNation[0]['Tech']['researched']['five'][2]
+        selectionArray = [one,two,three,four,five]
+        selectionIndex = selectionArray.index(min(selectionArray))
+        choice = ['one','two','three','four','five'][selectionIndex]
+
+        required         = TECH_MAP['EraCost'][era][choice]['rp']
+        myTechPoints     = researched[choice][0]
+        remaining        = required - myTechPoints
+
+        if myTechPoints > (required - 1):
+            print(str(currentNation[1]) + ' maxed out all tech streams. ' + str(selectionArray))
+            return(currentNation)
+
+        #PLACE ORDER 
+        currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + [['submitted','research',era, choice,required]]
+
+
+
+    return(currentNation)
+
+def averageRPCost(TECH_MAP,era):
+    rpCostArray = []
+    for techChoice in TECH_MAP['EraCost'][era].values():
+        rpCostArray.append(techChoice['rp'])
+    rpAverageCost = sum(rpCostArray)/len(rpCostArray)
+    return(rpAverageCost)
+
+def averageResearchCompletion(currentNation):
+    completionArray = []
+    for techChoice in currentNation[0]['Tech']['researched'].values():
+        completionArray.append(techChoice[-1])
+
+    AverageCompletion = sum(completionArray)/len(completionArray)
+    return(AverageCompletion)
 

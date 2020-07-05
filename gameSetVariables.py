@@ -74,7 +74,7 @@ def setVariables(WAR_BRIEFING):
 
         nation[0]['Friendship'] = {}
         for state in NATION_ARRAY:
-            friendship = random.randint(-5,50)
+            friendship = random.randint(-10,50)
             if nation[1] != state[1]:
                 nation[0]['Friendship'][state[1]] = {'level': friendship,'warDate': 0,'initiated': 0,'noWars': 0,'declared': 0,'attacked': 0,'lost': 0,'won': 0}
 

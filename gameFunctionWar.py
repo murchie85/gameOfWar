@@ -126,7 +126,7 @@ def drill(nextMove,NATION_ARRAY,currentNation,p,index,playerNationIndex):
     #units = [('troops',troops),('tanks',tanks)]
 
 
-    # Return Units 
+    # RETURN UNITS
     for unit, quantity in units:
         NATION_ARRAY[index][0]['War']['weapons'][unit] = quantity
 
@@ -250,16 +250,21 @@ def espionage(nextMove,NATION_ARRAY,currentNation,p,index,playerNationIndex,debu
     preferencePrint(str(str(NATION_ARRAY[nationChoice][1]) + ' has been infiltrated by an unknown advisary'),p,index,playerNationIndex)
     preferencePrint('===========================================',p,index,playerNationIndex)
     preferencePrint(str(str(NATION_ARRAY[nationChoice][1]) + ' current actions sabotaged and will miss a round.'),p,index,playerNationIndex)
-    preferencePrint(str(str(currentNation[1]) + ' gained ' + str(bonusPercent) + '% might.' ),p,index,playerNationIndex)
-    preferencePrint(str(str(currentNation[1]) + ' original might value: ' + str(currentNation[0]['War']['might'])),p,index,playerNationIndex)
+    
+    if currentNation[1] == NATION_ARRAY[playerNationIndex][1]:
+        preferencePrint(str(str(currentNation[1]) + ' gained ' + str(bonusPercent) + '% might.' ),p,index,playerNationIndex)
+        preferencePrint(str(str(currentNation[1]) + ' original might value: ' + str(currentNation[0]['War']['might'])),p,index,playerNationIndex)
+    
     currentNation[0]['War']['might'] = round(currentNation[0]['War']['might'] + (currentNation[0]['War']['might'] * (bonusPercent/100)))
-    preferencePrint(str(str(currentNation[1]) + '      new might value: ' + str(currentNation[0]['War']['might'])),p,index,playerNationIndex)
+    if currentNation[1] == NATION_ARRAY[playerNationIndex][1]:
+        preferencePrint(str(str(currentNation[1]) + '      new might value: ' + str(currentNation[0]['War']['might'])),p,index,playerNationIndex)
 
     discoverRisk = random.randint(0,5)
     if discoverRisk == 2:
+        preferencePrint('',p,index,playerNationIndex)
         preferencePrint(str(str(NATION_ARRAY[nationChoice][1]) + ' captured the insurgent from ' + str(currentNation[1])),p,index,playerNationIndex)
         preferencePrint('===========================================',p,index,playerNationIndex)
-        preferencePrint(str(str(NATION_ARRAY[nationChoice][1]) + ' friendship with ' + str(currentNation[1] + ' has decreased.')),p,index,playerNationIndex)
+        preferencePrint(str(str(NATION_ARRAY[nationChoice][1]) + ' friendship with ' + str(currentNation[1] + ' has decreased as a result.')),p,index,playerNationIndex)
         preferencePrint(str(str(NATION_ARRAY[nationChoice][1]) + ' original friendship value: ' + str(NATION_ARRAY[nationChoice][0]['Friendship'][currentNation[1]]['level'])),p,index,playerNationIndex)
         NATION_ARRAY[nationChoice][0]['Friendship'][currentNation[1]]['level'] = NATION_ARRAY[nationChoice][0]['Friendship'][currentNation[1]]['level'] - random.randint(1,18)
         preferencePrint(str(str(NATION_ARRAY[nationChoice][1]) + ' new friendship value: ' + str(NATION_ARRAY[nationChoice][0]['Friendship'][currentNation[1]]['level'])),p,index,playerNationIndex)

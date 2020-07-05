@@ -605,7 +605,9 @@ def scrapMenu(myNation,year,WAR_BRIEFING):
         print(' ')
         # CHECK MAX MOVES SINCE INSIDE WHILE LOOP
         returnCode = checkMoves(myNation,'%^')[1]
-        if returnCode > 0: return(myNation)
+        if returnCode > 0: 
+            print('Moves used up.')
+            return(myNation)
 
 
         buildSelection = str(input('Please chose an option \n')).upper()
@@ -1081,8 +1083,10 @@ def covert(myNation,NATION_ARRAY,WAR_BRIEFING):
 
 def espionage(myNation,NATION_ARRAY,WAR_BRIEFING):
     # CHECK MAX MOVES
-    returnCode = checkMoves(myNation,'covert')[1]
-    if returnCode > 0: return(myNation)
+    returnCode = checkMoves(myNation,'espionage')[1]
+    if returnCode > 0: 
+        print('You have already carried out espionage this round.')
+        return(myNation)
     # SELECT COUNTRY
     returnCode,NationChoice = selectCountry(NATION_ARRAY,myNation,'****CHOOSE A TARGET****')
     if returnCode > 0: return(myNation)

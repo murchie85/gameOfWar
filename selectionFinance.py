@@ -569,7 +569,9 @@ def investMenu(myNation,year,PRICE_TRACKER,NATION_ARRAY):
 def investResource(myNation,NATION_ARRAY,PRICE_TRACKER,resource):
     # CHECK MAX MOVES
     returnCode = checkMoves(myNation,'investResource')[1]
-    if returnCode > 0: return(myNation)
+    if returnCode > 0: 
+        input('Already invested or moves used up')
+        return(myNation)
 
     returnCode,spendAmount = enterMoney(myNation,'How much money do you wish to invest?')
     if returnCode > 0: return(myNation)
@@ -579,7 +581,7 @@ def investResource(myNation,NATION_ARRAY,PRICE_TRACKER,resource):
     # Decrement wealth now
     myNation[0]['Finance']['wealth'] = myNation[0]['Finance']['wealth'] - spendAmount
     investedPrice = PRICE_TRACKER[resource]['price']
-    wait = 2
+    wait = 4
     myNation[0]['Nextmoves'] = myNation[0]['Nextmoves'] + [['Submitted','investResource',resource,spendAmount,investedPrice,wait]]
 
     print('You have chosen to invest $' + str(spendAmount) + ' in ' + str(resource))
@@ -594,7 +596,9 @@ def investCountry(myNation,NATION_ARRAY):
     print('Investing in the growth of a country, helps boost friendship and earns money.')
     # CHECK MAX MOVES
     returnCode = checkMoves(myNation,'investCountry')[1]
-    if returnCode > 0: return(myNation)
+    if returnCode > 0: 
+        print('Already invested or moves used up.')
+        return(myNation)
     # SELECT COUNTRY
     returnCode,NationChoice = selectCountry(NATION_ARRAY,myNation,'****CHOOSE A NATION TO INVEST IN****')
     if returnCode > 0: return(myNation)
@@ -607,7 +611,7 @@ def investCountry(myNation,NATION_ARRAY):
     # Decrement wealth now
     myNation[0]['Finance']['wealth'] = myNation[0]['Finance']['wealth'] - spendAmount
     nationsOriginalWealth = NATION_ARRAY[NationChoice][0]['Finance']['wealth']
-    wait = 2
+    wait = 4
     myNation[0]['Nextmoves'] = myNation[0]['Nextmoves'] + [['Submitted','investCountry',NationChoice,spendAmount,nationsOriginalWealth,wait]]
 
     print('You have chosen to invest $' + str(spendAmount) + ' in ' + str(NATION_ARRAY[NationChoice][1]))

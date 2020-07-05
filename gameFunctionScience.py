@@ -17,7 +17,7 @@ def processResearch(nextMove,NATION_ARRAY,TECH_MAP,currentNation,p,index,playerN
 
     remaining                = required - currentNation[0]['Tech']['researched'][choice][0]
     pointsOwned              = currentNation[0]['Tech']['research points']
-    pointsToSpend            = round(currentNation[0]['Tech']['research points'] * 0.1)
+    pointsToSpend            = round(currentNation[0]['Tech']['research points'] * 0.2) # Test the last number, it may need reduced: spend = devcompletion speed
 
     # Skip this move if not enough points
     if pointsOwned < pointsToSpend:
@@ -69,13 +69,13 @@ def processResearchReward(NATION_ARRAY,TECH_MAP,era,choice,researchedItemName,p,
     for item in TECH_MAP['EraBonus'][era][choice]:
         if item[0] == 'K':
             printLine = str('Knowledge boosted by ' + str(item[1]) + ' points.')
-            NATION_ARRAY[playerNationIndex][0]['Tech']['knowledge'] += item[1]
+            NATION_ARRAY[index][0]['Tech']['knowledge'] += item[1]
         if item[0] == 'R':
             printLine = str('Research boosted by ' + str(item[1]) + ' points.')
-            NATION_ARRAY[playerNationIndex][0]['Tech']['research points'] += item[1]
+            NATION_ARRAY[index][0]['Tech']['research points'] += item[1]
         if item[0] == 'W':
             printLine = str('Wealth increased by $' + str(item[1]))
-            NATION_ARRAY[playerNationIndex][0]['Finance']['wealth'] += item[1]
+            NATION_ARRAY[index][0]['Finance']['wealth'] += item[1]
         preferencePrint(printLine,p,index,playerNationIndex)
     preferencePrint('',p,index,playerNationIndex)
     return(NATION_ARRAY)

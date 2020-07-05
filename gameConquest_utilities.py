@@ -2,6 +2,7 @@
 # UTILITIES 
 import sys
 import time
+import itertools
 
 #p = 'All'
 
@@ -86,12 +87,12 @@ def options(p,NATION_ARRAY,debug):
     if selection == '3':
         developer(NATION_ARRAY)
         return(p,debug)
-    if selection == '4':
-        if debug != 'y':
-            debug = 'y'
-        else:
-            debug = 'n'
-        return(p,debug)
+    # if selection == '4':
+    #     if debug != 'y':
+    #         debug = 'y'
+    #     else:
+    #         debug = 'n'
+    #     return(p,debug)
 
 
 
@@ -193,11 +194,13 @@ def developer(NATION_ARRAY):
         clearScreen()
 
 
+
 # returns how many moves remain and error code.
 def checkMoves(myNation,duplicateToCheck):
     mlimit = int( myNation[0]['Special']['moveLimit'])
     mvs    = int(len(myNation[0]['Nextmoves']))
-    pnding = int(str(sum(myNation[0]['Nextmoves'], [])).count('pending'))
+    array = myNation[0]['Nextmoves']
+    pnding = list(itertools.chain(*array)).count('pending')
 
 
     movesLeft = int(mlimit-mvs+pnding)
@@ -205,7 +208,7 @@ def checkMoves(myNation,duplicateToCheck):
         return(movesLeft,1)
     for item in myNation[0]['Nextmoves']:
         if duplicateToCheck in item:
-            print('you have already carried out '  + str(duplicateToCheck) + ' in this round')
+            #print('you have already carried out '  + str(duplicateToCheck) + ' in this round')
             return(movesLeft,1)
     return(movesLeft,0)
 
