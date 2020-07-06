@@ -13,7 +13,7 @@ from gameConquest_utilities  import checkMoves as checkMoves
 # Remember to deduct might from hard drill
 # Buffer drill by tech level 
 
-def setAIMoves(index,currentNation,ARRAY_DICT,AI_DEBUG):
+def setAIMoves(index,currentNation,ARRAY_DICT):
     NATION_ARRAY   = ARRAY_DICT['NATION_ARRAY']
     PRICE_TRACKER  = ARRAY_DICT['PRICE_TRACKER']
     WAR_BRIEFING   = ARRAY_DICT['WAR_BRIEFING']
@@ -51,13 +51,13 @@ def setAIMoves(index,currentNation,ARRAY_DICT,AI_DEBUG):
             # HAS BIAS TOWARDS WAR
             if bias == 1:
                 # TODO: Add logic
-                # currentNation = drill(currentNation)
+                currentNation = drill(currentNation,NATION_ARRAY)
                 # BUILD
                 currentNation = build(currentNation,WAR_BRIEFING,aggression,materialism)
                 # SCRAP
                 currentNation = scrap(currentNation,WAR_BRIEFING,NATION_ARRAY)
                 # ESPIONAGE~
-                currentNation = espionage(currentNation,NATION_ARRAY,aggression,prudence,AI_DEBUG)
+                currentNation = espionage(currentNation,NATION_ARRAY,aggression,prudence)
            
             # HAS BIAS TOWARDS SCIENCE
             if bias == 2:
@@ -154,8 +154,6 @@ def scrap(currentNation,WAR_BRIEFING,NATION_ARRAY):
     scrapProbability = 10
 
 
-
-
     # Check to see if current country is poorer than 80% of average
     for country in NATION_ARRAY: wealthArray.append(country[0]['Finance']['wealth'])
     averageWealth = round((sum(wealthArray)/len(wealthArray)))
@@ -169,10 +167,10 @@ def scrap(currentNation,WAR_BRIEFING,NATION_ARRAY):
         adjusted     = round((aggressionAdjusted * stock))
         maxScrap     = round(random.randint(adjusted, stock))
 
-        if stock < 0 or maxScrap < 0:
+        if stock < 1 or maxScrap < 1:
             print('none to scrap')
             print('stock :' + str(stock))
-            print('maxscrap: ' + str(maxscrap))
+            print('maxscrap: ' + str(maxScrap))
             return(currentNation)
 
         scrapAmount = random.randint(1,maxScrap)
@@ -214,59 +212,100 @@ def allowedTech(currentNation):
 
 
 
-
+# DRILL IF MIGHT IS < 80% of Average
 # Pick a military branch, save asset details to array, place order 
-def drill(currentNation):
+def drill(currentNation,NATION_ARRAY):
 
     returnCode = checkMoves(currentNation,'drill')[1]
     if returnCode > 0: 
         #print(str(currentNation[1]) + 'Already drilling')
         return(currentNation)
 
-    troops     = currentNation[0]['War']['weapons']['troops']
-    tanks      = currentNation[0]['War']['weapons']['tanks']
-    army       = troops + tanks
-    gunboats   = currentNation[0]['War']['weapons']['gunboats']
-    destroyers = currentNation[0]['War']['weapons']['destroyers']
-    carriers   = currentNation[0]['War']['weapons']['carriers']
-    navy       = gunboats + destroyers + carriers
-    jets       = currentNation[0]['War']['weapons']['jets']
-    bombers    = currentNation[0]['War']['weapons']['bombers']
-    airforce   = jets + bombers
-    nukes      = currentNation[0]['War']['weapons']['Nukes']
-        
+    # BUILD PROBABILITY
+    #-----------------
+    averageMight,averageWealth,averageKnowledge,averageInfluence = getAverages(NATION_ARRAY)
+    might = currentNation[0]['War']['might']
 
-    branchSelection = []
-    if army > 0: 
-        branchSelection.append(('army',     ('troops','tanks'),army))
-    if navy > 0: 
-        branchSelection.append(('navy',     ('gunboats','destroyers','carriers'),navy))
-    if airforce > 0: 
-        branchSelection.append(('airforce', ('jets','bombers'),airforce))
-    if len(branchSelection) ==0:
-        currentNation[0]['Nextmoves']= [['pass']]
-        print('failed to drill')
+    drillChance = 0
+    if might < (0.5 * averageMight):
+        drillChance += random.randint(0,8)
+    elif might < (0.8 * averageMight):
+        drillChance += random.randint(0,6)
+    else:
+        drillChance += random.randint(0,4)
+
+    # Warmongers gonna be warmongers
+    if might > (2.5 * averageMight):
+        drillChance += random.randint(0,20)
+    # Drop out if threshold not met
+    if drillChance < 2:
         return(currentNation)
 
-    branch = random.choice(branchSelection)
-    #print(branch)
-    units = []
 
-    #filling an array to say what units and how many belong to this branch 
-    for asset in branch[1]:
-        package = (str(asset),currentNation[0]['War']['weapons'][asset])
-        units.append(package)
+    unitOne      = currentNation[0]['War']['weapons']['1']
+    unitTwo      = currentNation[0]['War']['weapons']['2']
+    light        = unitOne[1] + unitTwo[1]
+    
+    unitThree    = currentNation[0]['War']['weapons']['3']
+    unitFour     = currentNation[0]['War']['weapons']['4']
+    unitFive     = currentNation[0]['War']['weapons']['5']
+    core         = unitThree[1] + unitFour[1] + unitFive[1]
+    
+    unitSix      = currentNation[0]['War']['weapons']['6']
+    unitSeven    = currentNation[0]['War']['weapons']['7']
+    heavy        = unitSix[1] + unitSeven[1]
+    
+    unitEight    = currentNation[0]['War']['weapons']['8']
+        
+    branchChoiceArray = []
 
-    exposure = random.choice(('soft','medium','hard'))
-    drillOrder = ['drill',branch[0],exposure, units]
+    if light > 1:
+        branchChoiceArray.append('light')
+    if core > 1:
+        branchChoiceArray.append('core')
+    if heavy > 1:
+        branchChoiceArray.append('heavy')
 
-    #print(str(currentNation[1]) + ' order ' + str(drillOrder))
+    # in the event there are no units
+    if len(branchChoiceArray) < 1:
+        return(currentNation)
+
+    branchChoice = random.choice(branchChoiceArray)
+
+    # based upon selection
+    if branchChoice == 'light':
+        units = [('1',unitOne[1]),('2',unitTwo[1])]
+        branch = 'Light Units'
+    elif branchChoice == 'core':
+        units = [('3',unitThree[1]),('4',unitFour[1]),('5',unitFive[1])]
+        branch = 'Core Division'
+    elif branchChoice == 'heavy':
+        units = [('6',unitSix[1]),('7',unitSeven[1])]
+        branch = 'Heavy Forces'
+    else:
+        return(currentNation)
+
+
+    aggression          = currentNation[0]['Special']['aggression']
+    augmentedAggresion  = random.randint(0,(100 + aggression))
+
+    # Ive tilted this a bit more towards harder drilling: can amend later
+    if augmentedAggresion > 120:
+        exposure = 'hard'
+    elif augmentedAggresion > 85:
+        exposure = 'medium'
+    else:
+        exposure = 'soft'
+
+    drillOrder = ['drill',branch,exposure, units]
+
     # Deduct units
     for unit in units:
-        currentNation[0]['War']['weapons'][unit] = 0
+        unit = unit[0]
+        currentNation[0]['War']['weapons'][unit][1] = 0
 
     # Place Order
-    currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + [drillOrder]
+    currentNation[0]['Nextmoves'] += [drillOrder]
     return(currentNation)
 
 # Probability of purchase depends how much the price is lower than average
@@ -274,7 +313,10 @@ def aiBuy(PRICE_TRACKER,currentNation,materialism):
 
     commodity = random.choice(('gold','gems','raremetals','oil'))
    
-    percentageDecrease = ((PRICE_TRACKER[commodity]['average'] - PRICE_TRACKER[commodity]['price'])/PRICE_TRACKER[commodity]['average'])
+    averageCommodityPrice = PRICE_TRACKER[commodity]['average']
+    if averageCommodityPrice == 0:
+        averageCommodityPrice = 0.1
+    percentageDecrease = ((PRICE_TRACKER[commodity]['average'] - PRICE_TRACKER[commodity]['price'])/averageCommodityPrice)
    
     # Higher materialism increases buy probability
     if percentageDecrease > 0.80:
@@ -487,7 +529,7 @@ def returnBestFriends(currentNation):
     return(friendList)
 
 # Only attack if aggression high, prudence low, friendship low
-def espionage(currentNation,NATION_ARRAY,aggression,prudence,AI_DEBUG):
+def espionage(currentNation,NATION_ARRAY,aggression,prudence):
 
     # if friendship lower than 0 - espionage is possible.
     espionageThreshold = 0
@@ -533,13 +575,6 @@ def espionage(currentNation,NATION_ARRAY,aggression,prudence,AI_DEBUG):
 
         espionageOrder = ['espionage',targetNationIndex]
         currentNation[0]['Nextmoves'] = currentNation[0]['Nextmoves'] + [espionageOrder]
-        # DEBUG
-        if 'espionage' in AI_DEBUG:
-            print('+++++DEBUG+++++ Espionage')
-            print('Current nation: ' + str(currentNation[1]))
-            print('Target nation: ' + str(targetNation))
-            print('Friendship: ' + str(currentNation[0]['Friendship'][targetNation]['level']))
-            print('Espionage orders given..' + str(currentNation[0]['Nextmoves'] ))
     return(currentNation)
 
 # Perform this move to get RP if..
@@ -636,8 +671,14 @@ def researchTechnology(currentNation,NATION_ARRAY,aggression,TECH_MAP):
         four   = currentNation[0]['Tech']['researched']['four'][2]
         five   = currentNation[0]['Tech']['researched']['five'][2]
         selectionArray = [one,two,three,four,five]
+
         selectionIndex = selectionArray.index(min(selectionArray))
         choice = ['one','two','three','four','five'][selectionIndex]
+
+        # Sometimes wont always start from left to right
+        randomChoice = random.randint(0,1)
+        if randomChoice == 1:
+            choice = random.choice(['one','two','three','four','five'])
 
         required         = TECH_MAP['EraCost'][era][choice]['rp']
         myTechPoints     = researched[choice][0]
@@ -692,4 +733,23 @@ def averageResearchCompletion(currentNation):
 
     AverageCompletion = sum(completionArray)/len(completionArray)
     return(AverageCompletion)
+
+def getAverages(NATION_ARRAY):
+    mightArray       = []
+    wealthArray      = []
+    knowledgeArray   = []
+    influenceArray   = []
+    for nation in NATION_ARRAY:
+        mightArray.append(nation[0]['War']['might'])
+        wealthArray.append(nation[0]['Finance']['wealth'])
+        knowledgeArray.append(nation[0]['Tech']['knowledge'])
+        influenceArray.append(nation[0]['Politics']['influence'])
+
+    averageMight = sum(mightArray)/len(mightArray)
+    averageWealth = sum(wealthArray)/len(wealthArray)
+    averageKnowledge = sum(knowledgeArray)/len(knowledgeArray)
+    averageInfluence = sum(influenceArray)/len(influenceArray)
+    return(averageMight,averageWealth,averageKnowledge,averageInfluence)
+
+
 

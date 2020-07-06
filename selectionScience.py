@@ -139,6 +139,7 @@ def showAssets(myNation,year,flag):
 
 
 def PrintResearch(paddingArray):
+     
     for item in paddingArray:
         paddingLen = 20 - len(item[1])
         padding    = ''

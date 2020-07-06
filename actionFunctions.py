@@ -22,26 +22,16 @@ import AIOrderFunctions    as AI
 
 
 # ENTRANCE FUNCTION (TOP LEVEL FLOW)  
-def nextYear(year,myNation,ARRAY_DICT,playerNationIndex,p,debug):
+def nextYear(year,myNation,ARRAY_DICT,playerNationIndex,p):
     NATION_ARRAY   = ARRAY_DICT['NATION_ARRAY']
     PRICE_TRACKER  = ARRAY_DICT['PRICE_TRACKER']
     WAR_BRIEFING   = ARRAY_DICT['WAR_BRIEFING']
     TECH_MAP       = ARRAY_DICT['TECH_MAP']
 
 
-    AI_DEBUG = ''
     clearScreen()
     fast_print('Processing next year....')
     print('')
-
-    if debug == 'y':
-        debugEspionage = input('Debug Espionage? y/n \n')
-        debugMoves= input('Debug Moves? y/n \n')
-        if debugEspionage == 'y':
-            AI_DEBUG = AI_DEBUG + 'espionage'
-        if debugMoves == 'y':
-            AI_DEBUG = AI_DEBUG + 'moves'
-
 
 
     previousPrices = copy.deepcopy (PRICE_TRACKER)
@@ -53,10 +43,10 @@ def nextYear(year,myNation,ARRAY_DICT,playerNationIndex,p,debug):
 
         # AI TEAM DECISION
         if currentNation != myNation: 
-            currentNation = AI.setAIMoves(index,currentNation,ARRAY_DICT,AI_DEBUG)
+            currentNation = AI.setAIMoves(index,currentNation,ARRAY_DICT)
 
         # ACTION CARRIED OUT FOR ALL USERS
-        NATION_ARRAY,PRICE_TRACKER = action(index, ARRAY_DICT,currentNation,p,playerNationIndex,debug)
+        NATION_ARRAY,PRICE_TRACKER = action(index, ARRAY_DICT,currentNation,p,playerNationIndex)
 
         # BRANCH PROMOTIONS
         currentNation  = financeFunction.promotion(currentNation,p,index,playerNationIndex)
@@ -81,9 +71,7 @@ def nextYear(year,myNation,ARRAY_DICT,playerNationIndex,p,debug):
     myNation = menu(myNation,PRICE_TRACKER,previousPrices,p,year)
     # INCREMENT THE YEARS
     year = year + 1
-    if debug == 'y':
-        print('**todo** FUNCTION TO CHECK WHEN STOCK IS 10% AND PUT ALERTS')
-        input('Debug: next moves ' + str(myNation[0]['Nextmoves']))
+
     return(year, NATION_ARRAY,PRICE_TRACKER,WAR_BRIEFING,p)
 
 
@@ -93,7 +81,7 @@ def nextYear(year,myNation,ARRAY_DICT,playerNationIndex,p,debug):
 
 
 
-def action(index, ARRAY_DICT,currentNation,p,playerNationIndex,debug):
+def action(index, ARRAY_DICT,currentNation,p,playerNationIndex):
     NATION_ARRAY   = ARRAY_DICT['NATION_ARRAY']
     PRICE_TRACKER  = ARRAY_DICT['PRICE_TRACKER']
     WAR_BRIEFING   = ARRAY_DICT['WAR_BRIEFING']
@@ -129,8 +117,8 @@ def action(index, ARRAY_DICT,currentNation,p,playerNationIndex,debug):
             #print('current nation' + str(currentNation[1]))
             NATION_ARRAY = financeFunction.investCountry(nextMove,NATION_ARRAY,currentNation,PRICE_TRACKER,p,index,playerNationIndex,nextMoveIndex)
     
-        # if 'drill' in nextMove:
-        #     NATION_ARRAY = warFunction.drill(nextMove,NATION_ARRAY,currentNation,p,index,playerNationIndex)
+        if 'drill' in nextMove:
+            NATION_ARRAY = warFunction.drill(nextMove,NATION_ARRAY,currentNation,p,index,playerNationIndex)
 
         # Even if prices change, you get it for the order you placed
         if 'WeaponsBuild' in nextMove:
@@ -140,7 +128,7 @@ def action(index, ARRAY_DICT,currentNation,p,playerNationIndex,debug):
             NATION_ARRAY = warFunction.scrap(nextMove,NATION_ARRAY,currentNation,p,index,playerNationIndex)
 
         if 'espionage' in nextMove:
-            NATION_ARRAY = warFunction.espionage(nextMove,NATION_ARRAY,currentNation,p,index,playerNationIndex,debug)
+            NATION_ARRAY = warFunction.espionage(nextMove,NATION_ARRAY,currentNation,p,index,playerNationIndex)
 
         if 'research' in nextMove:
             NATION_ARRAY = scienceFunction.processResearch(nextMove,NATION_ARRAY,TECH_MAP,currentNation,p,index,playerNationIndex,nextMoveIndex)
@@ -169,7 +157,7 @@ def tallyScores(NATION_ARRAY):
         techScore      = NATION_ARRAY[x][0]['Tech']['knowledge']
         warScore       = NATION_ARRAY[x][0]['War']['might']
         politicsScore  = NATION_ARRAY[x][0]['Politics']['influence']
-        totalSubScores = financeScore + techScore + warScore + politicsScore
+        totalSubScores = round(financeScore + techScore + warScore + politicsScore)
         NATION_ARRAY[x][0]['Score'] = totalSubScores
     return(NATION_ARRAY)
 

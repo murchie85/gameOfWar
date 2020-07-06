@@ -158,7 +158,7 @@ def investCountry(nextMove,NATION_ARRAY,currentNation,PRICE_TRACKER,p,index,play
         if wealthDiff > 0:
             bonus = round(wealthDiff * 0.2) + round(wealthDiff * 0.05 * spendAmount/100) + (spendAmount * 1.5)
             bonus = round(bonus)
-            print('982348937982348937982348937982348937982348937982348937 WEALTH DIFF' + str(wealthDiff))
+            #print('982348937982348937982348937982348937982348937982348937 WEALTH DIFF' + str(wealthDiff))
             NATION_ARRAY[index][0]['Finance']['wealth'] = round(NATION_ARRAY[index][0]['Finance']['wealth'] + bonus)
             preferencePrint(str(str(currentNation[1]) + ' made a profit of $' + str(bonus)),p,index,playerNationIndex)
    

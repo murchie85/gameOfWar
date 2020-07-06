@@ -237,6 +237,22 @@ userName = 'DonnerKebab'
 # MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU MAIN MENU
 # =======================================================================
 """
+p = 'All'
+out = 'All'
+
+def updates(p):
+	if p == 'All':
+		p = 'Me'
+		out = 'Just Me'
+	elif p == 'Me':
+		p = 'None'
+		out = 'No Updates'
+	elif p == 'None':
+		p = 'All'
+		out = 'All'
+
+	return(p,out)
+
 def menuUpdate():
 	for item in myNation[0]['Special']['notes']:
 		if item == 'financeLevel':
@@ -256,7 +272,7 @@ def menuUpdate():
 		myNation[0]['Special']['notes'] = []
 	
 
-debug = 'n'
+
 menuSelection = ' '
 while menuSelection != 'E':
 	clearScreen()
@@ -291,14 +307,10 @@ while menuSelection != 'E':
 	print(' ')
 	print(' ')
 	print('[O] Options')
+	print('[U] Updates')
 	print('[X] Exit')
 	print(' ')
-	#print(myNation[0]['Special']['moveLimit'])
-	#print(len(myNation[0]['Nextmoves']))
-	#print(str( sum(myNation[0]['Nextmoves'], []) ).count('pending'))
-	#print(myNation[0]['Nextmoves'])
-	#print('Moves: ' + str( myNation[0]['Special']['moveLimit'] - len(myNation[0]['Nextmoves'])  + str(sum(myNation[0]['Nextmoves'], [])).count('pending')))
-	print('Moves: ' + str(checkMoves(myNation,"%^")[0]) )
+	print('Moves: ' + str(checkMoves(myNation,"%^")[0]) + '                          [U] ' + str(out))
 	print('****************************************')
 	print(' ')
 	print(' ')
@@ -315,10 +327,12 @@ while menuSelection != 'E':
 	if menuSelection == 'T':
 		myNation = tech.techMenu(myNation,year,PRICE_TRACKER,TECH_MAP)
 	if menuSelection == 'N' or menuSelection == '':
-		year, NATION_ARRAY,PRICE_TRACKER,WAR_BRIEFING,p = nextYear(year,myNation,ARRAY_DICT,playerNationIndex,p,debug)
-	
+		year, NATION_ARRAY,PRICE_TRACKER,WAR_BRIEFING,p = nextYear(year,myNation,ARRAY_DICT,playerNationIndex,p)
+
 	if menuSelection == 'O':
 		p,debug = options(p,NATION_ARRAY,debug)
+	if menuSelection == 'U':
+		p,out = updates(p)
 	if menuSelection == 'X':
 		exit()
 		

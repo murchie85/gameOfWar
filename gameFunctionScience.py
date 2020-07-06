@@ -70,13 +70,13 @@ def processResearchReward(NATION_ARRAY,TECH_MAP,era,choice,researchedItemName,p,
     for item in TECH_MAP['EraBonus'][era][choice]:
         if item[0] == 'K':
             printLine = str('Knowledge boosted by ' + str(item[1]) + ' points.')
-            NATION_ARRAY[index][0]['Tech']['knowledge'] += item[1]
+            NATION_ARRAY[index][0]['Tech']['knowledge'] += round(item[1])
         if item[0] == 'R':
             printLine = str('Research boosted by ' + str(item[1]) + ' points.')
-            NATION_ARRAY[index][0]['Tech']['research points'] += item[1]
+            NATION_ARRAY[index][0]['Tech']['research points'] += round(item[1])
         if item[0] == 'W':
             printLine = str('Wealth increased by $' + str(item[1]))
-            NATION_ARRAY[index][0]['Finance']['wealth'] += item[1]
+            NATION_ARRAY[index][0]['Finance']['wealth'] += round(item[1])
         preferencePrint(printLine,p,index,playerNationIndex)
     preferencePrint('',p,index,playerNationIndex)
     return(NATION_ARRAY)
@@ -113,8 +113,8 @@ def gainResearch(nextMove,NATION_ARRAY,TECH_MAP,currentNation,p,index,playerNati
         rounds = rounds -1
 
         #ADD REWARDS
-        NATION_ARRAY[index][0]['Tech']['research points'] += bonusRP
-        NATION_ARRAY[index][0]['Tech']['knowledge']      += bonusKP
+        NATION_ARRAY[index][0]['Tech']['research points'] += round(bonusRP)
+        NATION_ARRAY[index][0]['Tech']['knowledge']      += round(bonusKP)
 
         nextMove = ['pending',job,intensity,investedPercent,rounds,invested]
         NATION_ARRAY[index][0]['Nextmoves'][nextMoveIndex] = nextMove
@@ -149,7 +149,7 @@ def advanceEra(nextMove,NATION_ARRAY,TECH_MAP,WAR_BRIEFING,currentNation,p,index
     NATION_ARRAY[index][0]['Tech']['researched'] = {'one':[0,'',0],'two':[0,'',0],'three':[0,'',0],'four':[0,'',0],'five':[0,'',0]}
     NATION_ARRAY = updateTechNames(NATION_ARRAY,TECH_MAP)
     # REWARD KNOWLEDGE..
-    NATION_ARRAY[index][0]['Tech']['knowledge'] += (NATION_ARRAY[index][0]['Tech']['knowledge']  * 0.1)
+    NATION_ARRAY[index][0]['Tech']['knowledge'] += round((NATION_ARRAY[index][0]['Tech']['knowledge']  * 0.1))
 
 
     #['conscripts','power','price','buildTime',['mightBonus%']]

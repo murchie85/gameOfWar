@@ -90,9 +90,9 @@ def setVariables(WAR_BRIEFING):
         nation[0]['Score']    = score 
         nation[0]['Finance']  = {'wealth': wealth, 'level': 'PickPocket', 'gold':60, 'gems':gems, 'raremetals':raremetals,  'oil':oil,}
         # Add drones, robots, etc later
-        nation[0]['War']      = {'might': might,    'level': 'Private', 'weapons':{'1':[UNITONE,troops,1,POWERONE],'2':[UNITTWO,20,1,POWERTWO],'3':[UNITTHREE,10,1,POWERTHREE],'4':[UNITFOUR,5,1,POWERFOUR],'5':[UNITFIVE,3,1,POWERFIVE],'6':[UNITSIX,2,1,POWERSIX],'7':[UNITSEVEN,2,1,POWERSEVEN],'8':[UNITEIGHT,1,1,POWEREIGHT]}, 'firePower':0}
-        nation[0]['Tech']     = {'knowledge' : 0,'level': 0,'era': era,'research points': 100, 'researched':{'one':[0,'',100],'two':[0,'',30],'three':[0,'',100],'four':[0,'',80],'five':[0,'',100]}, 'assets':{'universities':0,'techHubs':0,'scientists':0,'engineers':0,'mathematicians':0,'entrepreneurs':0}, 'prestigue':0}
-        nation[0]['Politics'] = {'influence':0, 'stability':0, 'backing':0}
+        nation[0]['War']      = {'might': might,    'level': 'Private', 'weapons':{'1':[UNITONE,troops,1,POWERONE],'2':[UNITTWO,0,1,POWERTWO],'3':[UNITTHREE,0,1,POWERTHREE],'4':[UNITFOUR,0,1,POWERFOUR],'5':[UNITFIVE,0,1,POWERFIVE],'6':[UNITSIX,0,1,POWERSIX],'7':[UNITSEVEN,0,1,POWERSEVEN],'8':[UNITEIGHT,0,1,POWEREIGHT]}, 'firePower':0}
+        nation[0]['Tech']     = {'knowledge' : 0,'level': 0,'era': era,'research points': 100, 'researched':{'one':[0,'',0],'two':[0,'',0],'three':[0,'',0],'four':[0,'',0],'five':[0,'',0]}, 'assets':{'universities':0,'techHubs':0,'scientists':0,'engineers':0,'mathematicians':0,'entrepreneurs':0}, 'prestigue':0}
+        nation[0]['Politics'] = {'influence':0, 'level' : 'Back Bencher', 'stability':0, 'backing':0}
         nation[0]['Special']  = {'chance': 0, 'moveLimit':2, 'aggression':random.randint(0,100), 'creativity':random.randint(0,100), 'materialism':random.randint(0,100), 'prudence':random.randint(0,100), 'bonusUnits': [], 'notes': []}
 
         nation[0]['Friendship'] = {}

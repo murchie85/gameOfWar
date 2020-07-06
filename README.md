@@ -59,7 +59,7 @@ updateList - LevelUP, X&Y are at war etc
 # TODO 
 Work out how to rename wararray
 update warbriefing for different functions
-
+print('**todo** FUNCTION TO CHECK WHEN STOCK IS 10% AND PUT ALERTS')
   
 # TECH PROMOTION
 LEVEL = %Completion/50

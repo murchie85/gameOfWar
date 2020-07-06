@@ -788,7 +788,7 @@ def manoeuvresMenu(myNation,year,WAR_BRIEFING):
         print(' ')
         flag = showAssets(myNation,year,flag)
         print('')
-        print('[D] Drill and train your forces')
+        print('[D] Drill your forces')
         print('[J] Joint manoeuvres')
         print('[I] Intimidation manoeuvres')
         print(' ')
@@ -840,6 +840,85 @@ def manoeuvresMenu(myNation,year,WAR_BRIEFING):
 
 
 
+def drillMenu(myNation,year,WAR_BRIEFING):
+    drillSelection = ' '
+    flag = ''
+    while drillSelection != 'XYZFFJJJJJJ':
+        clearScreen()
+        unitOne      = myNation[0]['War']['weapons']['1']
+        unitTwo      = myNation[0]['War']['weapons']['2']
+        unitThree    = myNation[0]['War']['weapons']['3']
+        unitFour     = myNation[0]['War']['weapons']['4']
+        unitFive     = myNation[0]['War']['weapons']['5']
+        unitSix      = myNation[0]['War']['weapons']['6']
+        unitSeven    = myNation[0]['War']['weapons']['7']
+        unitEight    = myNation[0]['War']['weapons']['8']
+
+
+        print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
+        print('       !!MILITARY DRILL HEADQUARTERS!!   :X        ')
+        print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
+        print('')
+        print('My Team        : ' + str(myNation[1]))
+        print('Year           : ' + str(year))
+        print('Might          : ' + str(myNation[0]['War']['might']) )
+        print('Rank           : ' + str(myNation[0]['War']['level']))
+        print('Light Unit     : ' + str(unitOne[1] + unitTwo[1]))
+        print('Core Division  : ' + str(unitThree[1] + unitFour[1] + unitFive[1])) 
+        print('Heavy Forces   : ' + str(unitSix[1] + unitSeven[1]))
+        print('SuperWeapons   : ' + str(unitEight[1]))
+        print('Firepower      : ' + str(myNation[0]['War']['firePower']) )
+        print(' ')
+        print(' ')
+        flag = showAssets(myNation,year,flag)
+        print('')
+        print('[L] Light Unit')
+        print('[C] Core Division ')
+        print('[H] Heavy Forces')
+        print(' ')
+        print(' ')
+        print('[D] Detailed forces review')
+        print('[R] Return')
+        print(' ')
+        print(' ')
+        print(' ')
+        print('Moves: ' + str(checkMoves(myNation,"%^")[0]) )
+        print('****************************************')
+        print(' ')
+        print(' ')
+        # CHECK MAX MOVES SINCE INSIDE WHILE LOOP
+        returnCode = checkMoves(myNation,'%^')[1]
+        if returnCode > 0: 
+            fast_print('All moves used up')
+            return(myNation)
+
+        drillSelection = input('Select a divison to train \n').upper()
+        clearScreen()
+        if drillSelection == 'L':
+            if (unitOne[1] + unitTwo[1]) < 1:
+                input('No Light assets to train... \n')
+                break
+            units = [('1',unitOne[1]),('2',unitTwo[1])]
+            myNation = drill(myNation, 'Light Units',units,WAR_BRIEFING)
+        if drillSelection == 'C':
+            if (unitThree[1] + unitFour[1] + unitFive[1]) < 1:
+                input('No navy assets to train... \n')
+                break
+            units = [('3',unitThree[1]),('4',unitFour[1]),('5',unitFive[1])]
+            myNation = drill(myNation, 'Core Division',units,WAR_BRIEFING)
+        if drillSelection == 'H':
+            if (unitSix[1] + unitSeven[1]) < 1:
+                input('No airforce assets to train... \n')
+                break
+            units = [('6',unitSix[1]),('7',unitSeven[1])]
+            myNation = drill(myNation, 'Heavy Forces',units,WAR_BRIEFING)
+        if drillSelection == 'D':
+            flag = 'yes'
+        if drillSelection == 'R' or drillSelection == '':
+            return(myNation)
+    return(myNation)    
+
+
 
 
 def drill(myNation, branch,units,WAR_BRIEFING):
@@ -874,14 +953,17 @@ def drill(myNation, branch,units,WAR_BRIEFING):
             print('Soft  : Might ++, low probability of loss')
             print('Medium: Might ++, credits ++, medium probability of loss')
             print('Hard  : Might ++, credits ++ newUnits ++, high probability of loss')
+            print('Remember drilling your units means they are off standby and unavailable for the next round, be vigilant incase you come under attack.')
             input('Enter to continue \n')
         if intensity == 'R' or intensity == '':
             return(myNation)
 
 
     # Deduct units
-    for unit,amount in units:
-        myNation[0]['War']['weapons'][unit] = 0
+    for unit in units:
+        unit = unit[0]
+        myNation[0]['War']['weapons'][unit][1] = 0
+
     # Place Order
     myNation[0]['Nextmoves'] = myNation[0]['Nextmoves'] + [drillOrder]
 
@@ -889,89 +971,6 @@ def drill(myNation, branch,units,WAR_BRIEFING):
     print('Your '  + str(branch) + ' will embark on training, the units will be returned to you next round.' )
     buffer = input('Press enter to continue \n ')
     return(myNation)
-
-
-
-
-def drillMenu(myNation,year,WAR_BRIEFING):
-    drillSelection = ' '
-    flag = ''
-    while drillSelection != 'XYZFFJJJJJJ':
-        clearScreen()
-        unitOne      = myNation[0]['War']['weapons']['1']
-        unitTwo      = myNation[0]['War']['weapons']['2']
-        unitThree    = myNation[0]['War']['weapons']['3']
-        unitFour     = myNation[0]['War']['weapons']['4']
-        unitFive     = myNation[0]['War']['weapons']['5']
-        unitSix      = myNation[0]['War']['weapons']['6']
-        unitSeven    = myNation[0]['War']['weapons']['7']
-        unitEight    = myNation[0]['War']['weapons']['8']
-
-
-        print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
-        print('       !!MILITARY DRILL HEADQUARTERS!!   :X        ')
-        print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
-        print('')
-        print('My Team        : ' + str(myNation[1]))
-        print('Year           : ' + str(year))
-        print('Might          : ' + str(myNation[0]['War']['might']) )
-        print('Rank           : ' + str(myNation[0]['War']['level']))
-        print('Light Unit     : ' + str(unitOne[1] + unitTwo[1]))
-        print('Core Division  : ' + str(unitThree[1] + unitFour[1] + unitFive[1])) 
-        print('Heavy Forces   : ' + str(unitSix[1] + unitSeven[1]))
-        print('SuperWeapons   : ' + str(unitEight[1]))
-        print('Firepower      : ' + str(myNation[0]['War']['firePower']) )
-        print(' ')
-        print(' ')
-        flag = showAssets(myNation,year,flag)
-        print('')
-        print('[G] Light Unit')
-        print('[N] Core Division ')
-        print('[A] Heavy Forces')
-        print(' ')
-        print(' ')
-        print('[D] Detailed forces review')
-        print('[R] Return')
-        print(' ')
-        print(' ')
-        print(' ')
-        print('Moves: ' + str(checkMoves(myNation,"%^")[0]) )
-        print('****************************************')
-        print(' ')
-        print(' ')
-        # CHECK MAX MOVES SINCE INSIDE WHILE LOOP
-        returnCode = checkMoves(myNation,'%^')[1]
-        if returnCode > 0: 
-            fast_print('All moves used up')
-            return(myNation)
-
-        drillSelection = input('Select a divison to train \n').upper()
-        clearScreen()
-        if drillSelection == 'G':
-            if (troops + tanks) < 1:
-                input('No army assets to train... \n')
-                break
-            units = [('troops',troops),('tanks',tanks)]
-            myNation = drill(myNation, 'army',units,WAR_BRIEFING)
-        if drillSelection == 'N':
-            if (gunboats + destroyers + carriers) < 1:
-                input('No navy assets to train... \n')
-                break
-            units = [('gunboats',gunboats),('destroyers',destroyers),('carriers',carriers)]
-            myNation = drill(myNation, 'navy',units,WAR_BRIEFING)
-        if drillSelection == 'A':
-            if (jets + bombers) < 1:
-                input('No airforce assets to train... \n')
-                break
-            units = [('jets',jets),('bombers',bombers)]
-            myNation = drill(myNation, 'Airforce',units,WAR_BRIEFING)
-        if drillSelection == 'D':
-            flag = 'yes'
-        if drillSelection == 'R' or drillSelection == '':
-            return(myNation)
-    return(myNation)    
-
-
 
 
 

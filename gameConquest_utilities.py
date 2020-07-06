@@ -66,7 +66,7 @@ def printupdates(p):
         p = 'All'
     return(p)
 
-def options(p,NATION_ARRAY,debug):
+def options(p,NATION_ARRAY):
     clearScreen()
     print('***************************************************')
     print('*                  OPTIONS                        *')
@@ -75,25 +75,17 @@ def options(p,NATION_ARRAY,debug):
     print('1. Select Music')
     print('2. Change End of Round Updates')
     print('3. Developer Insights')
-    print('4. Debug toggle')
 
     selection = str(input('Please select an option \n'))
     if selection == '1':
         music()
-        return(p,debug)
+        return(p)
     if selection == '2':
         p = printupdates(p)
-        return(p,debug)
+        return(p)
     if selection == '3':
         developer(NATION_ARRAY)
-        return(p,debug)
-    # if selection == '4':
-    #     if debug != 'y':
-    #         debug = 'y'
-    #     else:
-    #         debug = 'n'
-    #     return(p,debug)
-
+        return(p)
 
 
 
