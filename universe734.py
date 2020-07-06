@@ -92,13 +92,18 @@ import selectionScience  as tech
 # PRice is % of remaining available 
 PRICE_TRACKER = {'gold': {'price': 120, 'stock': 10000, 'priceChange': '+0', 'history':[120],'average':120},'raremetals': {'price': 60, 'stock': 2000, 'priceChange': '+0', 'history':[60],'average':60}, 'gems': {'price': 250, 'stock': 2000, 'priceChange': '+0', 'history':[250],'average':250}, 'oil': {'price': 12, 'stock': 10000, 'priceChange': '+0', 'history':[12],'average':12}}
 
-# numbers are price, wait time, might-valuation as percentage (ADDED ON). 
-WAR_BRIEFING = {'weapons':{'troops':(10,2,0.01),'tanks':(300,2,0.1),'gunboats':(100,2,0.005),'destroyers':(2000,3,0.1),'carriers':(20000,4,1),'jets':(5000,2,0.3),'bombers':(7000,3,0.35),'Nukes':(100000,4,5)}}
+# EXAMPLE
+# '1':['conscripts','power','price','buildTime',['mightBonus%']]
 
-# WAR_BRIEFING = {'weapons':{
-# 'StoneAge': {'one':(10,2,0.01,'pikeman'),'two':(300,2,0.1,'knight'),'three':(100,2,0.005,'archer'),'four':(2000,3,0.1,'catapult'),'five':(20000,4,1,'fireArchers'),'six':(5000,2,0.3,'hoursemen'),'seven':(7000,3,0.35,'mountedKnights'),'eight':(100000,4,5,'kingsGuard')}, 
-# 'InformationAge':{'one':(10,2,0.01,'troops'),'two':(300,2,0.1,'tanks'),'three':(100,2,0.005,'gunboats'),'four':(2000,3,0.1,'destroyers'),'five':(20000,4,1,'carriers'),'six':(5000,2,0.3,'jets'),'seven':(7000,3,0.35,'bombers'),'eight':(100000,4,5,'Nukes')}}
-# }
+WAR_BRIEFING = {'weapons':{
+	
+	'INDUSTRIAL REVOLUTION':{'1':['Conscripts',1,10,2,0.01],     '2':['Cavalry',2,300,2,0.1],       '3':['Cannon Specialists',10,100,2,0.005],'4':['Special-Ops',15,2000,3,0.1],    '5':['MiniSubs',25,20000,4,1],   '6':['Steam Warships',150,5000,2,0.3],'7':['Iron-clad Battleships',300,7000,3,0.35],'8':['Airships',350,100000,4,5]},
+	'INFORMATION AGE':      {'1':['Fiflemen',8,10,2,0.01],       '2':['Tanks',5,300,2,0.1],         '3':['Gunboats',20,100,2,0.005],          '4':['Destroyers',50,2000,3,0.1],     '5':['Carriers',40,20000,4,1],   '6':['Jets',200,5000,2,0.3],          '7':['Bombers',350,7000,3,0.35],              '8':['Nukes',500,100000,4,5]},
+	'SECOND ENLIGHTENMENT': {'1':['Laser Infantry',20,10,2,0.01],'2':['Mech Troopers',10,300,2,0.1],'3':['Naval Swarm',40,100,2,0.005],       '4':['Hybrid Fighters',80,2000,3,0.1],'5':['EMP Drones',100,20000,4,1],'6':['Raptor Drone',250,5000,2,0.3], '7':['Giga Swarm',400,7000,3,0.35],            '8':['Orbital Strike',999,100000,4,5]}
+} 
+
+}
+
 
 
 # Era - map for all names of each age
@@ -108,7 +113,6 @@ WAR_BRIEFING = {'weapons':{'troops':(10,2,0.01),'tanks':(300,2,0.1),'gunboats':(
 TECH_MAP = returnTechMap()
 
 NATION_ARRAY = setVariables(WAR_BRIEFING)
-
 NATION_ARRAY = updateTechNames(NATION_ARRAY,TECH_MAP)
 
 ARRAY_DICT = {'PRICE_TRACKER':PRICE_TRACKER,'WAR_BRIEFING':WAR_BRIEFING,'TECH_MAP':TECH_MAP,'NATION_ARRAY':NATION_ARRAY}

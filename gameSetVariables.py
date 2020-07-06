@@ -51,6 +51,30 @@ def setVariables(WAR_BRIEFING):
     KENYA = {}
     NATION_ARRAY = [[USA,'USA'],[UK,'UK'],[GERMANY,'GERMANY'],[CHINA,'CHINA'],[INDIA,'INDIA'],[RUSSIA,'RUSSIA'],[ITALY,'ITALY'],[SPAIN,'SPAIN'],[FRANCE,'FRANCE'],[JAPAN,'JAPAN'],[BRAZIL,'BRAZIL'],[SOUTHKOREA,'SOUTHKOREA'],[SOUTHAFRICA,'SOUTHAFRICA'],[PAKISTAN,'PAKISTAN'],[INDONESIA,'INDONESIA'],[NIGERIA,'NIGERIA'],[MEXICO,'MEXICO'],[EGYPT,'EGYPT'],[VIETNAM,'VIETNAM'],[IRAN,'IRAN'],[KENYA,'KENYA']]
 
+    era          = 'INDUSTRIAL REVOLUTION'
+
+    # 'weapons':{'1':[]
+    # 'weapons':{'1':['name',amount,level]
+    UNITONE    = WAR_BRIEFING['weapons'][era]['1'][0]
+    UNITTWO    = WAR_BRIEFING['weapons'][era]['2'][0]
+    UNITTHREE  = WAR_BRIEFING['weapons'][era]['3'][0]
+    UNITFOUR   = WAR_BRIEFING['weapons'][era]['4'][0]
+    UNITFIVE   = WAR_BRIEFING['weapons'][era]['5'][0]
+    UNITSIX    = WAR_BRIEFING['weapons'][era]['6'][0]
+    UNITSEVEN  = WAR_BRIEFING['weapons'][era]['7'][0]
+    UNITEIGHT  = WAR_BRIEFING['weapons'][era]['8'][0]
+
+    POWERONE    = WAR_BRIEFING['weapons'][era]['1'][1]
+    POWERTWO    = WAR_BRIEFING['weapons'][era]['2'][1]
+    POWERTHREE  = WAR_BRIEFING['weapons'][era]['3'][1]
+    POWERFOUR   = WAR_BRIEFING['weapons'][era]['4'][1]
+    POWERFIVE   = WAR_BRIEFING['weapons'][era]['5'][1]
+    POWERSIX    = WAR_BRIEFING['weapons'][era]['6'][1]
+    POWERSEVEN  = WAR_BRIEFING['weapons'][era]['7'][1]
+    POWEREIGHT  = WAR_BRIEFING['weapons'][era]['8'][1]
+
+
+    
     score        = 100
     wealth       = 500 
     gems         = 5
@@ -66,9 +90,8 @@ def setVariables(WAR_BRIEFING):
         nation[0]['Score']    = score 
         nation[0]['Finance']  = {'wealth': wealth, 'level': 'PickPocket', 'gold':60, 'gems':gems, 'raremetals':raremetals,  'oil':oil,}
         # Add drones, robots, etc later
-        nation[0]['War']      = {'might': might,    'level': 'Private', 'weapons':{'troops':troops,'tanks':0,'gunboats':0,'destroyers':0,'carriers':0,'jets':0,'bombers':0,'Nukes':0}, 'firePower':0}
-        #nation[0]['War']      = {'might': might,    'level': 'Private', 'weapons':{one:[0,''],two:[0,''],three:[0,''],four:[0,''],five:[0,''],six:[0,''],seven:[0,''],eight:[0,'']}, 'firePower':0}
-        nation[0]['Tech']     = {'knowledge' : 0,'level': 0,'era': 'INDUSTRIAL REVOLUTION','research points': 100, 'researched':{'one':[0,'',100],'two':[0,'',100],'three':[0,'',100],'four':[0,'',100],'five':[0,'',100]}, 'assets':{'universities':0,'techHubs':0,'scientists':0,'engineers':0,'mathematicians':0,'entrepreneurs':0}, 'prestigue':0}
+        nation[0]['War']      = {'might': might,    'level': 'Private', 'weapons':{'1':[UNITONE,troops,1,POWERONE],'2':[UNITTWO,20,1,POWERTWO],'3':[UNITTHREE,10,1,POWERTHREE],'4':[UNITFOUR,5,1,POWERFOUR],'5':[UNITFIVE,3,1,POWERFIVE],'6':[UNITSIX,2,1,POWERSIX],'7':[UNITSEVEN,2,1,POWERSEVEN],'8':[UNITEIGHT,1,1,POWEREIGHT]}, 'firePower':0}
+        nation[0]['Tech']     = {'knowledge' : 0,'level': 0,'era': era,'research points': 100, 'researched':{'one':[0,'',100],'two':[0,'',30],'three':[0,'',100],'four':[0,'',80],'five':[0,'',100]}, 'assets':{'universities':0,'techHubs':0,'scientists':0,'engineers':0,'mathematicians':0,'entrepreneurs':0}, 'prestigue':0}
         nation[0]['Politics'] = {'influence':0, 'stability':0, 'backing':0}
         nation[0]['Special']  = {'chance': 0, 'moveLimit':2, 'aggression':random.randint(0,100), 'creativity':random.randint(0,100), 'materialism':random.randint(0,100), 'prudence':random.randint(0,100), 'bonusUnits': [], 'notes': []}
 

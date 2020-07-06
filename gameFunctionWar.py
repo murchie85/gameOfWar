@@ -45,6 +45,7 @@ def build(nextMove,NATION_ARRAY,currentNation,p,index,playerNationIndex,nextMove
     wait       = nextMove[4]
     bonusMight = nextMove[5] 
     moveIndex = nextMoveIndex # Get position in country array
+    name = NATION_ARRAY[index][0]['War']['weapons'][unit][0]
 
 
     # IF NOT YET READY
@@ -53,7 +54,7 @@ def build(nextMove,NATION_ARRAY,currentNation,p,index,playerNationIndex,nextMove
         wait = wait -1
         preferencePrint(str(str(currentNation[1]) + ' chose to build '),p,index,playerNationIndex)
         preferencePrint('------------------',p,index,playerNationIndex)
-        preferencePrint(str(str(unit) + ' to build : ' + str(amount)),p,index,playerNationIndex)
+        preferencePrint(str(str(name) + ' to build : ' + str(amount)),p,index,playerNationIndex)
         preferencePrint(str('Build Time Remaining : ' + str(wait)),p,index,playerNationIndex)
         nextMove = ['pending',job,unit,amount,wait,bonusMight]
         NATION_ARRAY[index][0]['Nextmoves'][moveIndex] = nextMove
@@ -62,17 +63,18 @@ def build(nextMove,NATION_ARRAY,currentNation,p,index,playerNationIndex,nextMove
     # IF READY (currently at 2 cus lazy)
     if wait < 2:
         # Reward Unit
-        NATION_ARRAY[index][0]['War']['weapons'][unit] +=  amount
+        NATION_ARRAY[index][0]['War']['weapons'][unit][1] +=  amount
         
         # Reward Mightg
         bonusAdjustment = round((NATION_ARRAY[index][0]['War']['might'] * bonusMight) * (amount/2))
         if bonusAdjustment < 1:
             bonusAdjustment = 1
         NATION_ARRAY[index][0]['War']['might'] = NATION_ARRAY[index][0]['War']['might'] + bonusAdjustment
+        
         preferencePrint(str(str(currentNation[1]) + ' Build complete '),p,index,playerNationIndex)
         preferencePrint('------------------',p,index,playerNationIndex)
-        preferencePrint(str(str(unit) + ' units built: ' + str(amount)),p,index,playerNationIndex)
-        preferencePrint(str(str(unit) + ' total : ' + str(NATION_ARRAY[index][0]['War']['weapons'][unit])),p,index,playerNationIndex)
+        preferencePrint(str(str(name) + ' units built: ' + str(amount)),p,index,playerNationIndex)
+        preferencePrint(str(str(name) + ' total : ' + str(NATION_ARRAY[index][0]['War']['weapons'][unit][1])),p,index,playerNationIndex)
         preferencePrint(str('Might gained : ' + str(bonusAdjustment)),p,index,playerNationIndex)
         preferencePrint(str('Might total  : ' + str(currentNation[0]['War']['might'])),p,index,playerNationIndex)
 
@@ -94,10 +96,11 @@ def scrap(nextMove,NATION_ARRAY,currentNation,p,index,playerNationIndex):
     amount        = nextMove[2]
     valuation     = nextMove[3]
     reducedMight  = nextMove[4]
+    name = NATION_ARRAY[index][0]['War']['weapons'][unit][0]
 
     preferencePrint(str(str(currentNation[1]) + ' chose to scrap'),p,index,playerNationIndex)
     preferencePrint('------------------',p,index,playerNationIndex)
-    preferencePrint(str(str(unit) + ' to scrap : ' + str(amount)),p,index,playerNationIndex)
+    preferencePrint(str(str(name) + ' to scrap : ' + str(amount)),p,index,playerNationIndex)
 
     # Award Credits and reduce might
     NATION_ARRAY[index][0]['Finance']['wealth'] +=  valuation

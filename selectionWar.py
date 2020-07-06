@@ -26,31 +26,33 @@ from gameConquest_utilities  import selectCountry as selectCountry
 """
 def showAssets(myNation,year,flag):
     if flag == 'yes':
-        troops     = myNation[0]['War']['weapons']['troops']
-        tanks      = myNation[0]['War']['weapons']['tanks']
-        gunboats   = myNation[0]['War']['weapons']['gunboats']
-        destroyers = myNation[0]['War']['weapons']['destroyers']
-        carriers   = myNation[0]['War']['weapons']['carriers']
-        jets       = myNation[0]['War']['weapons']['jets']
-        bombers    = myNation[0]['War']['weapons']['bombers']
-        nukes      = myNation[0]['War']['weapons']['Nukes']
-        print('ARMY      : ' + str(troops + tanks))
+        unitOne      = myNation[0]['War']['weapons']['1']
+        unitTwo      = myNation[0]['War']['weapons']['2']
+        unitThree    = myNation[0]['War']['weapons']['3']
+        unitFour     = myNation[0]['War']['weapons']['4']
+        unitFive     = myNation[0]['War']['weapons']['5']
+        unitSix      = myNation[0]['War']['weapons']['6']
+        unitSeven    = myNation[0]['War']['weapons']['7']
+        unitEight    = myNation[0]['War']['weapons']['8']
+        print('Light Unit : ' + str(unitOne[1] + unitTwo[1]))
         print('--------------')
-        print('Troops : ' + str(troops ))
-        print('Tanks  : ' + str(tanks))
+        print(str(unitOne[0]) +  ' : ' + str(unitOne[1]))
+        print(str(unitTwo[0]) +   ' : ' + str(unitTwo[1]))
         print('')
-        print('NAVY      : ' + str(gunboats + destroyers + carriers))
+        print('Core Division : ' + str(unitThree[1] + unitFour[1] + unitFive[1])) 
         print('--------------')
-        print('Gunboats: ' + str(gunboats))
-        print('Destroyers: ' + str(destroyers))
-        print('Carriers : ' + str(carriers))
-        print('')
-        print('Airforce  : ' + str(jets + bombers))
+        print(str(unitThree[0]) +   ' : ' + str(unitThree[1]))
+        print(str(unitFour[0]) +   ' : ' + str(unitFour[1]))
+        print(str(unitFive[0]) +   ' : ' + str(unitFive[1]))
+        print('')   
+        print('Heavy Forces: ' + str(unitSix[1] + unitSeven[1]))
         print('--------------')
-        print('Fighter Jets: ' + str(jets))
-        print('Bombers: ' + str(bombers))
+        print(str(unitSix[0]) +   ' : ' + str(unitSix[1]))
+        print(str(unitSeven[0]) +   ' : ' + str(unitSeven[1]))
         print('')
-        print('Nuclear: ' + str(nukes))
+        print('Super Weapon' )
+        print('--------------')
+        print(str(unitEight[0]) +   ' : ' + str(unitEight[1]))
         print('Total Firepower : ' + str(myNation[0]['War']['firePower']) )
         print(' ')
         input('Enter to continue \n')
@@ -83,14 +85,15 @@ def warMinistry(myNation,NATION_ARRAY,year,WAR_BRIEFING):
     warSelection = ' '
     while warSelection != 'XYZFFJJJJJJ':
         clearScreen()
-        troops     = myNation[0]['War']['weapons']['troops']
-        tanks      = myNation[0]['War']['weapons']['tanks']
-        gunboats   = myNation[0]['War']['weapons']['gunboats']
-        destroyers = myNation[0]['War']['weapons']['destroyers']
-        carriers   = myNation[0]['War']['weapons']['carriers']
-        jets       = myNation[0]['War']['weapons']['jets']
-        bombers    = myNation[0]['War']['weapons']['bombers']
-        nukes      = myNation[0]['War']['weapons']['Nukes']
+        # NUMER
+        unitOne      = myNation[0]['War']['weapons']['1'][1]
+        unitTwo      = myNation[0]['War']['weapons']['2'][1]
+        unitThree    = myNation[0]['War']['weapons']['3'][1]
+        unitFour     = myNation[0]['War']['weapons']['4'][1]
+        unitFive     = myNation[0]['War']['weapons']['5'][1]
+        unitSix      = myNation[0]['War']['weapons']['6'][1]
+        unitSeven    = myNation[0]['War']['weapons']['7'][1]
+        unitEight    = myNation[0]['War']['weapons']['8'][1]
         print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
         print('        WELCOME TO THE MINISTRY OF WAR   :X        ')
         print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
@@ -169,27 +172,27 @@ def weaponsMenu(myNation,year,WAR_BRIEFING):
     warSelection = ' '
     while warSelection != 'XYZFFJJJJJJ':
         clearScreen()
-        troops     = myNation[0]['War']['weapons']['troops']
-        tanks      = myNation[0]['War']['weapons']['tanks']
-        gunboats   = myNation[0]['War']['weapons']['gunboats']
-        destroyers = myNation[0]['War']['weapons']['destroyers']
-        carriers   = myNation[0]['War']['weapons']['carriers']
-        jets       = myNation[0]['War']['weapons']['jets']
-        bombers    = myNation[0]['War']['weapons']['bombers']
-        nukes      = myNation[0]['War']['weapons']['Nukes']
+        unitOne      = myNation[0]['War']['weapons']['1']
+        unitTwo      = myNation[0]['War']['weapons']['2']
+        unitThree    = myNation[0]['War']['weapons']['3']
+        unitFour     = myNation[0]['War']['weapons']['4']
+        unitFive     = myNation[0]['War']['weapons']['5']
+        unitSix      = myNation[0]['War']['weapons']['6']
+        unitSeven    = myNation[0]['War']['weapons']['7']
+        unitEight    = myNation[0]['War']['weapons']['8']
         print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
         print('                 WEAPONS DEPOT           :X        ')
         print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
         print('')
-        print('My Team   : ' + str(myNation[1]))
-        print('Year      : ' + str(year))
-        print('Might     : ' + str(myNation[0]['War']['might']) )
-        print('Rank     : ' + str(myNation[0]['War']['level']))
-        print('Army      : ' + str(troops + tanks))
-        print('Navy      : ' + str(gunboats + destroyers + carriers))
-        print('Airforce  : ' + str(jets + bombers))
-        print('Nuclear   : ' + str(nukes))
-        print('Firepower : ' + str(myNation[0]['War']['firePower']) )
+        print('My Team        : ' + str(myNation[1]))
+        print('Year           : ' + str(year))
+        print('Might          : ' + str(myNation[0]['War']['might']) )
+        print('Rank           : ' + str(myNation[0]['War']['level']))
+        print('Light Unit     : ' + str(unitOne[1] + unitTwo[1]))
+        print('Core Division  : ' + str(unitThree[1] + unitFour[1] + unitFive[1])) 
+        print('Heavy Forces   : ' + str(unitSix[1] + unitSeven[1]))
+        print('SuperWeapons   : ' + str(unitEight[1]))
+        print('Firepower      : ' + str(myNation[0]['War']['firePower']) )
         print(' ')
         print('')
         print("""
@@ -235,21 +238,35 @@ def weaponsMenu(myNation,year,WAR_BRIEFING):
 
 
 def buildMenu(myNation,year,WAR_BRIEFING):
+    era = myNation[0]['Tech']['era']
+    WARONE    = WAR_BRIEFING['weapons'][era]['1']
+    WARTWO    = WAR_BRIEFING['weapons'][era]['2']
+    WARTHREE  = WAR_BRIEFING['weapons'][era]['3']
+    WARFOUR   = WAR_BRIEFING['weapons'][era]['4']
+    WARFIVE   = WAR_BRIEFING['weapons'][era]['5']
+    WARSIX    = WAR_BRIEFING['weapons'][era]['6']
+    WARSEVEN  = WAR_BRIEFING['weapons'][era]['7']
+    WAREIGHT  = WAR_BRIEFING['weapons'][era]['8']
     flag = ''
     buildSelection = ' '
     show = 'off'
     price = 'off'
     while buildSelection != 'XYZFFJJJJJJ':
         clearScreen()
-        troops     = myNation[0]['War']['weapons']['troops']
-        tanks      = myNation[0]['War']['weapons']['tanks']
-        gunboats   = myNation[0]['War']['weapons']['gunboats']
-        destroyers = myNation[0]['War']['weapons']['destroyers']
-        carriers   = myNation[0]['War']['weapons']['carriers']
-        jets       = myNation[0]['War']['weapons']['jets']
-        bombers    = myNation[0]['War']['weapons']['bombers']
-        nukes      = myNation[0]['War']['weapons']['Nukes']
-        techLevel  = myNation[0]['Tech']['level']
+        unitOne      = myNation[0]['War']['weapons']['1']
+        unitTwo      = myNation[0]['War']['weapons']['2']
+        unitThree    = myNation[0]['War']['weapons']['3']
+        unitFour     = myNation[0]['War']['weapons']['4']
+        unitFive     = myNation[0]['War']['weapons']['5']
+        unitSix      = myNation[0]['War']['weapons']['6']
+        unitSeven    = myNation[0]['War']['weapons']['7']
+        unitEight    = myNation[0]['War']['weapons']['8']
+        firstTech    = myNation[0]['Tech']['researched']['one']
+        secondTech   = myNation[0]['Tech']['researched']['two']
+        thirdTech    = myNation[0]['Tech']['researched']['three']
+        fourthTech   = myNation[0]['Tech']['researched']['four']
+        fifthTech    = myNation[0]['Tech']['researched']['five']
+        techLevel    = myNation[0]['Tech']['level']
         print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
         print('               WEAPONS PROCUREMENT       :X        ')
         print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
@@ -261,7 +278,7 @@ def buildMenu(myNation,year,WAR_BRIEFING):
         print('Tech Lv   : ' + str(techLevel) )
         print('')
         print('')
-        print('Nuclear: ' + str(nukes))
+        print('SuperWeapons: ' + str(unitEight[1]))
         print('Total Firepower : ' + str(myNation[0]['War']['firePower']) )
         print(' ')
         print('')
@@ -270,87 +287,85 @@ def buildMenu(myNation,year,WAR_BRIEFING):
                 """)
         print('')
         print('Build')
-        print('[S] Soldiers')
-        print('[T] Tanks')
-        print('[G] Gunboats')
-        print('[D] Destroyers')
-        print('[J] Jets')
-        print('[B] Bombers')
-        print('[A] Aircraft Cariers')
-        print('[N] Nukes')
+        print('[A] ' + str(unitOne[0]))
+        print('[B] ' + str(unitTwo[0]))
+        print('[C] ' + str(unitThree[0]))
+        print('[D] ' + str(unitFour[0]))
+        print('[E] ' + str(unitFive[0]))
+        print('[F] ' + str(unitSix[0]))
+        print('[G] ' + str(unitSeven[0]))
+        print('[H] ' + str(unitEight[0]))
         print('')
         print('')
         if price == 'on':
-            print('==============')
-            print(' Pricings     ')
-            print('==============')
-            print('______________')
-            print('ARMY         : ')
-            print('--------------')
-            print('Troop        = $' + str(WAR_BRIEFING['weapons']['troops'][0]))
-            print('buildTime    = ' + str(WAR_BRIEFING['weapons']['troops'][1]) )
-            print('MightPoints  = +' + str(WAR_BRIEFING['weapons']['troops'][2] * 100) + '%')
+            print('======================')
+            print('       Pricings       ')
+            print('======================')
+            print('______________________')
+            print('Light Unit            :')
+            print('----------------------')
+            print(str(WARONE[0]) + ' = $' + str(WARONE[2]))
+            print('buildTime    = ' + str(WARONE[3]))
+            print('MightPoints  = +' + str(WARONE[4]) + '%')
             print('')
-            print('Tanks        = $' + str(WAR_BRIEFING['weapons']['tanks'][0]))
-            print('buildTime    = ' + str(WAR_BRIEFING['weapons']['tanks'][1]) )
-            print('MightPoints  = +' + str(WAR_BRIEFING['weapons']['tanks'][2] * 100) + '%')
-            print('')
-            print('______________')
-            print('NAVY         : ')
-            print('--------------')
-            print('Gunboats     = $' + str(WAR_BRIEFING['weapons']['gunboats'][0]))
-            print('buildTime    = ' + str(WAR_BRIEFING['weapons']['gunboats'][1]) )
-            print('MightPoints  = +' + str(WAR_BRIEFING['weapons']['gunboats'][2] * 100) + '%')
-            print('')
-            print('Destroyers   = $' + str(WAR_BRIEFING['weapons']['destroyers'][0]))
-            print('buildTime    = ' + str(WAR_BRIEFING['weapons']['destroyers'][1]) )
-            print('MightPoints  = +' + str(WAR_BRIEFING['weapons']['destroyers'][2] * 100) + '%')
-            print('')
-            print('Carriers     = $' + str(WAR_BRIEFING['weapons']['carriers'][0]))
-            print('buildTime    = ' + str(WAR_BRIEFING['weapons']['carriers'][1]) )
-            print('MightPoints  = +' + str(WAR_BRIEFING['weapons']['carriers'][2] * 100) + '%')
+            print(str(WARTWO[0]) + ' = $' + str(WARTWO[2]))
+            print('buildTime    = ' + str(WARTWO[3]))
+            print('MightPoints  = +' + str(WARTWO[4]) + '%')
             print('')
             print('______________')
-            print('Airforce     : ')
+            print('Core Division         : ')
             print('--------------')
-            print('Fighter Jets = $' + str(WAR_BRIEFING['weapons']['jets'][0]))
-            print('buildTime    = ' + str(WAR_BRIEFING['weapons']['jets'][1]) )
-            print('MightPoints  = +' + str(WAR_BRIEFING['weapons']['jets'][2] * 100) + '%')
+            print(str(WARTHREE[0]) + ' = $' + str(WARTHREE[2]))
+            print('buildTime    = ' + str(WARTHREE[3]))
+            print('MightPoints  = +' + str(WARTHREE[4]) + '%')
             print('')
-            print('Bombers      = $' + str(WAR_BRIEFING['weapons']['bombers'][0]))
-            print('buildTime    = ' + str(WAR_BRIEFING['weapons']['bombers'][1]) )
-            print('MightPoints  = +' + str(WAR_BRIEFING['weapons']['bombers'][2] * 100) + '%')
+            print(str(WARFOUR[0]) + ' = $' + str(WARFOUR[2]))
+            print('buildTime    = ' + str(WARFOUR[3]))
+            print('MightPoints  = +' + str(WARFOUR[4]) + '%')
+            print('')
+            print(str(WARFIVE[0]) + ' = $' + str(WARFIVE[2]))
+            print('buildTime    = ' + str(WARFIVE[3]))
+            print('MightPoints  = +' + str(WARFIVE[4]) + '%')
+            print('')
+            print('______________')
+            print('Heavy Forces     : ')
+            print('--------------')
+            print(str(WARSIX[0]) + ' = $' + str(WARSIX[2]))
+            print('buildTime    = ' + str(WARSIX[3]))
+            print('MightPoints  = +' + str(WARSIX[4]) + '%')
+            print('')
+            print(str(WARSEVEN[0]) + ' = $' + str(WARSEVEN[2]))
+            print('buildTime    = ' + str(WARSEVEN[3]))
+            print('MightPoints  = +' + str(WARSEVEN[4]) + '%')
             print('')
             print('')
-            print('Nukes        = $' + str(WAR_BRIEFING['weapons']['Nukes'][0]))
-            print('buildTime    = ' + str(WAR_BRIEFING['weapons']['Nukes'][1]) )
-            print('MightPoints  = +' + str(WAR_BRIEFING['weapons']['Nukes'][2] * 100) + '%')
+            print(str(WAREIGHT[0]) + ' = $' + str(WAREIGHT[2]))
+            print('buildTime    = ' + str(WAREIGHT[3]))
+            print('MightPoints  = +' + str(WAREIGHT[4]) + '%')
             print('')
             fast_print('Press Enter to clear ')
             price = 'off'
             print('')
         if show == 'on':
-            print('______________')
-            print('ARMY  ' + str(troops + tanks))
+            print('Light Unit : ' + str(unitOne[1] + unitTwo[1]))
             print('--------------')
-            print('Troops : ' + str(troops ))
-            print('Tanks  : ' + str(tanks))
+            print(str(unitOne[0]) +  ' : ' + str(unitOne[1]))
+            print(str(unitTwo[0]) +   ' : ' + str(unitTwo[1]))
             print('')
-            print('______________')
-            print('NAVY  ' + str(gunboats + destroyers + carriers))
+            print('Core Division : ' + str(unitThree[1] + unitFour[1] + unitFive[1])) 
             print('--------------')
-            print('Gunboats: ' + str(gunboats))
-            print('Destroyers: ' + str(destroyers))
-            print('Carriers : ' + str(carriers))
-            print('')
-            print('______________')
-            print('Airforce ' + str(jets + bombers))
+            print(str(unitThree[0]) +   ' : ' + str(unitThree[1]))
+            print(str(unitFour[0]) +   ' : ' + str(unitFour[1]))
+            print(str(unitFive[0]) +   ' : ' + str(unitFive[1]))
+            print('')   
+            print('Heavy Forces: ' + str(unitSix[1] + unitSeven[1]))
             print('--------------')
-            print('Fighter Jets: ' + str(jets))
-            print('Bombers: ' + str(bombers))
+            print(str(unitSix[0]) +   ' : ' + str(unitSix[1]))
+            print(str(unitSeven[0]) +   ' : ' + str(unitSeven[1]))
             print('')
-            print('')
-            print('Nukes: ' + str(nukes))
+            print('Super Weapon' )
+            print('--------------')
+            print(str(unitEight[0]) +   ' : ' + str(unitEight[1]))
             fast_print('press Enter to clear')
             print(' ')
             show = 'off'
@@ -372,58 +387,66 @@ def buildMenu(myNation,year,WAR_BRIEFING):
             return(myNation)
 
         buildSelection = str(input('Please chose an option \n')).upper()
-        if buildSelection == 'S':
-            clearScreen()
-            myNation = buildUnits(myNation,year,WAR_BRIEFING,'troops')
-        if buildSelection == 'T':
-            clearScreen()
-            if techLevel < 1:
-                print('Build up your science level to unlock Tanks')
-                fast_print('Your Tech level is not high enough')
-                continue
-            myNation = buildUnits(myNation,year,WAR_BRIEFING,'tanks')
-        if buildSelection == 'G':
-            clearScreen()
-            if techLevel < 2:
-                print('Build up your science level to unlock Gunboats')
-                fast_print('Your Tech level is not high enough')
-                continue 
-            myNation = buildUnits(myNation,year,WAR_BRIEFING,'gunboats')
-        if buildSelection == 'D':
-            clearScreen()
-            if techLevel < 4:
-                print('Build up your science level to unlock Destroyers')
-                fast_print('Your Tech level is not high enough')
-                continue
-            myNation = buildUnits(myNation,year,WAR_BRIEFING,'destroyers')
-        if buildSelection == 'J':
-            clearScreen()
-            if techLevel < 6:
-                print('Build up your science level to unlock Jets')
-                fast_print('Your Tech level is not high enough')
-                continue
-            myNation = buildUnits(myNation,year,WAR_BRIEFING,'jets')
-        if buildSelection == 'B':
-            clearScreen()
-            if techLevel < 8:
-                print('Build up your science level to unlock Bombers')
-                fast_print('Your Tech level is not high enough')
-                continue
-            myNation = buildUnits(myNation,year,WAR_BRIEFING,'bombers')
+
+        # LIGHT UNIT
         if buildSelection == 'A':
             clearScreen()
-            if techLevel < 9:
-                print('Build up your science level to unlock Aircraft Carriers')
-                fast_print('Your Tech level is not high enough')
-                continue
-            myNation = buildUnits(myNation,year,WAR_BRIEFING,'carriers')
-        if buildSelection == 'N':
+            myNation = buildUnits(myNation,year,WAR_BRIEFING,unit='1')
+        if buildSelection == 'B':
             clearScreen()
-            if techLevel < 10:
-                print('Build up your science level to unlock Nukes')
+            if firstTech[2] < 100:
+                print('You need to complete ' + str(firstTech[1]) + ' development to unlock.')
                 fast_print('Your Tech level is not high enough')
                 continue
-            myNation = buildUnits(myNation,year,WAR_BRIEFING,'Nukes')
+            myNation = buildUnits(myNation,year,WAR_BRIEFING,unit='2')
+
+        # CORE DIVISION
+        if buildSelection == 'C':
+            clearScreen()
+            if secondTech[2] < 100:
+                print('You need to complete ' + str(secondTech[1]) + ' development to unlock.')
+                fast_print('Your Tech level is not high enough')
+                continue 
+            myNation = buildUnits(myNation,year,WAR_BRIEFING,unit='3')
+        if buildSelection == 'D':
+            clearScreen()
+            if thirdTech[2] < 100:
+                print('You need to complete ' + str(thirdTech[1]) + ' development to unlock.')
+                fast_print('Your Tech level is not high enough')
+                continue
+            myNation = buildUnits(myNation,year,WAR_BRIEFING,unit='4')
+        if buildSelection == 'E':
+            clearScreen()
+            if thirdTech[2] < 100:
+                print('You need to complete ' + str(thirdTech[1]) + ' development to unlock.')
+                fast_print('Your Tech level is not high enough')
+                continue
+            myNation = buildUnits(myNation,year,WAR_BRIEFING,unit='5')
+        
+        # HEAVY FORCES
+        if buildSelection == 'F':
+            clearScreen()
+            if fourthTech[2] < 100:
+                print('You need to complete ' + str(fourthTech[1]) + ' development to unlock.')
+                fast_print('Your Tech level is not high enough')
+                continue
+            myNation = buildUnits(myNation,year,WAR_BRIEFING,unit='6')
+        if buildSelection == 'G':
+            clearScreen()
+            if fourthTech[2] < 100:
+                print('You need to complete ' + str(fourthTech[1]) + ' development to unlock.')
+                fast_print('Your Tech level is not high enough')
+                continue
+            myNation = buildUnits(myNation,year,WAR_BRIEFING,unit='7')
+        
+        # SUPER WEAPON
+        if buildSelection == 'H':
+            clearScreen()
+            if fifthTech[2] < 100:
+                print('You need to complete ' + str(fifthTech[1]) + ' development to unlock.')
+                fast_print('Your Tech level is not high enough')
+                continue
+            myNation = buildUnits(myNation,year,WAR_BRIEFING,unit='8')
         if buildSelection == 'V':
             clearScreen()
             show = 'on'
@@ -440,14 +463,17 @@ def buildMenu(myNation,year,WAR_BRIEFING):
 
 def buildUnits(myNation,year,WAR_BRIEFING,unit):
 
-    price      = WAR_BRIEFING['weapons'][unit][0]
-    wait       = WAR_BRIEFING['weapons'][unit][1]
-    bonusMight = WAR_BRIEFING['weapons'][unit][2]
+    era = myNation[0]['Tech']['era']
+
+    name       = WAR_BRIEFING['weapons'][era][unit][0]
+    price      = WAR_BRIEFING['weapons'][era][unit][2]
+    wait       = WAR_BRIEFING['weapons'][era][unit][3]
+    bonusMight = WAR_BRIEFING['weapons'][era][unit][4]
     credits    = myNation[0]['Finance']['wealth']
 
     maxpurchase = int(credits // price)
     print('Note* This unit as a wait time of  ' + str(wait) + ' round[s]')
-    print('You can buy up to ' + str(maxpurchase) + ' ' + str(unit) + ' at a cost of $' + str(price) + ' each.' )
+    print('You can buy up to ' + str(maxpurchase) + ' ' + str(name) + ' at a cost of $' + str(price) + ' each.' )
 
     try:
         purchaseAmount = int(input('Enter amount \n'))
@@ -465,10 +491,11 @@ def buildUnits(myNation,year,WAR_BRIEFING,unit):
         return(myNation)
 
     # Deduct cost & Place Order 
-    myNation[0]['Finance']['wealth'] = myNation[0]['Finance']['wealth'] - cost
-    myNation[0]['Nextmoves'] = myNation[0]['Nextmoves'] + [['submitted','WeaponsBuild',unit, purchaseAmount,wait,bonusMight]]
-
-    superfast_print('Purchase order for ' + str(unit) + ' placed at a cost of ' + str(cost) + '\n')
+    myNation[0]['Finance']['wealth'] -=  cost
+    # Intentional glitch(if user puts in order same time as advance era, they get the next level for the same price)
+    myNation[0]['Nextmoves'] += [['submitted','WeaponsBuild',unit, purchaseAmount,wait,bonusMight]]
+    print(myNation[0]['Nextmoves'] )
+    superfast_print('Purchase order for ' + str(name) + ' placed at a cost of ' + str(cost) + '\n')
     input('Press enter to continue \n')
     return(myNation)
 
@@ -480,21 +507,30 @@ def buildUnits(myNation,year,WAR_BRIEFING,unit):
 
 
 def scrapMenu(myNation,year,WAR_BRIEFING):
+    era = myNation[0]['Tech']['era']
+    WARONE    = WAR_BRIEFING['weapons'][era]['1']
+    WARTWO    = WAR_BRIEFING['weapons'][era]['2']
+    WARTHREE  = WAR_BRIEFING['weapons'][era]['3']
+    WARFOUR   = WAR_BRIEFING['weapons'][era]['4']
+    WARFIVE   = WAR_BRIEFING['weapons'][era]['5']
+    WARSIX    = WAR_BRIEFING['weapons'][era]['6']
+    WARSEVEN  = WAR_BRIEFING['weapons'][era]['7']
+    WAREIGHT  = WAR_BRIEFING['weapons'][era]['8']
     flag = ''
     buildSelection = ' '
     show = 'off'
     price = 'off'
     while buildSelection != 'XYZFFJJJJJJ':
         clearScreen()
-        troops     = myNation[0]['War']['weapons']['troops']
-        tanks      = myNation[0]['War']['weapons']['tanks']
-        gunboats   = myNation[0]['War']['weapons']['gunboats']
-        destroyers = myNation[0]['War']['weapons']['destroyers']
-        carriers   = myNation[0]['War']['weapons']['carriers']
-        jets       = myNation[0]['War']['weapons']['jets']
-        bombers    = myNation[0]['War']['weapons']['bombers']
-        nukes      = myNation[0]['War']['weapons']['Nukes']
-        techLevel  = myNation[0]['Tech']['level']
+        unitOne      = myNation[0]['War']['weapons']['1']
+        unitTwo      = myNation[0]['War']['weapons']['2']
+        unitThree    = myNation[0]['War']['weapons']['3']
+        unitFour     = myNation[0]['War']['weapons']['4']
+        unitFive     = myNation[0]['War']['weapons']['5']
+        unitSix      = myNation[0]['War']['weapons']['6']
+        unitSeven    = myNation[0]['War']['weapons']['7']
+        unitEight    = myNation[0]['War']['weapons']['8']
+        techLevel    = myNation[0]['Tech']['level']
         print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
         print('                    SCRAP YARD           :X        ')
         print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
@@ -506,7 +542,7 @@ def scrapMenu(myNation,year,WAR_BRIEFING):
         print('Tech Lv   : ' + str(techLevel) )
         print('')
         print('')
-        print('Nuclear: ' + str(nukes))
+        print('SuperWeapons: ' + str(unitEight[1]))
         print('Total Firepower : ' + str(myNation[0]['War']['firePower']) )
         print(' ')
         print('')
@@ -514,80 +550,86 @@ def scrapMenu(myNation,year,WAR_BRIEFING):
 (╯°□°)--︻╦╤─ - - - 
                 """)
         print('')
-        print('Build')
-        print('[S] Soldiers')
-        print('[T] Tanks')
-        print('[G] Gunboats')
-        print('[D] Destroyers')
-        print('[J] Jets')
-        print('[B] Bombers')
-        print('[A] Aircraft Cariers')
-        print('[N] Nukes')
+        print('Scrap')
+        print('[A] ' + str(unitOne[0]))
+        print('[B] ' + str(unitTwo[0]))
+        print('[C] ' + str(unitThree[0]))
+        print('[D] ' + str(unitFour[0]))
+        print('[E] ' + str(unitFive[0]))
+        print('[F] ' + str(unitSix[0]))
+        print('[G] ' + str(unitSeven[0]))
+        print('[H] ' + str(unitEight[0]))
         print('')
         print('')
         if price == 'on':
-            print('==============')
-            print(' Valuations   ')
-            print('==============')
-            print('______________')
-            print('ARMY         : ')
-            print('--------------')
-            print('Troop        = $' + str(WAR_BRIEFING['weapons']['troops'][0]))
-            print('MightPoints  = -' + str(WAR_BRIEFING['weapons']['troops'][2] * 100) + '%')
+            print('======================')
+            print('       VALUATIONS     ')
+            print('======================')
+            print('______________________')
+            print('Light Unit            :')
+            print('----------------------')
+            print(str(WARONE[0]) + ' = $' + str(WARONE[2]))
+            print('buildTime    = ' + str(WARONE[3]))
+            print('MightPoints  = +' + str(WARONE[4]) + '%')
             print('')
-            print('Tanks        = $' + str(WAR_BRIEFING['weapons']['tanks'][0]))
-            print('MightPoints  = -' + str(WAR_BRIEFING['weapons']['tanks'][2] * 100) + '%')
-            print('')
-            print('______________')
-            print('NAVY         : ')
-            print('--------------')
-            print('Gunboats     = $' + str(WAR_BRIEFING['weapons']['gunboats'][0]))
-            print('MightPoints  = -' + str(WAR_BRIEFING['weapons']['gunboats'][2] * 100) + '%')
-            print('')
-            print('Destroyers   = $' + str(WAR_BRIEFING['weapons']['destroyers'][0]))
-            print('MightPoints  = -' + str(WAR_BRIEFING['weapons']['destroyers'][2] * 100) + '%')
-            print('')
-            print('Carriers     = $' + str(WAR_BRIEFING['weapons']['carriers'][0]))
-            print('MightPoints  = -' + str(WAR_BRIEFING['weapons']['carriers'][2] * 100) + '%')
+            print(str(WARTWO[0]) + ' = $' + str(WARTWO[2]))
+            print('buildTime    = ' + str(WARTWO[3]))
+            print('MightPoints  = +' + str(WARTWO[4]) + '%')
             print('')
             print('______________')
-            print('Airforce     : ')
+            print('Core Division         : ')
             print('--------------')
-            print('Fighter Jets = $' + str(WAR_BRIEFING['weapons']['jets'][0]))
-            print('MightPoints  = -' + str(WAR_BRIEFING['weapons']['jets'][2] * 100) + '%')
+            print(str(WARTHREE[0]) + ' = $' + str(WARTHREE[2]))
+            print('buildTime    = ' + str(WARTHREE[3]))
+            print('MightPoints  = +' + str(WARTHREE[4]) + '%')
             print('')
-            print('Bombers      = $' + str(WAR_BRIEFING['weapons']['bombers'][0]))
-            print('MightPoints  = -' + str(WAR_BRIEFING['weapons']['bombers'][2] * 100) + '%')
+            print(str(WARFOUR[0]) + ' = $' + str(WARFOUR[2]))
+            print('buildTime    = ' + str(WARFOUR[3]))
+            print('MightPoints  = +' + str(WARFOUR[4]) + '%')
+            print('')
+            print(str(WARFIVE[0]) + ' = $' + str(WARFIVE[2]))
+            print('buildTime    = ' + str(WARFIVE[3]))
+            print('MightPoints  = +' + str(WARFIVE[4]) + '%')
+            print('')
+            print('______________')
+            print('Heavy Forces     : ')
+            print('--------------')
+            print(str(WARSIX[0]) + ' = $' + str(WARSIX[2]))
+            print('buildTime    = ' + str(WARSIX[3]))
+            print('MightPoints  = +' + str(WARSIX[4]) + '%')
+            print('')
+            print(str(WARSEVEN[0]) + ' = $' + str(WARSEVEN[2]))
+            print('buildTime    = ' + str(WARSEVEN[3]))
+            print('MightPoints  = +' + str(WARSEVEN[4]) + '%')
             print('')
             print('')
-            print('Nukes        = $' + str(WAR_BRIEFING['weapons']['Nukes'][0]))
-            print('MightPoints  = -' + str(WAR_BRIEFING['weapons']['Nukes'][2] * 100) + '%')
+            print(str(WAREIGHT[0]) + ' = $' + str(WAREIGHT[2]))
+            print('buildTime    = ' + str(WAREIGHT[3]))
+            print('MightPoints  = +' + str(WAREIGHT[4]) + '%')
             print('')
             fast_print('Press Enter to clear ')
             print('')
             price = 'off'
         if show == 'on':
-            print('______________')
-            print('ARMY ' + str(troops + tanks))
+            print('Light Unit : ' + str(unitOne[1] + unitTwo[1]))
             print('--------------')
-            print('Troops : ' + str(troops ))
-            print('Tanks  : ' + str(tanks))
+            print(str(unitOne[0]) +  ' : ' + str(unitOne[1]))
+            print(str(unitTwo[0]) +   ' : ' + str(unitTwo[1]))
             print('')
-            print('______________')
-            print('NAVY   ' + str(gunboats + destroyers + carriers))
+            print('Core Division : ' + str(unitThree[1] + unitFour[1] + unitFive[1])) 
             print('--------------')
-            print('Gunboats: ' + str(gunboats))
-            print('Destroyers: ' + str(destroyers))
-            print('Carriers : ' + str(carriers))
-            print('')
-            print('______________')
-            print('Airforce ' + str(jets + bombers))
+            print(str(unitThree[0]) +   ' : ' + str(unitThree[1]))
+            print(str(unitFour[0]) +   ' : ' + str(unitFour[1]))
+            print(str(unitFive[0]) +   ' : ' + str(unitFive[1]))
+            print('')   
+            print('Heavy Forces: ' + str(unitSix[1] + unitSeven[1]))
             print('--------------')
-            print('Fighter Jets: ' + str(jets))
-            print('Bombers: ' + str(bombers))
+            print(str(unitSix[0]) +   ' : ' + str(unitSix[1]))
+            print(str(unitSeven[0]) +   ' : ' + str(unitSeven[1]))
             print('')
-            print('')
-            print('Nukes: ' + str(nukes))
+            print('Super Weapon' )
+            print('--------------')
+            print(str(unitEight[0]) +   ' : ' + str(unitEight[1]))
             print('')
             fast_print('press Enter to clear')
             print(' ')
@@ -611,54 +653,54 @@ def scrapMenu(myNation,year,WAR_BRIEFING):
 
 
         buildSelection = str(input('Please chose an option \n')).upper()
-        if buildSelection == 'S':
-            clearScreen()
-            if troops < 1:
-                fast_print('You dont have any to scrap..')
-                continue
-            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'troops')
-        if buildSelection == 'T':
-            clearScreen()
-            if tanks < 1:
-                fast_print('You dont have any to scrap..')
-                continue
-            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'tanks')
-        if buildSelection == 'G':
-            clearScreen()
-            if gunboats < 1:
-                fast_print('You dont have any to scrap..')
-                continue
-            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'gunboats')
-        if buildSelection == 'D':
-            clearScreen()
-            if destroyers < 1:
-                fast_print('You dont have any to scrap..')
-                continue
-            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'destroyers')
-        if buildSelection == 'J':
-            clearScreen()
-            if jets < 1:
-                fast_print('You dont have any to scrap..')
-                continue
-            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'jets')
-        if buildSelection == 'B':
-            clearScreen()
-            if bombers < 1:
-                fast_print('You dont have any to scrap..')
-                continue
-            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'bombers')
         if buildSelection == 'A':
             clearScreen()
-            if carriers < 1:
+            if unitOne[1] < 1:
                 fast_print('You dont have any to scrap..')
                 continue
-            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'carriers')
-        if buildSelection == 'N':
+            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'1')
+        if buildSelection == 'B':
             clearScreen()
-            if nukes < 1:
+            if unitTwo[1] < 1:
                 fast_print('You dont have any to scrap..')
                 continue
-            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'Nukes')
+            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'2')
+        if buildSelection == 'C':
+            clearScreen()
+            if unitThree[1] < 1:
+                fast_print('You dont have any to scrap..')
+                continue
+            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'3')
+        if buildSelection == 'D':
+            clearScreen()
+            if unitFour[1] < 1:
+                fast_print('You dont have any to scrap..')
+                continue
+            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'4')
+        if buildSelection == 'E':
+            clearScreen()
+            if unitFive[1] < 1:
+                fast_print('You dont have any to scrap..')
+                continue
+            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'5')
+        if buildSelection == 'F':
+            clearScreen()
+            if unitSix[1] < 1:
+                fast_print('You dont have any to scrap..')
+                continue
+            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'6')
+        if buildSelection == 'G':
+            clearScreen()
+            if unitSeven[1] < 1:
+                fast_print('You dont have any to scrap..')
+                continue
+            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'7')
+        if buildSelection == 'H':
+            clearScreen()
+            if unitEight[1] < 1:
+                fast_print('You dont have any to scrap..')
+                continue
+            myNation = scrapUnits(myNation,year,WAR_BRIEFING,'8')
         if buildSelection == 'V':
             clearScreen()
             show = 'on'
@@ -673,13 +715,17 @@ def scrapMenu(myNation,year,WAR_BRIEFING):
 
 
 def scrapUnits(myNation,year,WAR_BRIEFING,unit):
-    price      = WAR_BRIEFING['weapons'][unit][0]
-    wait       = WAR_BRIEFING['weapons'][unit][1]
-    bonusMight = WAR_BRIEFING['weapons'][unit][2]
-    unitsOwned = myNation[0]['War']['weapons'][unit]
+
+    era        = myNation[0]['Tech']['era']
+
+    name       = WAR_BRIEFING['weapons'][era][unit][0]
+    price      = WAR_BRIEFING['weapons'][era][unit][2]
+    wait       = WAR_BRIEFING['weapons'][era][unit][3]
+    bonusMight = WAR_BRIEFING['weapons'][era][unit][4]
+    unitsOwned = myNation[0]['War']['weapons'][unit][1]
 
     print('Note* This unit as a wait time of  ' + str(wait) + ' round[s]')
-    print('You can scrap up to ' + str(unitsOwned) + ' ' + str(unit) + ' for $' + str(price) + ' each.')
+    print('You can scrap up to ' + str(unitsOwned) + ' ' + str(name) + ' for $' + str(price) + ' each.')
 
     try:
         scrapAmount = int(input('Enter amount to be scrapped \n'))
@@ -697,11 +743,11 @@ def scrapUnits(myNation,year,WAR_BRIEFING,unit):
         return(myNation)
 
     # Reduce units and Place Order
-    myNation[0]['War']['weapons'][unit] = myNation[0]['War']['weapons'][unit] - scrapAmount
-    myNation[0]['Nextmoves'] = myNation[0]['Nextmoves'] + [['WeaponsScrap',unit, scrapAmount,valuation,bonusMight]]
+    myNation[0]['War']['weapons'][unit][1] -= scrapAmount
+    myNation[0]['Nextmoves']               += [['WeaponsScrap',unit, scrapAmount,valuation,bonusMight]]
 
 
-    superfast_print('Scrap order for ' + str(unit) + ' placed at a cost of ' + str(valuation) + '\n')
+    superfast_print('Scrap order for ' + str(name) + ' placed at a cost of ' + str(valuation) + '\n')
     print('You will get paid next round \n')
     print('')
     input('Press enter to continue \n')
@@ -715,29 +761,29 @@ def manoeuvresMenu(myNation,year,WAR_BRIEFING):
     flag = ''
     while manoeuvresSelection != 'XYZFFJJJJJJ':
         clearScreen()
-        troops     = myNation[0]['War']['weapons']['troops']
-        tanks      = myNation[0]['War']['weapons']['tanks']
-        gunboats   = myNation[0]['War']['weapons']['gunboats']
-        destroyers = myNation[0]['War']['weapons']['destroyers']
-        carriers   = myNation[0]['War']['weapons']['carriers']
-        jets       = myNation[0]['War']['weapons']['jets']
-        bombers    = myNation[0]['War']['weapons']['bombers']
-        nukes      = myNation[0]['War']['weapons']['Nukes']
+        unitOne      = myNation[0]['War']['weapons']['1']
+        unitTwo      = myNation[0]['War']['weapons']['2']
+        unitThree    = myNation[0]['War']['weapons']['3']
+        unitFour     = myNation[0]['War']['weapons']['4']
+        unitFive     = myNation[0]['War']['weapons']['5']
+        unitSix      = myNation[0]['War']['weapons']['6']
+        unitSeven    = myNation[0]['War']['weapons']['7']
+        unitEight    = myNation[0]['War']['weapons']['8']
 
 
         print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
         print('       !!MILITARY MANOEUVRES HQ!!        :X        ')
         print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
         print('')
-        print('My Team   : ' + str(myNation[1]))
-        print('Year      : ' + str(year))
-        print('Might     : ' + str(myNation[0]['War']['might']) )
-        print('Rank     : ' + str(myNation[0]['War']['level']))
-        print('Army      : ' + str(troops + tanks))
-        print('Navy      : ' + str(gunboats + destroyers + carriers))
-        print('Airforce  : ' + str(jets + bombers))
-        print('Nuclear   : ' + str(nukes))
-        print('Firepower : ' + str(myNation[0]['War']['firePower']) )
+        print('My Team        : ' + str(myNation[1]))
+        print('Year           : ' + str(year))
+        print('Might          : ' + str(myNation[0]['War']['might']) )
+        print('Rank           : ' + str(myNation[0]['War']['level']))
+        print('Light Unit     : ' + str(unitOne[1] + unitTwo[1]))
+        print('Core Division  : ' + str(unitThree[1] + unitFour[1] + unitFive[1])) 
+        print('Heavy Forces   : ' + str(unitSix[1] + unitSeven[1]))
+        print('SuperWeapons   : ' + str(unitEight[1]))
+        print('Firepower      : ' + str(myNation[0]['War']['firePower']) )
         print(' ')
         print(' ')
         flag = showAssets(myNation,year,flag)
@@ -852,36 +898,36 @@ def drillMenu(myNation,year,WAR_BRIEFING):
     flag = ''
     while drillSelection != 'XYZFFJJJJJJ':
         clearScreen()
-        troops     = myNation[0]['War']['weapons']['troops']
-        tanks      = myNation[0]['War']['weapons']['tanks']
-        gunboats   = myNation[0]['War']['weapons']['gunboats']
-        destroyers = myNation[0]['War']['weapons']['destroyers']
-        carriers   = myNation[0]['War']['weapons']['carriers']
-        jets       = myNation[0]['War']['weapons']['jets']
-        bombers    = myNation[0]['War']['weapons']['bombers']
-        nukes      = myNation[0]['War']['weapons']['Nukes']
+        unitOne      = myNation[0]['War']['weapons']['1']
+        unitTwo      = myNation[0]['War']['weapons']['2']
+        unitThree    = myNation[0]['War']['weapons']['3']
+        unitFour     = myNation[0]['War']['weapons']['4']
+        unitFive     = myNation[0]['War']['weapons']['5']
+        unitSix      = myNation[0]['War']['weapons']['6']
+        unitSeven    = myNation[0]['War']['weapons']['7']
+        unitEight    = myNation[0]['War']['weapons']['8']
 
 
         print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
         print('       !!MILITARY DRILL HEADQUARTERS!!   :X        ')
         print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
         print('')
-        print('My Team   : ' + str(myNation[1]))
-        print('Year      : ' + str(year))
-        print('Might     : ' + str(myNation[0]['War']['might']) )
-        print('Rank     : ' + str(myNation[0]['War']['level']))
-        print('Army      : ' + str(troops + tanks))
-        print('Navy      : ' + str(gunboats + destroyers + carriers))
-        print('Airforce  : ' + str(jets + bombers))
-        print('Nuclear   : ' + str(nukes))
-        print('Firepower : ' + str(myNation[0]['War']['firePower']) )
+        print('My Team        : ' + str(myNation[1]))
+        print('Year           : ' + str(year))
+        print('Might          : ' + str(myNation[0]['War']['might']) )
+        print('Rank           : ' + str(myNation[0]['War']['level']))
+        print('Light Unit     : ' + str(unitOne[1] + unitTwo[1]))
+        print('Core Division  : ' + str(unitThree[1] + unitFour[1] + unitFive[1])) 
+        print('Heavy Forces   : ' + str(unitSix[1] + unitSeven[1]))
+        print('SuperWeapons   : ' + str(unitEight[1]))
+        print('Firepower      : ' + str(myNation[0]['War']['firePower']) )
         print(' ')
         print(' ')
         flag = showAssets(myNation,year,flag)
         print('')
-        print('[G] Ground Forces')
-        print('[N] Navy')
-        print('[A] Airforce')
+        print('[G] Light Unit')
+        print('[N] Core Division ')
+        print('[A] Heavy Forces')
         print(' ')
         print(' ')
         print('[D] Detailed forces review')
@@ -950,27 +996,27 @@ def missionsMenu(myNation,NATION_ARRAY,year,WAR_BRIEFING):
     missionSelection = ' '
     while missionSelection != 'XYZFFJJJJJJ':
         clearScreen()
-        troops     = myNation[0]['War']['weapons']['troops']
-        tanks      = myNation[0]['War']['weapons']['tanks']
-        gunboats   = myNation[0]['War']['weapons']['gunboats']
-        destroyers = myNation[0]['War']['weapons']['destroyers']
-        carriers   = myNation[0]['War']['weapons']['carriers']
-        jets       = myNation[0]['War']['weapons']['jets']
-        bombers    = myNation[0]['War']['weapons']['bombers']
-        nukes      = myNation[0]['War']['weapons']['Nukes']
+        unitOne      = myNation[0]['War']['weapons']['1']
+        unitTwo      = myNation[0]['War']['weapons']['2']
+        unitThree    = myNation[0]['War']['weapons']['3']
+        unitFour     = myNation[0]['War']['weapons']['4']
+        unitFive     = myNation[0]['War']['weapons']['5']
+        unitSix      = myNation[0]['War']['weapons']['6']
+        unitSeven    = myNation[0]['War']['weapons']['7']
+        unitEight    = myNation[0]['War']['weapons']['8']
         print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
         print('                 MISSION PLANNING        :X        ')
         print('+++++++++++++++++++++++++++++++++++++++++++++++++++')
         print('')
-        print('My Team   : ' + str(myNation[1]))
-        print('Year      : ' + str(year))
-        print('Might     : ' + str(myNation[0]['War']['might']) )
-        print('Rank     : ' + str(myNation[0]['War']['level']))
-        print('Army      : ' + str(troops + tanks))
-        print('Navy      : ' + str(gunboats + destroyers + carriers))
-        print('Airforce  : ' + str(jets + bombers))
-        print('Nuclear   : ' + str(nukes))
-        print('Firepower : ' + str(myNation[0]['War']['firePower']) )
+        print('My Team        : ' + str(myNation[1]))
+        print('Year           : ' + str(year))
+        print('Might          : ' + str(myNation[0]['War']['might']) )
+        print('Rank           : ' + str(myNation[0]['War']['level']))
+        print('Light Unit     : ' + str(unitOne[1] + unitTwo[1]))
+        print('Core Division  : ' + str(unitThree[1] + unitFour[1] + unitFive[1])) 
+        print('Heavy Forces   : ' + str(unitSix[1] + unitSeven[1]))
+        print('SuperWeapons   : ' + str(unitEight[1]))
+        print('Firepower      : ' + str(myNation[0]['War']['firePower']) )
         print(' ')
         flag = showAssets(myNation,year,flag)
         friendshipFlag = showFriendship(myNation,friendshipFlag)

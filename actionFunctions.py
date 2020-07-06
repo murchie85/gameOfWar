@@ -129,8 +129,8 @@ def action(index, ARRAY_DICT,currentNation,p,playerNationIndex,debug):
             #print('current nation' + str(currentNation[1]))
             NATION_ARRAY = financeFunction.investCountry(nextMove,NATION_ARRAY,currentNation,PRICE_TRACKER,p,index,playerNationIndex,nextMoveIndex)
     
-        if 'drill' in nextMove:
-            NATION_ARRAY = warFunction.drill(nextMove,NATION_ARRAY,currentNation,p,index,playerNationIndex)
+        # if 'drill' in nextMove:
+        #     NATION_ARRAY = warFunction.drill(nextMove,NATION_ARRAY,currentNation,p,index,playerNationIndex)
 
         # Even if prices change, you get it for the order you placed
         if 'WeaponsBuild' in nextMove:
@@ -149,7 +149,7 @@ def action(index, ARRAY_DICT,currentNation,p,playerNationIndex,debug):
             NATION_ARRAY = scienceFunction.gainResearch(nextMove,NATION_ARRAY,TECH_MAP,currentNation,p,index,playerNationIndex,nextMoveIndex)
 
         if 'advanceEra' in nextMove:
-            NATION_ARRAY = scienceFunction.advanceEra(nextMove,NATION_ARRAY,TECH_MAP,currentNation,p,index,playerNationIndex,nextMoveIndex)        
+            NATION_ARRAY = scienceFunction.advanceEra(nextMove,NATION_ARRAY,TECH_MAP,WAR_BRIEFING,currentNation,p,index,playerNationIndex,nextMoveIndex)        
 
         nextMoveIndex = nextMoveIndex + 1
 

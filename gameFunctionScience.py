@@ -140,7 +140,7 @@ def gainResearch(nextMove,NATION_ARRAY,TECH_MAP,currentNation,p,index,playerNati
 
     return(NATION_ARRAY)
 
-def advanceEra(nextMove,NATION_ARRAY,TECH_MAP,currentNation,p,index,playerNationIndex,nextMoveIndex):
+def advanceEra(nextMove,NATION_ARRAY,TECH_MAP,WAR_BRIEFING,currentNation,p,index,playerNationIndex,nextMoveIndex):
 
     era = currentNation[0]['Tech']['era']
     nextEra = TECH_MAP['nextEra'][era]
@@ -148,8 +148,44 @@ def advanceEra(nextMove,NATION_ARRAY,TECH_MAP,currentNation,p,index,playerNation
     NATION_ARRAY[index][0]['Tech']['era'] = nextEra
     NATION_ARRAY[index][0]['Tech']['researched'] = {'one':[0,'',0],'two':[0,'',0],'three':[0,'',0],'four':[0,'',0],'five':[0,'',0]}
     NATION_ARRAY = updateTechNames(NATION_ARRAY,TECH_MAP)
+    # REWARD KNOWLEDGE..
+    NATION_ARRAY[index][0]['Tech']['knowledge'] += (NATION_ARRAY[index][0]['Tech']['knowledge']  * 0.1)
+
+
+    #['conscripts','power','price','buildTime',['mightBonus%']]
+    # Convert all units to might
+
+    # REWARD MIGHT
+    mightBonus = 0
+    quantityTotal = 0
+    for x in range(1,len(NATION_ARRAY[index][0]['War']['weapons']) + 1):
+        quantity = NATION_ARRAY[index][0]['War']['weapons'][str(x)][1]
+        level    = NATION_ARRAY[index][0]['War']['weapons'][str(x)][2]
+        power    = NATION_ARRAY[index][0]['War']['weapons'][str(x)][3]
+        quantityTotal += quantity
+        total = quantity * level * power
+        mightBonus += total
+
+    NATION_ARRAY[index][0]['War']['might'] += mightBonus
+
+    # # UPDATING WAR ARRAY 
+    UNITONE    = WAR_BRIEFING['weapons'][nextEra]['1']
+    UNITTWO    = WAR_BRIEFING['weapons'][nextEra]['2']
+    UNITTHREE  = WAR_BRIEFING['weapons'][nextEra]['3']
+    UNITFOUR   = WAR_BRIEFING['weapons'][nextEra]['4']
+    UNITFIVE   = WAR_BRIEFING['weapons'][nextEra]['5']
+    UNITSIX    = WAR_BRIEFING['weapons'][nextEra]['6']
+    UNITSEVEN  = WAR_BRIEFING['weapons'][nextEra]['7']
+    UNITEIGHT  = WAR_BRIEFING['weapons'][nextEra]['8']
+    
+
+    NATION_ARRAY[index][0]['War']['weapons']  = {'1':[UNITONE[0],0,1,UNITONE[2]],'2':[UNITTWO[0],0,1,UNITTWO[2]],'3':[UNITTHREE[0],0,1,UNITTHREE[2]],'4':[UNITFOUR[0],0,1,UNITFOUR[2]],'5':[UNITFIVE[0],0,1,UNITFIVE[2]],'6':[UNITSIX[0],0,1,UNITSIX[2]],'7':[UNITSEVEN[0],0,1,UNITSEVEN[2]],'8':[UNITEIGHT[0],0,1,UNITEIGHT[2]]}
     preferencePrint('++++++++++++++++++++++++++++++++++++++++++',p,index,playerNationIndex)
     preferencePrint(str(str(NATION_ARRAY[index][1]) + ' has advanced to the ' + str(nextEra)),p,index,playerNationIndex)
     preferencePrint('++++++++++++++++++++++++++++++++++++++++++',p,index,playerNationIndex)
+    preferencePrint('',p,index,playerNationIndex)
+    preferencePrint(str(str(NATION_ARRAY[index][1])  + ' gained 10% knowledge.'),p,index,playerNationIndex)
+    preferencePrint(str(str(quantityTotal) + ' units converted to +' + str(mightBonus) + ' might.'),p,index,playerNationIndex)
+    preferencePrint(str(str(NATION_ARRAY[index][1]) + ' now has ' + str(nextEra) + ' level military capabilities.'),p,index,playerNationIndex)
 
     return(NATION_ARRAY)
