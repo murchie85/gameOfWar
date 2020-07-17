@@ -1,29 +1,39 @@
-from conquest_utilities import slow_print as slow_print
-from conquest_utilities import med_print as med_print
-from conquest_utilities import fast_print as fast_print
-from conquest_utilities import superfast_print as superfast_print
-from conquest_utilities import clearScreen as clearScreen
-from conquest_utilities import preferencePrint as preferencePrint
+from gameConquest_utilities import slow_print as slow_print
+from gameConquest_utilities import med_print as med_print
+from gameConquest_utilities import fast_print as fast_print
+from gameConquest_utilities import superfast_print as superfast_print
+from gameConquest_utilities import clearScreen as clearScreen
+from gameConquest_utilities import preferencePrint as preferencePrint
 import sys
 import time
 
 def start(userName,myNation):
     assistant = 'Arbiter: '
+    print(""" 
+    @('_')@
+                """)
     fast_print('**rustle**....**clunk** ..."oh not again!" \n')
     fast_print(str(assistant) + '....wait... \n')
     time.sleep(0.7)
     fast_print(str(assistant) +'..who the hell are you? How did you get in here? ... \n')
-
     userName = input('Enter your name \n')
+    clearScreen()
     print(' ')
     med_print(str(userName) + ': ... im ' + str(userName) + '\n')
-
+    clearScreen()
+    print("""
+    @('_')@
+                """)
     fast_print(str(assistant) + 'ah, so YOU are the one. \n')
     time.sleep(0.4)
     fast_print(str(assistant) + 'Its truly an honour to meet you ' + str(userName) +  ' please know that we all appreciate your sacrifice  \n')
     fast_print(str(assistant) + '...are you ready?  \n ')
     print('')
     input(' Press enter to continue..')
+    clearScreen()
+    print(""" 
+    @('_')@
+                """)
     fast_print(str(assistant) + 'executing dynamic cascade sequence now, this should feel... uh..uh....  \n ')
     time.sleep(0.6)
     fast_print('....a little weird \n ')
@@ -44,7 +54,7 @@ def start(userName,myNation):
     time.sleep(0.50)
     for x in range(0,10):
         print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-    fast_print('....booting up universe simulation #16725 omega .......\n')
+    fast_print('....booting up universe simulation #734 omega .......\n')
     for y in range(0,3):
         for x in range(0,10):
             print('><><><>><><><>><><><>><><><>><><><>><><><>><><><>><><><')
